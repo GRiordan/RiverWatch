@@ -1,7 +1,9 @@
-package com.vuw.project1.riverwatch;
+package com.vuw.project1.riverwatch.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.vuw.project1.riverwatch.R;
 
 public class MainActivity extends AppCompatActivity {
 
