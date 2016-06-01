@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="river_blue_transparent">#8866CCFF</color>
+    <color name="river_green">#2682AA</color>
 </resources>

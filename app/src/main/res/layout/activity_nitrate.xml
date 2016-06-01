@@ -7,6 +7,12 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.vuw.project1.riverwatch.activities.NitrateActivity">
+    tools:context="com.vuw.project1.riverwatch.ui.NitrateActivity">
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:id="@+id/testButton"
+        android:text="New Test"/>
 
 </RelativeLayout>
