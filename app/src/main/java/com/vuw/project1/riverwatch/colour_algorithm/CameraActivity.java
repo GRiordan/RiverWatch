@@ -6,6 +6,8 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -21,11 +23,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CameraActivity extends AppCompatActivity {
+public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
     private Camera camera;
-    private CameraPreview preview;
+    private SurfaceView surfaceView;
+    private SurfaceHolder holder;
     private Button captureButton;
     private StripOverlay stripOverlay;
+    private RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +39,13 @@ public class CameraActivity extends AppCompatActivity {
         // Create an instance of Camera
         camera = getCameraInstance();
 
-        // Set up strip overlay
         stripOverlay = (StripOverlay) findViewById(R.id.stripOverlay);
-        // Create our Preview view and set it as the content of our activity.
-        preview = new CameraPreview(this, camera);
-        FrameLayout camera_preview = (FrameLayout) findViewById(R.id.camera_preview);
-        camera_preview.setDrawingCacheEnabled(true);
-        camera_preview.addView(preview);
+        relativeLayout=(RelativeLayout) findViewById(R.id.containerImg);
+        relativeLayout.setDrawingCacheEnabled(true);
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView1);
+        stripOverlay = (StripOverlay) findViewById(R.id.stripOverlay);
+        holder = surfaceView.getHolder();
+        holder.addCallback(this);
 
         // Add a listener to the Capture button
         Button captureButton = (Button) findViewById(R.id.button_capture);
@@ -87,12 +91,12 @@ public class CameraActivity extends AppCompatActivity {
         public void onPictureTaken(byte[] data, Camera camera) {
             //TODO: setup async task for saving to SD card
             File pictureFile = getOutputMediaFile(1);
-          /*  if (pictureFile == null){
+            /*  if (pictureFile == null){
                 Log.d(TAG, "Error creating media file, check storage permissions: " +
                         e.getMessage());
                 return;
             }*/
-
+            //write the picture to memory
             try {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 fos.write(data);
@@ -138,5 +142,46 @@ public class CameraActivity extends AppCompatActivity {
         }
 
         return mediaFile;
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder holder) {
+        try {
+            camera.setPreviewDisplay(holder);
+            camera.startPreview();
+        } catch (IOException e) {
+            // Log.d(TAG, "Error setting camera preview: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        if (holder.getSurface() == null){
+            // preview surface does not exist
+            return;
+        }
+        // stop preview before making changes
+        try {
+            camera.stopPreview();
+        } catch (Exception e){
+            // ignore: tried to stop a non-existent preview
+        }
+
+        // set preview size and make any resize, rotate or
+        // reformatting changes here
+
+        // start preview with new settings
+        try {
+            camera.setPreviewDisplay(holder);
+            camera.startPreview();
+
+        } catch (Exception e){
+            //Log.d(TAG, "Error starting camera preview: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder holder) {
+        // empty. Take care of releasing the Camera preview in your activity.
     }
 }

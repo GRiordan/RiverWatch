@@ -12,7 +12,7 @@ import android.view.View;
 import java.util.HashMap;
 
 /**
- * Repurposed from FantasticFive riverwatch team 2015
+ * Repurposed from opera riverwatch team 2015
  * Created by colin on 27/09/15.
  */
 public class StripOverlay extends View {
