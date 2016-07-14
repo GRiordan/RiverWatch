@@ -1,4 +1,4 @@
-package com.vuw.project1.riverwatch.activities;
+package com.vuw.project1.riverwatch.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
