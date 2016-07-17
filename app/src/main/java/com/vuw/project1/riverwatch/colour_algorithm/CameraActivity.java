@@ -1,6 +1,9 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +25,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
     private Camera camera;
@@ -38,6 +42,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
         // Create an instance of Camera
         camera = getCameraInstance();
+        Camera.Parameters parameters = camera.getParameters();
+        parameters.set("orientation", "portrait");
+        camera.setParameters(parameters);
+        camera.setDisplayOrientation(270);
 
         stripOverlay = (StripOverlay) findViewById(R.id.stripOverlay);
         relativeLayout=(RelativeLayout) findViewById(R.id.containerImg);
@@ -90,6 +98,34 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             //TODO: setup async task for saving to SD card
+
+            //create new analysis
+            HashMap<String, Rect> captureRectangles = stripOverlay.getCaptureRectangles();
+
+            Bitmap cameraBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+
+            //cameraBitmap = RotateBitmap(cameraBitmap,90f);
+
+            int wid = cameraBitmap.getWidth();
+            int hgt = cameraBitmap.getHeight();
+
+            Bitmap newImage = Bitmap.createBitmap(wid, hgt, Bitmap.Config.ARGB_8888);
+
+            Rect leftR = captureRectangles.get("leftCaptureRectangle");
+            Rect midR = captureRectangles.get("middleCaptureRectangle");
+            Rect rightR = captureRectangles.get("rightCaptureRectangle");
+
+            Bitmap left = Bitmap.createBitmap(cameraBitmap, leftR.left, leftR.top, leftR.width(), leftR.height());
+            Bitmap middle = Bitmap.createBitmap(cameraBitmap, midR.left, midR.top, midR.width(), midR.height());
+            Bitmap right = Bitmap.createBitmap(cameraBitmap, rightR.left, rightR.top, rightR.width(), rightR.height());
+
+            Analysis analysis = new Analysis();
+
+            //process images
+            analysis.processImages(left, middle, right, getApplicationContext());
+
+            //create intent with analysis object
+
             File pictureFile = getOutputMediaFile(1);
             /*  if (pictureFile == null){
                 Log.d(TAG, "Error creating media file, check storage permissions: " +
@@ -108,7 +144,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             }
 
             //start a new activity
-            Intent intent = new Intent(CameraActivity.this, NitrateActivity.class);
+            Intent intent = new Intent(CameraActivity.this, NitrateResultsActivity.class);
+            intent.putExtra("nitrate", analysis.getNitrate());
+            intent.putExtra("nitrite", analysis.getNitrite());
             startActivity(intent);
         }
     };

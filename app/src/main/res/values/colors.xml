@@ -6,4 +6,19 @@
 
     <color name="river_blue_transparent">#8866CCFF</color>
     <color name="river_green">#2682AA</color>
+
+    <color name="Nitrite1">#FFBBD8</color>
+    <color name="Nitrite3">#FF8CB9</color>
+    <color name="Nitrite1_5">#FA98BB</color>
+    <color name="Nitrite0_3">#FFEFFB</color>
+    <color name="Nitrite0">#FFF5E9</color>
+    <color name="Nitrite0_15">#FFF0FD</color>
+
+    <color name="Nitrate10">#F17DA0</color>
+    <color name="Nitrate0">#FEDCB7</color>
+    <color name="Nitrate1">#FFE8DE</color>
+    <color name="Nitrate2">#F9CDC2</color>
+    <color name="Nitrate50">#B61140</color>
+    <color name="Nitrate20">#E54278</color>
+    <color name="Nitrate5">#EDA6B0</color>
 </resources>
