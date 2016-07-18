@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.vuw.project1.riverwatch.colour_algorithm.CameraActivity"
+    android:id="@+id/camera_preview">
+
+    <RelativeLayout
+        android:id="@+id/containerImg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <SurfaceView
+            android:id="@+id/surfaceView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true" />
+
+        <com.vuw.project1.riverwatch.colour_algorithm.StripOverlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/stripOverlay"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/button_capture"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="60px"
+        android:background="@drawable/camera_button"
+        />
+
+</FrameLayout>

@@ -1,15 +1,15 @@
-package com.vuw.project1.riverwatch;
+package com.vuw.project1.riverwatch.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import com.vuw.project1.riverwatch.R;
+
+public class HistoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //Cool
-        //sfsdfsd
+        setContentView(R.layout.activity_history);
     }
 }
