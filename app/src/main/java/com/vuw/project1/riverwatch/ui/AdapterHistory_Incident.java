@@ -15,11 +15,11 @@ import com.vuw.project1.riverwatch.objects.Incident_Object;
 
 import java.util.ArrayList;
 
-public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ShowViewHolder> {
+public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory_Incident.ShowViewHolder> {
     private Context mContext;
     private ArrayList<Incident_Object> mContent;
     private Callback mCallback;
-    public AdapterHistory(Context mContext, ArrayList<Incident_Object> mContent, Callback mCallback) {
+    public AdapterHistory_Incident(Context mContext, ArrayList<Incident_Object> mContent, Callback mCallback) {
         this.mContext = mContext;
         this.mContent = mContent;
         this.mCallback = mCallback;
@@ -32,7 +32,8 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ShowView
     public void onBindViewHolder(final ShowViewHolder viewHolder, int position) {
         final Incident_Object obj = mContent.get(position);
         viewHolder.title.setText(obj.name);
-        viewHolder.message.setText(obj.description);
+        viewHolder.location.setText(obj.location);
+        viewHolder.date.setText(obj.date);
         Glide.with(mContext)
                 .load(Uri.parse(obj.image))
                 .placeholder(null)
@@ -49,18 +50,20 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ShowView
     @Override
     public ShowViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.element_history, viewGroup, false);
-        return new AdapterHistory.ShowViewHolder(itemView);
+        return new AdapterHistory_Incident.ShowViewHolder(itemView);
     }
     class ShowViewHolder extends RecyclerView.ViewHolder {
         View view;
         TextView title;
-        TextView message;
+        TextView location;
+        TextView date;
         ImageView image;
         ShowViewHolder(View v) {
             super(v);
             view = v;
-            title = (TextView) v.findViewById(R.id.title);
-            message = (TextView) v.findViewById(R.id.message);
+            title = (TextView) v.findViewById(R.id.name);
+            location = (TextView) v.findViewById(R.id.location);
+            date = (TextView) v.findViewById(R.id.date);
             image = (ImageView) v.findViewById(R.id.image);
         }
     }

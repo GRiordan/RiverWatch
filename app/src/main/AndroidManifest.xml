@@ -28,7 +28,9 @@
         <activity android:name=".ui.BluetoothActivity" />
         <activity android:name=".ui.HistoryActivity" />
         <activity android:name=".ui.History_IncidentActivity" />
+        <activity android:name=".ui.History_IncidentActivity_Item" />
         <activity android:name=".ui.History_NitrateActivity" />
+        <activity android:name=".ui.History_NitrateActivity_Item" />
         <activity android:name=".ui.History_WaterActivity" />
         <activity
             android:name=".colour_algorithm.CameraActivity"

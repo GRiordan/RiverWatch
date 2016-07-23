@@ -21,7 +21,6 @@
         android:text="Nitrate Tests"
         android:id="@+id/nitrateButton"
         android:layout_centerHorizontal="true"
-
         android:layout_margin="10dp"
         android:layout_below="@+id/reportButton"
         />
@@ -32,7 +31,6 @@
         android:text="Water Measurement Device Tests"
         android:id="@+id/waterButton"
         android:layout_centerHorizontal="true"
-
         android:layout_margin="10dp"
         android:layout_below="@+id/nitrateButton"/>
 
