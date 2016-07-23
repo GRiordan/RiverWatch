@@ -32,7 +32,7 @@ public class ReportFormActivity extends AppCompatActivity {
             float imgWeight = ((LinearLayout.LayoutParams) (imageView.getLayoutParams())).weight;
             ScreenDimensions dimensioner = new ScreenDimensions(getBaseContext());
             int imgHeight = (int) (dimensioner.getScreenHeight() * imgWeight);
-            imageView.setImageBitmap(BitmapDisplay.decodeSampledBitmapFromPath(getImagePath(), imgHeight));
+            imageView.setImageBitmap(BitMapDisplay.decodeSampledBitmapFromPath(getImagePath(), imgHeight));
         } else {
             findViewById(R.id.submission_details_photo).setVisibility(View.GONE);
         }
