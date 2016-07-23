@@ -8,7 +8,7 @@ import android.util.Log;
 /**
  * Created by Alex on 18/07/2016.
  */
-public class BitmapDisplay {
+public class BitMapDisplay {
     /**
      * Rotates the image based on the angle so it can be displayed in the right
      * orientation in the fragment
