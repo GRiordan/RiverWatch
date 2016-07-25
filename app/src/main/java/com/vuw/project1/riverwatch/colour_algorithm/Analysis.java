@@ -17,7 +17,10 @@ public class Analysis {
     private String path;
 
     public Analysis(){
-
+        nitrate = 0;
+        nitrite = 0;
+        nitrateColor = null;
+        nitriteColor = null;
     }
 
     public void processImages(Bitmap left, Bitmap middle, Bitmap right, Context c){

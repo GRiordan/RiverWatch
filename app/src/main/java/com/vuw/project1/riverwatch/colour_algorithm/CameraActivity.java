@@ -3,15 +3,20 @@ package com.vuw.project1.riverwatch.colour_algorithm;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -23,9 +28,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Policy;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
     private Camera camera;
@@ -42,10 +50,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
         // Create an instance of Camera
         camera = getCameraInstance();
-        Camera.Parameters parameters = camera.getParameters();
-        parameters.set("orientation", "portrait");
-        camera.setParameters(parameters);
-        camera.setDisplayOrientation(270);
+        //Camera.Parameters parameters = camera.getParameters();
+        //parameters.set("orientation", "portrait");
+        //camera.setParameters(parameters);
+        //camera.setDisplayOrientation(270);
 
         stripOverlay = (StripOverlay) findViewById(R.id.stripOverlay);
         relativeLayout=(RelativeLayout) findViewById(R.id.containerImg);
@@ -100,24 +108,29 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             //TODO: setup async task for saving to SD card
 
             //create new analysis
-            HashMap<String, Rect> captureRectangles = stripOverlay.getCaptureRectangles();
+
 
             Bitmap cameraBitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
 
-            //cameraBitmap = RotateBitmap(cameraBitmap,90f);
+            cameraBitmap = RotateBitmap(cameraBitmap,-90f);
 
             int wid = cameraBitmap.getWidth();
             int hgt = cameraBitmap.getHeight();
 
-            Bitmap newImage = Bitmap.createBitmap(wid, hgt, Bitmap.Config.ARGB_8888);
-
+            //need to resize as the camera bitmap is three times two big
+            Bitmap resizedBitmap = resizeBitmap(getScreenDimensionsX(), getScreenDimensionsY(), cameraBitmap);
+            HashMap<String, Rect> captureRectangles = stripOverlay.getCaptureRectangles();
             Rect leftR = captureRectangles.get("leftCaptureRectangle");
             Rect midR = captureRectangles.get("middleCaptureRectangle");
             Rect rightR = captureRectangles.get("rightCaptureRectangle");
 
-            Bitmap left = Bitmap.createBitmap(cameraBitmap, leftR.left, leftR.top, leftR.width(), leftR.height());
-            Bitmap middle = Bitmap.createBitmap(cameraBitmap, midR.left, midR.top, midR.width(), midR.height());
-            Bitmap right = Bitmap.createBitmap(cameraBitmap, rightR.left, rightR.top, rightR.width(), rightR.height());
+            /*Bitmap left = Bitmap.createBitmap(resizedBitmap, (leftR.left+(leftR.width()/2)), leftR.top+(leftR.height()/2), leftR.width(), leftR.height());
+            Bitmap middle = Bitmap.createBitmap(resizedBitmap, (midR.left+(leftR.width()/2)), midR.top+(midR.height()/2), midR.width(), midR.height());
+            Bitmap right = Bitmap.createBitmap(resizedBitmap, (rightR.left+(rightR.width()/2)), rightR.top+(rightR.height()/2), rightR.width(), rightR.height());*/
+
+            Bitmap left = Bitmap.createBitmap(resizedBitmap, leftR.left+(leftR.width()/2), leftR.top+(leftR.width()/2), leftR.width(), leftR.height());
+            Bitmap middle = Bitmap.createBitmap(resizedBitmap, midR.left+(leftR.width()/2), midR.top+(leftR.width()/2), midR.width(), midR.height());
+            Bitmap right = Bitmap.createBitmap(resizedBitmap, rightR.left+(leftR.width()/2), rightR.top+(leftR.width()/2), rightR.width(), rightR.height());
 
             Analysis analysis = new Analysis();
 
@@ -147,9 +160,28 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             Intent intent = new Intent(CameraActivity.this, NitrateResultsActivity.class);
             intent.putExtra("nitrate", analysis.getNitrate());
             intent.putExtra("nitrite", analysis.getNitrite());
+            intent.putExtra("left", left);
+            intent.putExtra("middle", middle);
+            intent.putExtra("right", right);
+            intent.putExtra("stripBitmap", right);
             startActivity(intent);
         }
     };
+
+    private Bitmap resizeBitmap(int newWidth, int newHeight, Bitmap bitmap) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        float scaleWidth = (float) newWidth/width;
+        float scaleHeight = (float) newHeight/height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
+
+        return resizedBitmap;
+    }
 
     /** Create a File for saving an image or video */
     private static File getOutputMediaFile(int type){
@@ -184,6 +216,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+
         try {
             camera.setPreviewDisplay(holder);
             camera.startPreview();
@@ -204,7 +237,11 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         } catch (Exception e){
             // ignore: tried to stop a non-existent preview
         }
+        Camera.Parameters parameters = camera.getParameters();
+        Display display = ((WindowManager)getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
 
+        parameters.setPreviewSize(height, width);
+        camera.setDisplayOrientation(270);
         // set preview size and make any resize, rotate or
         // reformatting changes here
 
@@ -214,12 +251,33 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             camera.startPreview();
 
         } catch (Exception e){
-            //Log.d(TAG, "Error starting camera preview: " + e.getMessage());
+            Log.d("temp", "cannot start preview");
         }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         // empty. Take care of releasing the Camera preview in your activity.
+    }
+
+    public static Bitmap RotateBitmap(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
+    }
+
+    public int getScreenDimensionsY(){
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        System.out.println("screen size: "+ size.y);
+        return size.y;
+    }
+
+    public int getScreenDimensionsX(){
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        return size.x;
     }
 }
