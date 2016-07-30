@@ -43,18 +43,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="nitrate"
-                android:id="@+id/nitrate"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="nitrite"
-                android:id="@+id/nitrite"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 tools:text="description"
                 android:id="@+id/description"/>
 

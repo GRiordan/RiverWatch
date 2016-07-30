@@ -13,15 +13,17 @@ public class Nitrate_Object {
     public String date;
     public String description;
     public String image;
-    public double Nitrate;
-    public double Nitrite;
+    public double nitrate;
+    public double nitrite;
 
-    public Nitrate_Object(long id, String name, String location, String date, String description, String image){
+    public Nitrate_Object(long id, String name, String location, String date, String description, String image, double nitrate, double nitrite){
         this.id = id;
         this.name = name;
         this.location = location;
         this.date = date;
         this.description = description;
         this.image = image;
+        this.nitrate = nitrate;
+        this.nitrite = nitrite;
     }
 }

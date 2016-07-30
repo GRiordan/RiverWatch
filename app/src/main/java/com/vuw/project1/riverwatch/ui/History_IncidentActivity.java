@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -25,7 +26,13 @@ public class History_IncidentActivity extends AppCompatActivity {
         mAdapter = new AdapterHistory_Incident(this, incidents, new AdapterHistory_Incident.Callback() {
             @Override
             public void open(Incident_Object obj) {
-                Toast.makeText(History_IncidentActivity.this, obj.name, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(History_IncidentActivity.this, History_IncidentActivity_Item.class);
+                intent.putExtra("name", obj.name);
+                intent.putExtra("location", obj.location);
+                intent.putExtra("date", obj.date);
+                intent.putExtra("description", obj.description);
+                intent.putExtra("image", obj.image);
+                startActivity(intent);
             }
         });
         GridLayoutManager llm = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
@@ -37,7 +44,7 @@ public class History_IncidentActivity extends AppCompatActivity {
     public ArrayList<Incident_Object> addDummyData(){
         ArrayList<Incident_Object> incidents = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            incidents.add(new Incident_Object(i, "test name"+i, "test location", "DD/MM/YYYY", "test description", "https://cathyqmumford.files.wordpress.com/2010/12/connecticut-river-cow.jpg"));
+            incidents.add(new Incident_Object(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "https://cathyqmumford.files.wordpress.com/2010/12/connecticut-river-cow.jpg"));
         }
         return incidents;
     }

@@ -32,6 +32,7 @@
         <activity android:name=".ui.History_NitrateActivity" />
         <activity android:name=".ui.History_NitrateActivity_Item" />
         <activity android:name=".ui.History_WaterActivity" />
+        <activity android:name=".ui.History_WaterActivity_Item" />
         <activity
             android:name=".colour_algorithm.CameraActivity"
             android:screenOrientation="portrait" />

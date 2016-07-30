@@ -8,32 +8,38 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
 
-public class History_NitrateActivity_Item extends AppCompatActivity {
+public class History_WaterActivity_Item extends AppCompatActivity {
 
     private ImageView Image;
-    private TextView Nitrate;
-    private TextView Nitrite;
     private TextView Description;
     private TextView Name;
     private TextView Location;
     private TextView Date;
+    private TextView Temperature;
+    private TextView PH;
+    private TextView Conductivity;
+    private TextView Turbidity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_nitrate);
+        setContentView(R.layout.activity_history_water);
 
         Bundle extras = getIntent().getExtras();
-        double nitrate = 0.0;
-        double nitrite = 0.0;
+        double temperature = 0.0;
+        double pH = 0.0;
+        double conductivity = 0.0;
+        double turbidity = 0.0;
         String description = "";
         String image = "";
         String name = "";
         String location = "";
         String date = "";
         if(extras != null){
-            nitrate = extras.getDouble("nitrate", 0.0);
-            nitrite = extras.getDouble("nitrite", 0.0);
+            temperature = extras.getDouble("temperature", 0.0);
+            pH = extras.getDouble("pH", 0.0);
+            conductivity = extras.getDouble("conductivity", 0.0);
+            turbidity = extras.getDouble("turbidity", 0.0);
             description = extras.getString("description", "");
             image = extras.getString("image", "");
             name = extras.getString("name", "");
@@ -46,10 +52,6 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
                 .placeholder(R.mipmap.ic_launcher)
                 .crossFade()
                 .into(Image);
-        Nitrate = (TextView) findViewById(R.id.nitrate);
-        Nitrate.setText("Nitrate: "+nitrate);
-        Nitrite = (TextView) findViewById(R.id.nitrite);
-        Nitrite.setText("Nitrite: "+nitrite);
         Description = (TextView) findViewById(R.id.description);
         Description.setText(description);
         Name = (TextView) findViewById(R.id.name);
@@ -58,5 +60,13 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
         Location.setText("Location: "+location);
         Date = (TextView) findViewById(R.id.date);
         Date.setText("Date: "+date);
+        Temperature = (TextView) findViewById(R.id.temperature);
+        Temperature.setText("Temperature: "+ temperature);
+        PH = (TextView) findViewById(R.id.pH);
+        PH.setText("pH: "+pH);
+        Conductivity = (TextView) findViewById(R.id.conductivity);
+        Conductivity.setText("Conductivity: "+conductivity);
+        Turbidity = (TextView) findViewById(R.id.turbidity);
+        Turbidity.setText("Turbidity: "+turbidity);
     }
 }

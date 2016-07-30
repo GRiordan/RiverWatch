@@ -43,14 +43,27 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="nitrate"
-                android:id="@+id/nitrate"/>
+                tools:text="temperature"
+                android:id="@+id/temperature"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:text="nitrite"
-                android:id="@+id/nitrite"/>
+                tools:text="pH"
+                android:id="@+id/pH"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="conductivity"
+                android:id="@+id/conductivity"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="turbidity"
+                android:id="@+id/turbidity"/>
+
 
             <TextView
                 android:layout_width="match_parent"

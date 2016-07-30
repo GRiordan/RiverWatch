@@ -28,7 +28,13 @@ public class History_NitrateActivity extends AppCompatActivity {
             @Override
             public void open(Nitrate_Object obj) {
                 Intent intent = new Intent(History_NitrateActivity.this, History_NitrateActivity_Item.class);
-                intent.putExtra("name", "sutt");
+                intent.putExtra("name", obj.name);
+                intent.putExtra("location", obj.location);
+                intent.putExtra("date", obj.date);
+                intent.putExtra("description", obj.description);
+                intent.putExtra("image", obj.image);
+                intent.putExtra("nitrate", obj.nitrate);
+                intent.putExtra("nitrite", obj.nitrite);
                 startActivity(intent);
             }
         });
@@ -41,7 +47,7 @@ public class History_NitrateActivity extends AppCompatActivity {
     public ArrayList<Nitrate_Object> addDummyData(){
         ArrayList<Nitrate_Object> incidents = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            incidents.add(new Nitrate_Object(i, "test name"+i, "test location", "DD/MM/YYYY", "test description", "http://www.fullstop.com.au/HTMLfilesv2/060_SoilSolution/030_MonitoringNutrients/MonitoringNitrate_Images/020_MatchStripColour300.jpg"));
+            incidents.add(new Nitrate_Object(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "http://www.fullstop.com.au/HTMLfilesv2/060_SoilSolution/030_MonitoringNutrients/MonitoringNitrate_Images/020_MatchStripColour300.jpg",10,10));
         }
         return incidents;
     }
