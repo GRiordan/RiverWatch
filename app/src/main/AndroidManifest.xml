@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera" />
 
@@ -25,6 +26,12 @@
         <activity android:name=".ui.NitrateActivity" />
         <activity android:name=".ui.BluetoothActivity" />
         <activity android:name=".ui.HistoryActivity" />
+        <activity android:name=".ui.History_IncidentActivity" />
+        <activity android:name=".ui.History_IncidentActivity_Item" />
+        <activity android:name=".ui.History_NitrateActivity" />
+        <activity android:name=".ui.History_NitrateActivity_Item" />
+        <activity android:name=".ui.History_WaterActivity" />
+        <activity android:name=".ui.History_WaterActivity_Item" />
         <activity
             android:name=".colour_algorithm.CameraActivity"
             android:screenOrientation="portrait" />
