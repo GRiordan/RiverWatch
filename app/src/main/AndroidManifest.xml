@@ -27,6 +27,7 @@
         <activity android:name=".ui.HistoryActivity" />
         <activity
             android:name=".colour_algorithm.CameraActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:screenOrientation="portrait" />
         <activity android:name=".Report_functionality.ReportFormActivity"></activity>
         <activity android:name=".colour_algorithm.NitrateResultsActivity"></activity>
