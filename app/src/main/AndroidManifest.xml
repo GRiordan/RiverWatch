@@ -29,6 +29,7 @@
             android:name=".colour_algorithm.CameraActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".Report_functionality.ReportFormActivity"></activity>
+        <activity android:name=".colour_algorithm.NitrateResultsActivity"></activity>
     </application>
 
 </manifest>
