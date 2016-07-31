@@ -215,7 +215,14 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         Camera.getCameraInfo(Camera.CameraInfo.CAMERA_FACING_BACK, info);
 
         // set preview size to screen dimensions
+        //if portrait else if landscape -- swap height and width
         //parameters.setPreviewSize(getScreenDimensionsX(), getScreenDimensionsY());
+        //parameters.setPictureSize(3024, 4032);
+        Camera.Size previewSize = getOptimalPreviewSize(parameters);
+
+        parameters.setPreviewSize(previewSize.width, previewSize.height);
+        parameters.setPictureSize(previewSize.width, previewSize.height);
+
 
         // handle rotation
         int rotation = getCorrectCameraOrientation(camera, info);
@@ -229,6 +236,10 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         try {
             camera.setParameters(parameters);
             camera.setPreviewDisplay(holder);
+            Log.d(TAG, "Picture size width: " + parameters.getPictureSize().width);
+            Log.d(TAG, "Picture size height: " + parameters.getPictureSize().height);
+            Log.d(TAG, "Preview size width: " + parameters.getPreviewSize().width);
+            Log.d(TAG, "Preview size height: " + parameters.getPreviewSize().height);
             camera.startPreview();
 
         } catch (Exception e){
@@ -294,6 +305,21 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         return result;
     }
 
+    private Camera.Size getOptimalPreviewSize(Camera.Parameters parameters){
+        final List<Camera.Size> sizeList = parameters.getSupportedPreviewSizes();
+        //set initial size
+        Camera.Size bestSize = sizeList.get(0);
+        //search through sizelist to find biggest size
+        for (Camera.Size size : sizeList) {
+            if ((size.width * size.height) > (bestSize.width * bestSize.height)) {
+                bestSize = size;
+            }
+        }
+        return bestSize;
+    }
+
+
+
     private Camera.PictureCallback picture = new Camera.PictureCallback() {
 
         @Override
@@ -310,8 +336,12 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             int wid = cameraBitmap.getWidth();
             int hgt = cameraBitmap.getHeight();
 
+
             //need to resize as the camera bitmap is three times two big
-            cameraBitmap = resizeBitmap(getScreenDimensionsX(), getScreenDimensionsY(), cameraBitmap);
+            //cameraBitmap = resizeBitmap(1080, 1920, cameraBitmap);
+
+            //Log.d(TAG, "Screen x: " + getScreenDimensionsX());
+            //Log.d(TAG, "Screen y: " + getScreenDimensionsY());
             HashMap<String, Rect> captureRectangles = stripOverlay.getCaptureRectangles();
             Rect leftR = captureRectangles.get("leftCaptureRectangle");
             Rect midR = captureRectangles.get("middleCaptureRectangle");
@@ -321,9 +351,11 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             Bitmap middle = Bitmap.createBitmap(resizedBitmap, (midR.left+(leftR.width()/2)), midR.top+(midR.height()/2), midR.width(), midR.height());
             Bitmap right = Bitmap.createBitmap(resizedBitmap, (rightR.left+(rightR.width()/2)), rightR.top+(rightR.height()/2), rightR.width(), rightR.height());*/
 
-            Bitmap left = Bitmap.createBitmap(cameraBitmap, leftR.left, leftR.top, leftR.width(), leftR.height());
-            Bitmap middle = Bitmap.createBitmap(cameraBitmap, midR.left, midR.top, midR.width(), midR.height());
-            Bitmap right = Bitmap.createBitmap(cameraBitmap, rightR.left, rightR.top, rightR.width(), rightR.height());
+            int statusBarHeight = getStatusBarHeight();
+
+            Bitmap left = Bitmap.createBitmap(cameraBitmap, leftR.left, leftR.top+statusBarHeight, leftR.width(), leftR.height());
+            Bitmap middle = Bitmap.createBitmap(cameraBitmap, midR.left, midR.top+statusBarHeight, midR.width(), midR.height());
+            Bitmap right = Bitmap.createBitmap(cameraBitmap, rightR.left, rightR.top+statusBarHeight, rightR.width(), rightR.height());
 
             Analysis analysis = new Analysis();
 
@@ -357,6 +389,15 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             intent.putExtra("middle", middle);
             intent.putExtra("right", right);
             startActivity(intent);
+        }
+
+        public int getStatusBarHeight() {
+            int result = 0;
+            int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                result = getResources().getDimensionPixelSize(resourceId);
+            }
+            return result;
         }
     };
 }
