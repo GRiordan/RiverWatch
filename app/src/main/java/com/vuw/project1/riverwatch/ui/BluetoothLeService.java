@@ -328,11 +328,11 @@ public class BluetoothLeService extends Service {
 
     public class LocalBinder extends Binder {
         BluetoothLeService getService() {
+            System.out.println("GETTING SERVICE");
             return BluetoothLeService.this;
         }
     }
 
-    @Override
     public IBinder onBind(Intent intent) {
         System.out.print("BINDING\n");
 
@@ -347,8 +347,6 @@ public class BluetoothLeService extends Service {
         close();
         return super.onUnbind(intent);
     }
-
-    private final IBinder mBinder = new LocalBinder();
 
     /**
      * Initializes a reference to the local Bluetooth adapter.
