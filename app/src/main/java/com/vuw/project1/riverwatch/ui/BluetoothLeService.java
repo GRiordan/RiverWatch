@@ -326,9 +326,9 @@ public class BluetoothLeService extends Service {
 
 
 
-    public class LocalBinder extends Binder {
-        BluetoothLeService getService() {
-            System.out.println("GETTING SERVICE");
+    private final IBinder mBinder = new LocalBinder();
+    public class LocalBinder extends Binder{
+        public BluetoothLeService getService(){
             return BluetoothLeService.this;
         }
     }
@@ -336,7 +336,7 @@ public class BluetoothLeService extends Service {
     public IBinder onBind(Intent intent) {
         System.out.print("BINDING\n");
 
-        return new LocalBinder();
+        return mBinder;
     }
 
     @Override
@@ -386,7 +386,6 @@ public class BluetoothLeService extends Service {
      *         callback.
      */
     public boolean connect(final String address) {
-        initialize();
     	System.out.println("BluetoothLeService connect"+address+mBluetoothGatt);
         if (mBluetoothAdapter == null || address == null) {
             Log.w(TAG, "BluetoothAdapter not initialized or unspecified address.");

@@ -36,8 +36,9 @@
     </application>
 
     <service
-        android:name=".bluetooth.BluetoothLeService"
-        android:label="bluetooth_le_service">
+        android:name=".ui.BluetoothLeService"
+        android:label="bluetooth_le_service"
+        android:enabled="true">
     </service>
 
 </manifest>

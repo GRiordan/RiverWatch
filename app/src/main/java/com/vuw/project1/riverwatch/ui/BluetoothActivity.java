@@ -52,7 +52,7 @@ public class BluetoothActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
-        final Intent gattServiceIntent = new Intent(BluetoothActivity.this, BluetoothLeService.class);
+        final Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
 
         if(!initiate())
         {
@@ -68,7 +68,7 @@ public class BluetoothActivity extends Activity {
         System.out.println(mBluetoothLeService);
         System.out.println(Context.BIND_AUTO_CREATE);
 
-        if(bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)){
+        if(getApplicationContext().bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)){
             System.out.print("GOOD\n");
         }
         else{
@@ -222,6 +222,7 @@ public class BluetoothActivity extends Activity {
         System.out.println("HERE!!!" + bluetoothManager.getAdapter());
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
+
         // Checks if Bluetooth is supported on the device.
         if (mBluetoothAdapter == null) {
             return false;
@@ -255,7 +256,7 @@ public class BluetoothActivity extends Activity {
         TextView deviceAddress;
     }
     private static BluetoothGattCharacteristic mSCharacteristic, mModelNumberCharacteristic, mSerialPortCharacteristic, mCommandCharacteristic;
-    BluetoothLeService mBluetoothLeService = new BluetoothLeService();
+    BluetoothLeService mBluetoothLeService;
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics =
             new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
     private LeDeviceListAdapter mLeDeviceListAdapter=null;
