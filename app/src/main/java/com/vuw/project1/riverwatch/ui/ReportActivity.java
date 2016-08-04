@@ -1,6 +1,10 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -11,21 +15,36 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.hardware.Camera;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.Report_functionality.Preview;
 import com.vuw.project1.riverwatch.Report_functionality.ReportFormActivity;
+
+
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-public class ReportActivity extends AppCompatActivity {
+public class ReportActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener {
     private Button captureButton;
     private Preview camPreview;
     private SurfaceHolder holder;
     private Camera camera;
     private String imagePath;
+
+
+    private GoogleApiClient mGoogleApiClient;
+    private android.location.Location lastLocation;
+    private LocationRequest locationRequest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +68,94 @@ public class ReportActivity extends AppCompatActivity {
             }
         });
 
+        //setup the google map api
+        createLocationRequest();
+        createGoogleMapAPI();
+        mGoogleApiClient.connect();
     }
+
+
+    protected void createLocationRequest() {
+        locationRequest = new LocationRequest();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    //------------------------------------------Google API methods for location services----------------------------------------------
+    //------------------------------------------Google API methods for location services----------------------------------------------
+    //------------------------------------------Google API methods for location services----------------------------------------------
+
+    private void createGoogleMapAPI() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    protected void stopLocationUpdates() {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    }
+
+
+    protected void startLocationUpdates() {
+        try{
+            LocationServices.FusedLocationApi.requestLocationUpdates(
+                    mGoogleApiClient, locationRequest, this);
+        }catch(SecurityException e){
+            Toast.makeText(this, "Location services not enabled", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        ensureLocationServicesOn();
+        Toast.makeText(this, "Connected to Location services", Toast.LENGTH_SHORT).show();
+        try{
+            lastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                    mGoogleApiClient);
+        }catch(SecurityException e){
+            Toast.makeText(this, "Location services not enabled", Toast.LENGTH_SHORT).show();
+        }
+
+
+        //starts checking for location updates
+        startLocationUpdates();
+    }
+
+    private boolean ensureLocationServicesOn() {
+        if (!((LocationManager) getSystemService(Context.LOCATION_SERVICE))
+                .isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+
+        } else if (lastLocation == null) {
+            Toast.makeText(this, "No Location please wait", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult conRes){
+        Toast.makeText(this, "Connection failed!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int something){
+        Toast.makeText(this, "Connection suspended", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onLocationChanged(Location location){
+        lastLocation = location;
+    }
+
+    //--------------------------------End of Google API services methods--------------------------------
+    //--------------------------------End of Google API services methods--------------------------------
+    //--------------------------------End of Google API services methods--------------------------------
     /**
      * Safely creates a new Camera instance and assigns it to the camera field
      * @return
@@ -79,9 +185,14 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     /**
-     * Called when the take picture button has been called
+     * Called when the take picture button has been pressed
      */
     public void takePicture(){
+        if( lastLocation == null){
+            Toast.makeText(this, "No Location please wait", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         camera.takePicture(null,null,jpegCallback);
     }
 
@@ -91,8 +202,9 @@ public class ReportActivity extends AppCompatActivity {
     public void pictureTaken(){
         Intent intent = new Intent(ReportActivity.this,ReportFormActivity.class );
         intent.putExtra("IMAGE_PATH", imagePath);
+        com.vuw.project1.riverwatch.Report_functionality.BasicLocation location = new com.vuw.project1.riverwatch.Report_functionality.BasicLocation(this.lastLocation.getLatitude(),this.lastLocation.getLongitude());;
+        intent.putExtra("LOCATION",location.toJson());
         startActivity(intent);
-
     }
     /*
         Anonymous inner class used in takePicture to control the callback when the image has been succesfully saved and the application can move onto the ReportFormActivity
