@@ -8,4 +8,38 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Text" parent="android:style/TextAppearance">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:typeface">sans</item>
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="Text.White">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/transparent_white</item>
+    </style>
+
+    <style name="Text.White.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Text.White.SmallMed">
+        <item name="android:textSize">@dimen/text_size_smallmed</item>
+    </style>
+
+    <style name="Text.White.Medium">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+
+    <style name="Button" parent="Text.White.Small">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/button</item>
+        <item name="android:layout_marginLeft">@dimen/common_margin_half</item>
+        <item name="android:layout_marginRight">@dimen/common_margin_half</item>
+        <item name="android:layout_marginTop">@dimen/common_margin_quarter</item>
+        <item name="android:layout_marginBottom">@dimen/common_margin_quarter</item>
+        <item name="android:gravity">center</item>
+    </style>
 </resources>
