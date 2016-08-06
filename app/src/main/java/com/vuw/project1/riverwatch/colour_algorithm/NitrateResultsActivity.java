@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,7 +13,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.ui.MainActivity;
 import com.vuw.project1.riverwatch.ui.NitrateActivity;
+
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class NitrateResultsActivity extends AppCompatActivity {
 
@@ -23,40 +28,51 @@ public class NitrateResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nitrate_results);
         Log.d(TAG, "Got to Intent");
-        TextView nitrateView = (TextView) findViewById(R.id.textView);
-        TextView nitriteView = (TextView) findViewById(R.id.textView2);
+
+        TextView nitrateView = (TextView) findViewById(R.id.nitrateTextView);
+        TextView nitriteView = (TextView) findViewById(R.id.nitriteTextView);
+        ImageView leftView = (ImageView) findViewById(R.id.nitrateImageView);
+        ImageView rightView = (ImageView) findViewById(R.id.nitriteImageView);
 
         Intent intent = getIntent();
         final Double nitrate = intent.getExtras().getDouble("nitrate");
         final Double nitrite = intent.getExtras().getDouble("nitrite");
 
+        // set image views to left and right square of strip
         Bitmap left = (Bitmap) intent.getParcelableExtra("left");
-        Bitmap middle = (Bitmap) intent.getParcelableExtra("middle");
         Bitmap right = (Bitmap) intent.getParcelableExtra("right");
-
-        ImageView leftView = (ImageView) findViewById(R.id.leftSection);
-        ImageView middleView = (ImageView) findViewById(R.id.middleSection);
-        ImageView rightView = (ImageView) findViewById(R.id.rightSection);
-
         leftView.setImageBitmap(left);
-        middleView.setImageBitmap(middle);
         rightView.setImageBitmap(right);
 
-        nitrateView.setText("Nitrate: " + nitrate);
-        nitriteView.setText("Nitrite: " + nitrite);
+        // set text views to nitrite and nitrate levels
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        nitrateView.setText("Nitrate: " + df.format(nitrate));
+        nitriteView.setText("Nitrite: " + df.format(nitrite));
+        Button button = (Button) findViewById(R.id.finishButton);
 
-        Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        EditText editText = (EditText) findViewById(R.id.editText);
+                        EditText editText = (EditText) findViewById(R.id.infoEditText);
                         String info = editText.getText().toString();
                         NitrateResult result = new NitrateResult(nitrate, nitrite, info);
-                        Intent intent = new Intent(NitrateResultsActivity.this, NitrateActivity.class);
+
+                        //TODO: add code to add this result to history
+
+                        Intent intent = new Intent(NitrateResultsActivity.this, MainActivity.class);
                         startActivity(intent);
                     }
                 }
         );
     }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(NitrateResultsActivity.this, CameraActivity.class);
+        startActivity(intent);
+    }
+
 }

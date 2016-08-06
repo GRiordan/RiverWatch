@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.colour_algorithm.CameraActivity;
 
 public class MainActivity extends AppCompatActivity {
     private Button reportButton;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         nitrateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, NitrateActivity.class);
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
                 startActivity(intent);
             }
         });
