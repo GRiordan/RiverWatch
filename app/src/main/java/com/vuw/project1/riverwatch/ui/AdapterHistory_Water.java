@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.objects.Water_Object;
+import com.vuw.project1.riverwatch.objects.Water_Report;
 
 import java.util.ArrayList;
 
 public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Water.ShowViewHolder> {
     private Context mContext;
-    private ArrayList<Water_Object> mContent;
+    private ArrayList<Water_Report> mContent;
     private Callback mCallback;
-    public AdapterHistory_Water(Context mContext, ArrayList<Water_Object> mContent, Callback mCallback) {
+    public AdapterHistory_Water(Context mContext, ArrayList<Water_Report> mContent, Callback mCallback) {
         this.mContext = mContext;
         this.mContent = mContent;
         this.mCallback = mCallback;
@@ -30,7 +30,7 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
     }
     @Override
     public void onBindViewHolder(final ShowViewHolder viewHolder, int position) {
-        final Water_Object obj = mContent.get(position);
+        final Water_Report obj = mContent.get(position);
         viewHolder.title.setText(obj.name);
         viewHolder.location.setText(obj.location);
         viewHolder.date.setText(obj.date);
@@ -68,6 +68,6 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
         }
     }
     interface Callback {
-        void open(Water_Object obj);
+        void open(Water_Report obj);
     }
 }

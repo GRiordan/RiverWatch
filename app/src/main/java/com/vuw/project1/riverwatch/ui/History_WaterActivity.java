@@ -5,11 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Toast;
 
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.objects.Nitrate_Object;
-import com.vuw.project1.riverwatch.objects.Water_Object;
+import com.vuw.project1.riverwatch.objects.Water_Report;
 
 import java.util.ArrayList;
 
@@ -23,10 +21,10 @@ public class History_WaterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_list);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        ArrayList<Water_Object> waterTests = addDummyData();
+        ArrayList<Water_Report> waterTests = addDummyData();
         mAdapter = new AdapterHistory_Water(this, waterTests, new AdapterHistory_Water.Callback() {
             @Override
-            public void open(Water_Object obj) {
+            public void open(Water_Report obj) {
                 Intent intent = new Intent(History_WaterActivity.this, History_WaterActivity_Item.class);
                 intent.putExtra("name", obj.name);
                 intent.putExtra("location", obj.location);
@@ -46,10 +44,10 @@ public class History_WaterActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<Water_Object> addDummyData(){
-        ArrayList<Water_Object> waterTests = new ArrayList<>();
+    public ArrayList<Water_Report> addDummyData(){
+        ArrayList<Water_Report> waterTests = new ArrayList<>();
         for(int i = 0; i < 10; i++){
-            waterTests.add(new Water_Object(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "http://vignette1.wikia.nocookie.net/clubpenguin/images/a/a7/Water_Droplet_Pin.PNG/revision/latest?cb=20150314141114", 25, 7, 10, 10));
+            waterTests.add(new Water_Report(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "http://vignette1.wikia.nocookie.net/clubpenguin/images/a/a7/Water_Droplet_Pin.PNG/revision/latest?cb=20150314141114", 25, 7, 10, 10));
         }
         return waterTests;
     }
