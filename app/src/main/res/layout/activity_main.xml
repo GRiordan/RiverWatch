@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="Incident Report"
             android:textColor="@color/white"
-            android:background="@color/river_blue_transparent"
+            android:background="@drawable/button"
             android:padding="20dp"
             android:layout_margin="10dp"
             android:id="@+id/reportButton"/>
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:text="Nitrate Test"
             android:textColor="@color/white"
-            android:background="@color/river_blue_transparent"
+            android:background="@drawable/button"
             android:padding="20dp"
             android:layout_margin="10dp"
             android:id="@+id/nitrateButton" />
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:text="Bluetooth"
             android:textColor="@color/white"
-            android:background="@color/river_blue_transparent"
+            android:background="@drawable/button"
             android:padding="20dp"
             android:layout_margin="10dp"
             android:id="@+id/bluetoothButton" />
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:text="History"
             android:textColor="@color/white"
-            android:background="@color/river_blue_transparent"
+            android:background="@drawable/button"
             android:padding="20dp"
             android:layout_margin="10dp"
             android:id="@+id/historyButton" />
