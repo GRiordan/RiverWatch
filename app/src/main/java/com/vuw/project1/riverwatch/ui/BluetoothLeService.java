@@ -324,9 +324,8 @@ public class BluetoothLeService extends Service {
 //        }
     }
 
-
-
     private final IBinder mBinder = new LocalBinder();
+
     public class LocalBinder extends Binder{
         public BluetoothLeService getService(){
             return BluetoothLeService.this;
@@ -542,9 +541,5 @@ public class BluetoothLeService extends Service {
         return mBluetoothGatt.getServices();
     }
 
-    public BluetoothAdapter getmBluetootAdapter(){
-        return this.mBluetoothAdapter;
-    }
-    
     
 }

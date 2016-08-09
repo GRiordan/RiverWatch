@@ -42,7 +42,6 @@ public class BluetoothActivity extends Activity {
     private EditText serialSendText;
     private TextView serialReceivedText;
 
-    private ServiceConnection serviceConnection;
     private BluetoothAdapter mBluetoothAdapter;
 
     private final static String TAG = BluetoothActivity.class.getSimpleName();
@@ -52,6 +51,11 @@ public class BluetoothActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
 
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
         final Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
 
         if(!initiate())
@@ -60,15 +64,17 @@ public class BluetoothActivity extends Activity {
                     Toast.LENGTH_SHORT).show();
             finish();
         }
+        else{
+            System.out.println("SUCCESS");
+        }
 
 
-        serviceConnection = createServiceConnection();
         System.out.println(gattServiceIntent);
-        System.out.println(serviceConnection);
+        System.out.println(mConnection);
         System.out.println(mBluetoothLeService);
         System.out.println(Context.BIND_AUTO_CREATE);
 
-        if(getApplicationContext().bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)){
+        if(bindService(gattServiceIntent, mConnection, Context.BIND_AUTO_CREATE)){
             System.out.print("GOOD\n");
         }
         else{
@@ -148,7 +154,7 @@ public class BluetoothActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        onDestroyProcess(serviceConnection);														//onDestroy Process by BlunoLibrary
+        onDestroyProcess(mConnection);														//onDestroy Process by BlunoLibrary
     }
 
     public void onConectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
@@ -182,26 +188,25 @@ public class BluetoothActivity extends Activity {
 
 
     // Code to manage Service lifecycle.
-    private ServiceConnection createServiceConnection() {
-        System.out.print("CREATING SERVICE CONNECTION\n");
-        return new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder service) {
-                System.out.println("mServiceConnection onServiceConnected");
-                mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
-                if (!mBluetoothLeService.initialize()) {
-                    Log.e(TAG, "Unable to initialize Bluetooth");
-                    finish();
-                }
-            }
+    private ServiceConnection mConnection = new ServiceConnection() {
 
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-                System.out.println("mServiceConnection onServiceDisconnected");
-                mBluetoothLeService = null;
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder service) {
+            System.out.println("mServiceConnection onServiceConnected");
+            mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+            if (!mBluetoothLeService.initialize()) {
+                Log.e(TAG, "Unable to initialize Bluetooth");
+                finish();
             }
-        };
-    }
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            System.out.println("mServiceConnection onServiceDisconnected");
+            mBluetoothLeService = null;
+        }
+
+    };
 
 
 
