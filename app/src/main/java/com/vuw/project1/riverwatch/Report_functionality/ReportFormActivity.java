@@ -35,7 +35,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     private String imagePath;
     private Location location;
     private GoogleApiClient mGoogleApiClient;
-    GoogleMap map;
+    private GoogleMap map;
 
     //public static final String IMAGE_PATH = "extra photo path";
     @Override
@@ -59,6 +59,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         } else {
             findViewById(R.id.submission_details_photo).setVisibility(View.GONE);
         }
+
     }
 
 
@@ -67,14 +68,23 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     //------------------------------------------Google API methods for location services----------------------------------------------
 
     public void setupMap(){
-        /*MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map_fragment);*/
-
+            /*MapFragment mapFragment = (MapFragment) getFragmentManager()
+                    .findFragmentById(R.id.map_fragment);*/
+        /*
         MapFragment mapFragment = MapFragment.newInstance();
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.replace(R.id.map_fragment, mapFragment);
         ft.commit();
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this);*/
+
+        MapFragment mMapFragment = MapFragment.newInstance();
+        FragmentTransaction fragmentTransaction =
+                getFragmentManager().beginTransaction();
+        fragmentTransaction.add(R.id.map_fragment, mMapFragment);
+        fragmentTransaction.commit();
+
+        mMapFragment.getMapAsync(this);
+
     }
 
 

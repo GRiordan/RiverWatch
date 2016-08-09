@@ -49,11 +49,13 @@
 
     </ImageView>
 
+
+
+        -->
     <fragment
         android:id="@+id/map_fragment"
         class="com.google.android.gms.maps.MapFragment"
-        xmlns:map="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_weight="0.25"
         android:layout_gravity="center_horizontal"
@@ -61,6 +63,8 @@
         android:layout_marginBottom="@dimen/common_margin_half"
         android:layout_marginLeft="@dimen/common_margin_half"
         android:layout_marginRight="@dimen/common_margin_half">
+        >
+
     </fragment>
 
     <Button

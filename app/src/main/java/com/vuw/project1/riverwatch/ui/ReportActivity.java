@@ -82,6 +82,12 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
+    @Override
+    protected void onStop(){
+        super.onStop();
+        // remove the instance of this Activity once it's moved on to the SubmissionDetails Activity
+        finish();
+    }
     //------------------------------------------Google API methods for location services----------------------------------------------
     //------------------------------------------Google API methods for location services----------------------------------------------
     //------------------------------------------Google API methods for location services----------------------------------------------
@@ -152,6 +158,7 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
     public void onLocationChanged(Location location){
         lastLocation = location;
     }
+
 
     //--------------------------------End of Google API services methods--------------------------------
     //--------------------------------End of Google API services methods--------------------------------
