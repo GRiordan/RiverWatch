@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 
 import java.util.ArrayList;
@@ -21,18 +22,19 @@ public class History_NitrateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_list);
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
-        ArrayList<Nitrate_Report> nitrateTests = addDummyData();
+        ArrayList<Nitrate_Report> nitrateTests = new Database(this).getNitrateReportList();
         mAdapter = new AdapterHistory_Nitrate(this, nitrateTests, new AdapterHistory_Nitrate.Callback() {
             @Override
             public void open(Nitrate_Report obj) {
                 Intent intent = new Intent(History_NitrateActivity.this, History_NitrateActivity_Item.class);
-                intent.putExtra("name", obj.name);
-                intent.putExtra("location", obj.location);
-                intent.putExtra("date", obj.date);
-                intent.putExtra("description", obj.description);
-                intent.putExtra("image", obj.image);
-                intent.putExtra("nitrate", obj.nitrate);
-                intent.putExtra("nitrite", obj.nitrite);
+                intent.putExtra("id", obj.id);
+//                intent.putExtra("name", obj.name);
+//                intent.putExtra("location", obj.location);
+//                intent.putExtra("date", obj.date);
+//                intent.putExtra("description", obj.description);
+//                intent.putExtra("image", obj.image);
+//                intent.putExtra("nitrate", obj.nitrate);
+//                intent.putExtra("nitrite", obj.nitrite);
                 startActivity(intent);
             }
         });
