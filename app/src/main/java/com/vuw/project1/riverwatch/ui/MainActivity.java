@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.bluetooth.MainBluetoothActivity;
 
 public class MainActivity extends AppCompatActivity {
     private Button reportButton;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         bluetoothButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, BluetoothActivity.class);
+                Intent intent = new Intent(MainActivity.this, MainBluetoothActivity.class);
                 startActivity(intent);
             }
         });

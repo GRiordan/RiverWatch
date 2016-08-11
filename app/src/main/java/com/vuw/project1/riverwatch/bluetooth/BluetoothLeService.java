@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.vuw.project1.riverwatch.ui;
+package com.vuw.project1.riverwatch.bluetooth;
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
@@ -324,17 +324,14 @@ public class BluetoothLeService extends Service {
 //        }
     }
 
-    private final IBinder mBinder = new LocalBinder();
-
-    public class LocalBinder extends Binder{
-        public BluetoothLeService getService(){
+    public class LocalBinder extends Binder {
+        BluetoothLeService getService() {
             return BluetoothLeService.this;
         }
     }
 
+    @Override
     public IBinder onBind(Intent intent) {
-        System.out.print("BINDING\n");
-
         return mBinder;
     }
 
@@ -347,13 +344,14 @@ public class BluetoothLeService extends Service {
         return super.onUnbind(intent);
     }
 
+    private final IBinder mBinder = new LocalBinder();
+
     /**
      * Initializes a reference to the local Bluetooth adapter.
      *
      * @return Return true if the initialization is successful.
      */
     public boolean initialize() {
-        System.out.println("INITIALISING");
         // For API level 18 and above, get a reference to BluetoothAdapter through
         // BluetoothManager.
     	System.out.println("BluetoothLeService initialize"+mBluetoothManager);
@@ -432,7 +430,7 @@ public class BluetoothLeService extends Service {
     public void disconnect() {
     	System.out.println("BluetoothLeService disconnect");
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized1");
+            Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
         mBluetoothGatt.disconnect();
@@ -460,7 +458,7 @@ public class BluetoothLeService extends Service {
      */
     public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized2");
+            Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
         mBluetoothGatt.readCharacteristic(characteristic);
@@ -476,7 +474,7 @@ public class BluetoothLeService extends Service {
      */
     public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized3");
+            Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
         
@@ -511,7 +509,7 @@ public class BluetoothLeService extends Service {
     public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
                                               boolean enabled) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized4");
+            Log.w(TAG, "BluetoothAdapter not initialized");
             return;
         }
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
@@ -540,6 +538,6 @@ public class BluetoothLeService extends Service {
 
         return mBluetoothGatt.getServices();
     }
-
+    
     
 }

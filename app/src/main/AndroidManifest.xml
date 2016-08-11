@@ -28,9 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".bluetooth.MainBluetoothActivity" />
         <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.NitrateActivity" />
-        <activity android:name=".ui.BluetoothActivity" />
         <activity android:name=".ui.HistoryActivity" />
         <activity android:name=".ui.History_IncidentActivity" />
         <activity android:name=".ui.History_IncidentActivity_Item" />
@@ -44,12 +44,11 @@
             android:screenOrientation="portrait" />
         <activity android:name=".Report_functionality.ReportFormActivity"></activity>
         <activity android:name=".colour_algorithm.NitrateResultsActivity"></activity>
+
+        <service android:name="com.vuw.project1.riverwatch.bluetooth.BluetoothLeService" android:enabled="true"/>
+
     </application>
 
-    <service
-        android:name=".ui.BluetoothLeService"
-        android:label="bluetooth_le_service"
-        android:enabled="true">
-    </service>
+
 
 </manifest>
