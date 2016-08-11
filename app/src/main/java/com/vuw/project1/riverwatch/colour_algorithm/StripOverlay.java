@@ -66,7 +66,6 @@ public class StripOverlay extends View {
         middleWhite.right = width / 2 + stripHeight;
         middleWhite.bottom = 6 * stripHeight;
         canvas.drawRect(middleWhite, p);
-
         middleCaptureRectangle = middleWhite;
 
         Rect leftwhite = new Rect();
