@@ -97,6 +97,43 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+
+    /**
+     * This method is called by camera activity when the phone
+     * changes orientation.
+     * */
+    public void rotated(String orientation ) {
+        if(camera == null ){
+            return;
+        }
+        final Camera.Parameters parameters = camera.getParameters();
+        final Camera.Size previewSize = getBestPreviewSize(parameters);
+        parameters.setPreviewSize(previewSize.width, previewSize.height);
+
+        //phone is landscape left
+        if (orientation.equals("Landscape") ) {
+            parameters.setRotation(0);
+        }
+
+        //phone is upright
+        if (orientation.equals("Portrait")) {
+            parameters.setRotation(90);
+        }
+
+        //phone is landscape right
+        if (orientation.equals("Landscape_Right") ) {
+            parameters.setRotation(180);
+        }
+
+        //phone is upside down
+        if (orientation.equals("Portrait_Down") ) {
+            parameters.setRotation(270);
+        }
+
+        camera.setParameters(parameters);
+        camera.startPreview();
+    }
+
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (camera != null) {

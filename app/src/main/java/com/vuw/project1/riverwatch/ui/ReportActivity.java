@@ -3,6 +3,7 @@ package com.vuw.project1.riverwatch.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
@@ -11,10 +12,17 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.Interpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.hardware.Camera;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -41,6 +49,11 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
     private String imagePath;
 
 
+    private OrientationEventListener mOrientationListener;
+    private int prevRotation;
+    private int currentRotation = 90;
+    private String phoneOrientation;
+
     private GoogleApiClient mGoogleApiClient;
     private android.location.Location lastLocation;
     private LocationRequest locationRequest;
@@ -65,6 +78,18 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
             @Override
             public void onClick(View v) {
                 takePicture();
+            }
+        });
+
+        //Setup orientation listener
+        final FrameLayout layout = (FrameLayout)findViewById(R.id.activity_report);
+
+        ViewTreeObserver vto = layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                layout.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                initOrientationListener();
             }
         });
 
@@ -200,6 +225,7 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
             return;
         }
 
+        mOrientationListener.disable();
         camera.takePicture(null,null,jpegCallback);
     }
 
@@ -234,7 +260,137 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
         this.imagePath = file.getAbsolutePath();
     }
 
+    private void initOrientationListener(){
+        mOrientationListener = new OrientationEventListener(this,
+                SensorManager.SENSOR_DELAY_NORMAL) {
+            @Override
+            public void onOrientationChanged(int orientation) {
+                setOrientation(orientation);
+            }
+        };
 
+        if (mOrientationListener.canDetectOrientation() == true) {
+            mOrientationListener.enable();
+        } else {
+            mOrientationListener.disable();
+        }
+    }
+
+    private void setOrientation(int orientationDegrees) {
+        int tempOrientation = currentRotation;
+
+        int sensitivity = 10;//degrees of orientation to start change
+
+        //natural device orientation
+        if(orientationDegrees > 360-sensitivity || orientationDegrees <= sensitivity ){
+            currentRotation = 90;
+            phoneOrientation = "Portrait";
+        }
+        //on its side to the right
+        else if(orientationDegrees > 90 - sensitivity && orientationDegrees <= 90 + sensitivity){
+            currentRotation = 180;
+            phoneOrientation = "Landscape_Right";
+        }
+        //upside down
+        else if(orientationDegrees > 180 - sensitivity && orientationDegrees <= 180 + sensitivity){
+            currentRotation = 270;
+            phoneOrientation = "Portrait_Down";
+        }
+        //on its side to the left
+        else if(orientationDegrees > 270 - sensitivity && orientationDegrees <= 270 + sensitivity){
+            currentRotation = 0;
+            phoneOrientation = "Landscape";
+        }
+
+        //if the orientation has changed update the camera preview and animate button
+        if(tempOrientation != currentRotation){
+            prevRotation = tempOrientation;
+            camPreview.rotated(phoneOrientation);
+            animate();
+        }
+    }
+
+    private void animate() {
+        if(prevRotation == currentRotation)return;
+        final Button camButton = (Button) findViewById(R.id.button_capture);
+
+        RotateAnimation rotate =  getButtonOrientation(prevRotation, currentRotation);
+        rotate.setDuration(150);
+
+        camButton.startAnimation(rotate);
+        rotate.setFillAfter(true);
+    }
+
+    public RotateAnimation getButtonOrientation(int oldOr, int newOr){
+        boolean reverse = false;
+
+        int from = 0;
+        int to = 0;
+
+        //portrait to landscape
+        if(oldOr == 90 && newOr == 0){
+            from = 0;
+            to = 90;
+        }
+        //landscape to portrait
+        if(oldOr == 0  && newOr == 90){
+            from = 0;
+            to = 90;
+            reverse = true;
+
+        }
+        //portrait to right landscape
+        if(oldOr == 90 && newOr == 180){
+            from = 270;
+            to = 360;
+            reverse = true;
+        }
+        //right landscape to portrait
+        if(oldOr == 180 && newOr == 90){
+            from = 270;
+            to = 360;
+        }
+
+        //right landscape to upside down
+        if(oldOr == 180 && newOr == 270){
+            from = 270;
+            to = 180;
+        }
+
+        //upside down to right landscape
+        if(oldOr == 270 && newOr == 180){
+            from = 270;
+            to = 180;
+            reverse = true;
+        }
+
+        //upside down to right landscape
+        if(oldOr == 270 && newOr == 0){
+            from = 180;
+            to = 90;
+        }
+
+        //upside down to right landscape
+        if(oldOr == 0 && newOr == 270){
+            from = 180;
+            to = 90;
+            reverse = true;
+        }
+
+        RotateAnimation rotate = new RotateAnimation(from, to, Animation.RELATIVE_TO_SELF, 0.5f,  Animation.RELATIVE_TO_SELF, 0.5f);
+
+        if(reverse){
+            rotate.setInterpolator(new ReverseInterpolator());
+        }
+        return rotate;
+    }
+
+    class ReverseInterpolator implements Interpolator {
+        @Override
+        public float getInterpolation(float paramFloat) {
+            return Math.abs(paramFloat -1f);
+        }
+    }
     /**
      * Class to save image data to the SD card in the background
      **/
