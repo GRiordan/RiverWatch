@@ -213,7 +213,7 @@ public class Database extends SQLiteAssetHelper {
 
     public Water_Report getWaterReportById(long id){
         Water_Report waterReport = null;
-        Cursor cursor = getReadableDatabase().query("nitrate_report", null, "_id = ?", new String[]{Long.toString(id)}, null, null, null);
+        Cursor cursor = getReadableDatabase().query("water_report", null, "_id = ?", new String[]{Long.toString(id)}, null, null, null);
         if(cursor != null){
             if (cursor.moveToFirst()) {
                 do {
