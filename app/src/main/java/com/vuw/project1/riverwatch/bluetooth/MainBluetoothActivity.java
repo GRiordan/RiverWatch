@@ -5,38 +5,73 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.vuw.project1.riverwatch.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
+
 public class MainBluetoothActivity extends BlunoLibrary {
 	private Button buttonScan;
-	private Button buttonSerialSend;
-	private EditText serialSendText;
-	private TextView serialReceivedText;
-	
-	@Override
+	private Button buttonTest;
+	private Button buttonRetrieve;
+	private Button buttonStatus;
+
+    private TextView serialReceivedText;
+
+    private String allData;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetooth);
         onCreateProcess();														//onCreate Process by BlunoLibrary
 
-
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
 
         serialReceivedText=(TextView) findViewById(R.id.serialReveicedText);	//initial the EditText of the received data
-        serialSendText=(EditText) findViewById(R.id.serialSendText);			//initial the EditText of the sending data
 
-        buttonSerialSend = (Button) findViewById(R.id.buttonSerialSend);		//initial the button for sending the data
-        buttonSerialSend.setOnClickListener(new OnClickListener() {
+        buttonTest = (Button) findViewById(R.id.buttonTest);		//initial the button for sending the data
+        buttonTest.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 
-				serialSend(serialSendText.getText().toString());				//send the data to the BLUNO
+				//serialSend(serialSendText.getText().toString());				//send the data to the BLUNO
+                serialReceivedText.setText("");
+				findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+				serialSend("Test");
+
+			}
+		});
+
+		buttonRetrieve = (Button) findViewById(R.id.buttonRetrieve);		//initial the button for sending the data
+		buttonRetrieve.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+                serialReceivedText.setText("");
+                findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+				serialSend("RetrieveData");
+			}
+		});
+
+		buttonStatus = (Button) findViewById(R.id.buttonStatus);		//initial the button for sending the data
+		buttonStatus.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+
+                serialReceivedText.setText("");
+                findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+				serialSend("Status");
 			}
 		});
 
@@ -84,10 +119,13 @@ public class MainBluetoothActivity extends BlunoLibrary {
     }
 
 	@Override
-	public void onConectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
+	public void onConnectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
 		switch (theConnectionState) {											//Four connection state
 		case isConnected:
 			buttonScan.setText("Connected");
+            buttonStatus.setEnabled(true);
+            buttonRetrieve.setEnabled(true);
+            buttonTest.setEnabled(true);
 			break;
 		case isConnecting:
 			buttonScan.setText("Connecting");
@@ -107,11 +145,52 @@ public class MainBluetoothActivity extends BlunoLibrary {
 	}
 
 	@Override
-	public void onSerialReceived(String theString) {							//Once connection data received, this function will be called
-		// TODO Auto-generated method stub
-		serialReceivedText.append(theString);							//append the text into the EditText
-		//The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
-		((ScrollView)serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
-	}
+	public void onSerialReceived(String data) {                            //Once connection data received, this function will be called
+
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+        // TODO Auto-generated method stub
+        //serialReceivedText.append(theString);							//append the text into the EditText
+        //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
+        //((ScrollView)serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
+
+        allData += data;
+
+        if (!allData.contains("[dataend]")) {
+            //Log.i(TAG, "Current Message:  "+message);
+        } else {
+            final JSONObject json = WaterQualityCommands.formatRetiredData(allData);
+
+            if (json != null) {
+                try {
+                    //Log.i(TAG, "Formatted message  " + json.toString());
+
+                    String status = json.getString("status");
+
+                    switch (status) {
+                        case "complete":
+                            //Handles on receiving data.
+
+                            List<Sample> samples = WaterQualityCommands.makeReportList(json);
+                            break;
+                        default:
+                            break;
+
+                    }
+                } catch (JSONException exception) {
+                    //Log.e(TAG, exception.toString());
+                    System.out.println("The Water Quality device is returning poorly formatted data.");
+                }
+
+            }
+        }
+    }
+
+    private void parseData(){
+
+        if(true){
+
+        }
+
+    }
 
 }

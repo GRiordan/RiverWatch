@@ -35,14 +35,9 @@ public abstract  class BlunoLibrary  extends Activity {
 
 	private Context mainContext=this;
 
-	
-//	public BlunoLibrary(Context theContext) {
-//		
-//		mainContext=theContext;
-//	}
-
-	public abstract void onConectionStateChange(connectionStateEnum theconnectionStateEnum);
+	public abstract void onConnectionStateChange(connectionStateEnum theconnectionStateEnum);
 	public abstract void onSerialReceived(String theString);
+
 	public void serialSend(String theString){
 		if (mConnectionState == connectionStateEnum.isConnected) {
 			mSCharacteristic.setValue(theString);
@@ -55,8 +50,6 @@ public abstract  class BlunoLibrary  extends Activity {
 	
 	
 	private String mBaudrateBuffer = "AT+CURRUART="+mBaudrate+"\r\n";
-	
-//	byte[] mBaudrateBuffer={0x32,0x00,(byte) (mBaudrate & 0xFF),(byte) ((mBaudrate>>8) & 0xFF),(byte) ((mBaudrate>>16) & 0xFF),0x00};;
 	
 	
 	public void serialBegin(int baud){
@@ -95,7 +88,7 @@ public abstract  class BlunoLibrary  extends Activity {
 		public void run() {
         	if(mConnectionState== connectionStateEnum.isConnecting)
 			mConnectionState= connectionStateEnum.isToScan;
-			onConectionStateChange(mConnectionState);
+			onConnectionStateChange(mConnectionState);
 			mBluetoothLeService.close();
 		}};
 		
@@ -105,7 +98,7 @@ public abstract  class BlunoLibrary  extends Activity {
 		public void run() {
         	if(mConnectionState== connectionStateEnum.isDisconnecting)
 			mConnectionState= connectionStateEnum.isToScan;
-			onConectionStateChange(mConnectionState);
+			onConnectionStateChange(mConnectionState);
 			mBluetoothLeService.close();
 		}};
     
@@ -145,7 +138,7 @@ public abstract  class BlunoLibrary  extends Activity {
 		        if(device.getName()==null || device.getAddress()==null)
 		        {
 		        	mConnectionState= connectionStateEnum.isToScan;
-		        	onConectionStateChange(mConnectionState);
+		        	onConnectionStateChange(mConnectionState);
 		        }
 		        else{
 
@@ -159,13 +152,13 @@ public abstract  class BlunoLibrary  extends Activity {
 		        	if (mBluetoothLeService.connect(mDeviceAddress)) {
 				        Log.d(TAG, "Connect request success");
 			        	mConnectionState= connectionStateEnum.isConnecting;
-			        	onConectionStateChange(mConnectionState);
+			        	onConnectionStateChange(mConnectionState);
 			            mHandler.postDelayed(mConnectingOverTimeRunnable, 10000);
 		        	}
 			        else {
 				        Log.d(TAG, "Connect request fail");
 			        	mConnectionState= connectionStateEnum.isToScan;
-			        	onConectionStateChange(mConnectionState);
+			        	onConnectionStateChange(mConnectionState);
 					}
 		        }
 			}
@@ -177,7 +170,7 @@ public abstract  class BlunoLibrary  extends Activity {
 				System.out.println("mBluetoothAdapter.stopLeScan");
 
 				mConnectionState = connectionStateEnum.isToScan;
-				onConectionStateChange(mConnectionState);
+				onConnectionStateChange(mConnectionState);
 				mScanDeviceDialog.dismiss();
 
 				scanLeDevice(false);
@@ -214,14 +207,12 @@ public abstract  class BlunoLibrary  extends Activity {
 		mainContext.unregisterReceiver(mGattUpdateReceiver);
 		mLeDeviceListAdapter.clear();
     	mConnectionState= connectionStateEnum.isToScan;
-    	onConectionStateChange(mConnectionState);
+    	onConnectionStateChange(mConnectionState);
 		mScanDeviceDialog.dismiss();
 		if(mBluetoothLeService!=null)
 		{
 			mBluetoothLeService.disconnect();
             mHandler.postDelayed(mDisonnectingOverTimeRunnable, 10000);
-
-//			mBluetoothLeService.close();
 		}
 		mSCharacteristic=null;
 
@@ -232,8 +223,6 @@ public abstract  class BlunoLibrary  extends Activity {
 		System.out.println("MiUnoActivity onStop");
 		if(mBluetoothLeService!=null)
 		{
-//			mBluetoothLeService.disconnect();
-//            mHandler.postDelayed(mDisonnectingOverTimeRunnable, 10000);
         	mHandler.removeCallbacks(mDisonnectingOverTimeRunnable);
 			mBluetoothLeService.close();
 		}
@@ -296,7 +285,7 @@ public abstract  class BlunoLibrary  extends Activity {
             } else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
                 mConnected = false;
                 mConnectionState = connectionStateEnum.isToScan;
-                onConectionStateChange(mConnectionState);
+                onConnectionStateChange(mConnectionState);
             	mHandler.removeCallbacks(mDisonnectingOverTimeRunnable);
             	mBluetoothLeService.close();
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
@@ -319,13 +308,13 @@ public abstract  class BlunoLibrary  extends Activity {
 						mSCharacteristic=mSerialPortCharacteristic;
 						mBluetoothLeService.setCharacteristicNotification(mSCharacteristic, true);
 						mConnectionState = connectionStateEnum.isConnected;
-						onConectionStateChange(mConnectionState);
+						onConnectionStateChange(mConnectionState);
 						
 					}
             		else {
             			Toast.makeText(mainContext, "Please select DFRobot devices", Toast.LENGTH_SHORT).show();
                         mConnectionState = connectionStateEnum.isToScan;
-                        onConectionStateChange(mConnectionState);
+                        onConnectionStateChange(mConnectionState);
 					}
             	}
             	else if (mSCharacteristic==mSerialPortCharacteristic) {
@@ -334,12 +323,6 @@ public abstract  class BlunoLibrary  extends Activity {
             	
             
             	System.out.println("displayData "+intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
-            	
-//            	mPlainProtocol.mReceivedframe.append(intent.getStringExtra(BluetoothLeService.EXTRA_DATA)) ;
-//            	System.out.print("mPlainProtocol.mReceivedframe:");
-//            	System.out.println(mPlainProtocol.mReceivedframe.toString());
-
-            	
             }
         }
     };
@@ -349,13 +332,13 @@ public abstract  class BlunoLibrary  extends Activity {
     	switch (mConnectionState) {
 		case isNull:
 			mConnectionState= connectionStateEnum.isScanning;
-			onConectionStateChange(mConnectionState);
+			onConnectionStateChange(mConnectionState);
 			scanLeDevice(true);
 			mScanDeviceDialog.show();
 			break;
 		case isToScan:
 			mConnectionState= connectionStateEnum.isScanning;
-			onConectionStateChange(mConnectionState);
+			onConnectionStateChange(mConnectionState);
 			scanLeDevice(true);
 			mScanDeviceDialog.show();
 			break;
@@ -369,10 +352,8 @@ public abstract  class BlunoLibrary  extends Activity {
 		case isConnected:
 			mBluetoothLeService.disconnect();
             mHandler.postDelayed(mDisonnectingOverTimeRunnable, 10000);
-
-//			mBluetoothLeService.close();
 			mConnectionState= connectionStateEnum.isDisconnecting;
-			onConectionStateChange(mConnectionState);
+			onConnectionStateChange(mConnectionState);
 			break;
 		case isDisconnecting:
 			
@@ -477,12 +458,10 @@ public abstract  class BlunoLibrary  extends Activity {
                 else if(uuid.equals(SerialPortUUID)){
                 	mSerialPortCharacteristic = gattCharacteristic;
                 	System.out.println("mSerialPortCharacteristic  "+mSerialPortCharacteristic.getUuid().toString());
-//                    updateConnectionState(R.string.comm_establish);
                 }
                 else if(uuid.equals(CommandUUID)){
                 	mCommandCharacteristic = gattCharacteristic;
                 	System.out.println("mSerialPortCharacteristic  "+mSerialPortCharacteristic.getUuid().toString());
-//                    updateConnectionState(R.string.comm_establish);
                 }
             }
             mGattCharacteristics.add(charas);
@@ -491,7 +470,7 @@ public abstract  class BlunoLibrary  extends Activity {
         if (mModelNumberCharacteristic==null || mSerialPortCharacteristic==null || mCommandCharacteristic==null) {
 			Toast.makeText(mainContext, "Please select DFRobot devices", Toast.LENGTH_SHORT).show();
             mConnectionState = connectionStateEnum.isToScan;
-            onConectionStateChange(mConnectionState);
+            onConnectionStateChange(mConnectionState);
 		}
         else {
         	mSCharacteristic=mModelNumberCharacteristic;
