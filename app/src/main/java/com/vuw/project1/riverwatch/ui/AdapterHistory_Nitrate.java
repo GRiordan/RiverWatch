@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.objects.Nitrate_Object;
+import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 
 import java.util.ArrayList;
 
 public class AdapterHistory_Nitrate extends RecyclerView.Adapter<AdapterHistory_Nitrate.ShowViewHolder> {
     private Context mContext;
-    private ArrayList<Nitrate_Object> mContent;
+    private ArrayList<Nitrate_Report> mContent;
     private Callback mCallback;
-    public AdapterHistory_Nitrate(Context mContext, ArrayList<Nitrate_Object> mContent, Callback mCallback) {
+    public AdapterHistory_Nitrate(Context mContext, ArrayList<Nitrate_Report> mContent, Callback mCallback) {
         this.mContext = mContext;
         this.mContent = mContent;
         this.mCallback = mCallback;
@@ -30,7 +30,7 @@ public class AdapterHistory_Nitrate extends RecyclerView.Adapter<AdapterHistory_
     }
     @Override
     public void onBindViewHolder(final ShowViewHolder viewHolder, int position) {
-        final Nitrate_Object obj = mContent.get(position);
+        final Nitrate_Report obj = mContent.get(position);
         viewHolder.title.setText(obj.name);
         viewHolder.location.setText(obj.location);
         viewHolder.date.setText(obj.date);
@@ -68,6 +68,6 @@ public class AdapterHistory_Nitrate extends RecyclerView.Adapter<AdapterHistory_
         }
     }
     interface Callback {
-        void open(Nitrate_Object obj);
+        void open(Nitrate_Report obj);
     }
 }

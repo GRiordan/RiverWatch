@@ -11,7 +11,7 @@
     <dimen name="text_size_title">50sp</dimen>
 
     <!-- borders -->
-    <dimen name="corners">3dp</dimen>
+    <dimen name="corners">10dp</dimen>
     <dimen name="stroke_width">1dp</dimen>
 
     <!-- paddings -->
