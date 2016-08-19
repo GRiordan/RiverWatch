@@ -7,6 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/view"
     tools:context="com.vuw.project1.riverwatch.colour_algorithm.NitrateResultsActivity">
 
     <LinearLayout
@@ -21,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
+            android:text="Medium Text"
             android:layout_gravity="center"
             android:id="@+id/nitrateTextView" />
 
@@ -44,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
+            android:text="Medium Text"
             android:layout_gravity="center"
             android:id="@+id/nitriteTextView" />
 
@@ -58,23 +59,44 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nitriteLinearLayout"
-        android:layout_centerHorizontal="true"
+        android:paddingRight="15dp"
         android:hint="info about test"
-        android:id="@+id/infoEditText" />
+        android:id="@+id/infoEditText"
+        android:layout_below="@+id/nitriteLinearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp"
+        android:layout_toStartOf="@+id/doneButton" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/infoEditText">
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:text="Finish"
-            android:id="@+id/finishButton" />
-    </LinearLayout>
+    <Button
+        style="@style/Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finish"
+        android:id="@+id/finishButton"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="53dp"
+        android:layout_alignBaseline="@+id/abortButton"
+        android:layout_alignBottom="@+id/abortButton"
+        android:layout_alignEnd="@+id/doneButton" />
+
+    <Button
+        style="@style/Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Done"
+        android:id="@+id/doneButton"
+        android:layout_alignBottom="@+id/infoEditText"
+        android:layout_alignEnd="@+id/nitriteLinearLayout" />
+
+    <Button
+        style="@style/Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abort"
+        android:id="@+id/abortButton"
+        android:layout_marginBottom="21dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="54dp" />
+
 </RelativeLayout>
