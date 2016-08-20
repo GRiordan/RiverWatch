@@ -37,7 +37,7 @@
     <color name="Nitrate20">#E54278</color>
     <color name="Nitrate5">#EDA6B0</color>
 
-    <color name="button_background">#640094bd</color>
+    <color name="button_background">#c80094bd</color>
     <color name="button_border">#00b1b6</color>
     <color name="button_pressed">#8866CCFF</color>
 </resources>
