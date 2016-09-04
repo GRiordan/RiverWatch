@@ -1,19 +1,18 @@
 package com.vuw.project1.riverwatch.Report_functionality;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-import android.support.v4.app.Fragment;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -25,6 +24,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.objects.Incident_Object;
+import com.vuw.project1.riverwatch.ui.MainActivity;
+
+import java.util.Date;
 
 public class ReportFormActivity extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
@@ -33,7 +36,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     private ImageView image;
     private Button submitButton;
     private String imagePath;
-    private Location location;
+    private BasicLoc location;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap map;
 
@@ -45,7 +48,6 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         description = (EditText) findViewById(R.id.submission_details_description);
         extraDetails = (EditText) findViewById(R.id.submission_details_extra_details);
         location = getLocation();
-
         setupMap();
         buildGoogleApiClient();
 
@@ -60,9 +62,31 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
             findViewById(R.id.submission_details_photo).setVisibility(View.GONE);
         }
 
+        submitButton = (Button) findViewById(R.id.submission_details_control);
+        submitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                submit();
+            }
+        });
+
     }
 
+    public void submit(){
+        //TODO attemmpt to submit to website
 
+        //Save to history
+        String date = new Date(System.currentTimeMillis()).toString();
+        String descriptionText = description.getText().toString();
+        String extraDetailsText = extraDetails.getText().toString();
+        String imagePath = getImagePath();
+        BasicLoc loc = getLocation();
+        Incident_Object currentIncident = new Incident_Object(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
+        Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(ReportFormActivity.this,MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
     //------------------------------------------Google API methods for location services----------------------------------------------
     //------------------------------------------Google API methods for location services----------------------------------------------
     //------------------------------------------Google API methods for location services----------------------------------------------
@@ -129,6 +153,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         LatLng nz = new LatLng(-41.5, 174);
 
         LatLng imageLocation = new LatLng(location.getLatitude(), location.getLongitude());
+        //Toast.makeText(this, imageLocation.toString(), Toast.LENGTH_SHORT).show();
         // animate map camera to where photo taken
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(imageLocation, 3.0f));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(imageLocation, 14), 5000, null);
@@ -145,7 +170,9 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         return getIntent().getExtras().getString("IMAGE_PATH");
     }
 
-    public Location getLocation(){
-        return BasicLocation.fromJson(getIntent().getExtras().getString("LOCATION"));
+    public BasicLoc getLocation(){
+        double latitude = Double.valueOf(getIntent().getExtras().getString("LATITUDE"));
+        double longitude = Double.valueOf(getIntent().getExtras().getString("LONGITUDE"));
+        return new BasicLoc(latitude,longitude);
     }
 }

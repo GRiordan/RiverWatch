@@ -50,8 +50,8 @@
             android:value="@integer/google_play_services_version" />
 
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="myApiKey"/>
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyC0aOMrkPdDhp7jGEQK4Ol1g84WKCNsT-E"/>
         <activity android:name=".colour_algorithm.NitrateResultsActivity"></activity>
     </application>
 

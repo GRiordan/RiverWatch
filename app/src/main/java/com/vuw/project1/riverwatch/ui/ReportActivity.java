@@ -235,8 +235,8 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
     public void pictureTaken(){
         Intent intent = new Intent(ReportActivity.this,ReportFormActivity.class );
         intent.putExtra("IMAGE_PATH", imagePath);
-        com.vuw.project1.riverwatch.Report_functionality.BasicLocation location = new com.vuw.project1.riverwatch.Report_functionality.BasicLocation(this.lastLocation.getLatitude(),this.lastLocation.getLongitude());;
-        intent.putExtra("LOCATION",location.toJson());
+        intent.putExtra("LATITUDE",String.valueOf(lastLocation.getLatitude()));
+        intent.putExtra("LONGITUDE",String.valueOf(lastLocation.getLongitude()));
         startActivity(intent);
     }
     /*
@@ -425,6 +425,7 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
 
         @Override
         public void onPostExecute(Void result) {
+
             pictureTaken();
         }
     }
