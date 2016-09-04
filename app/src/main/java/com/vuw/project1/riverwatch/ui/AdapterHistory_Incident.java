@@ -11,15 +11,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.objects.Incident_Object;
+import com.vuw.project1.riverwatch.objects.Incident_Report;
 
 import java.util.ArrayList;
 
 public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory_Incident.ShowViewHolder> {
     private Context mContext;
-    private ArrayList<Incident_Object> mContent;
+    private ArrayList<Incident_Report> mContent;
     private Callback mCallback;
-    public AdapterHistory_Incident(Context mContext, ArrayList<Incident_Object> mContent, Callback mCallback) {
+    public AdapterHistory_Incident(Context mContext, ArrayList<Incident_Report> mContent, Callback mCallback) {
         this.mContext = mContext;
         this.mContent = mContent;
         this.mCallback = mCallback;
@@ -30,7 +30,7 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
     }
     @Override
     public void onBindViewHolder(final ShowViewHolder viewHolder, int position) {
-        final Incident_Object obj = mContent.get(position);
+        final Incident_Report obj = mContent.get(position);
         viewHolder.title.setText(obj.name);
         viewHolder.location.setText(obj.location);
         viewHolder.date.setText(obj.date);
@@ -68,6 +68,6 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
         }
     }
     interface Callback {
-        void open(Incident_Object obj);
+        void open(Incident_Report obj);
     }
 }
