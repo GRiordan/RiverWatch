@@ -7,69 +7,96 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:id="@+id/view"
     tools:context="com.vuw.project1.riverwatch.colour_algorithm.NitrateResultsActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView2"
-        android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp" />
+        android:id="@+id/nitrateLinearLayout">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Finish"
-        android:id="@+id/button"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/textView2"
-        android:layout_alignStart="@+id/textView2" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Medium Text"
+            android:layout_gravity="center"
+            android:id="@+id/nitrateTextView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="80dp"
+            android:id="@+id/nitrateImageView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_below="@+id/nitrateLinearLayout"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/nitriteLinearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Medium Text"
+            android:layout_gravity="center"
+            android:id="@+id/nitriteTextView" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="83dp"
+            android:id="@+id/nitriteImageView" />
+    </LinearLayout>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_below="@+id/textView2"
-        android:layout_marginTop="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:paddingRight="15dp"
         android:hint="info about test"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/infoEditText"
+        android:layout_below="@+id/nitriteLinearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="37dp"
+        android:layout_toStartOf="@+id/doneButton" />
 
-    <ImageView
+    <Button
+        style="@style/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/leftSection"
-        android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true" />
+        android:text="Finish"
+        android:id="@+id/finishButton"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="53dp"
+        android:layout_alignBaseline="@+id/abortButton"
+        android:layout_alignBottom="@+id/abortButton"
+        android:layout_alignEnd="@+id/doneButton" />
 
-    <ImageView
+    <Button
+        style="@style/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/middleSection"
-        android:layout_below="@+id/leftSection"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp" />
+        android:text="Done"
+        android:id="@+id/doneButton"
+        android:layout_alignBottom="@+id/infoEditText"
+        android:layout_alignEnd="@+id/nitriteLinearLayout" />
 
-    <ImageView
+    <Button
+        style="@style/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/rightSection"
-        android:layout_above="@+id/button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="43dp" />
-
+        android:text="Abort"
+        android:id="@+id/abortButton"
+        android:layout_marginBottom="21dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="54dp" />
 
 </RelativeLayout>

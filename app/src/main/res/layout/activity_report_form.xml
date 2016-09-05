@@ -49,6 +49,24 @@
 
     </ImageView>
 
+
+
+        -->
+    <fragment
+        android:id="@+id/map_fragment"
+        class="com.google.android.gms.maps.MapFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.25"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/common_margin_half"
+        android:layout_marginBottom="@dimen/common_margin_half"
+        android:layout_marginLeft="@dimen/common_margin_half"
+        android:layout_marginRight="@dimen/common_margin_half">
+        >
+
+    </fragment>
+
     <Button
         android:id="@+id/submission_details_control"
         style="@style/Button"

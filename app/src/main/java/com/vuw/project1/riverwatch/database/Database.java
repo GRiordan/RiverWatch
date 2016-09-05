@@ -26,7 +26,7 @@ public class Database extends SQLiteAssetHelper {
 
     public ArrayList<Incident_Report> getIncidentReportList(){
         ArrayList<Incident_Report> incidents = new ArrayList<>();
-        Cursor cursor = getReadableDatabase().query("incident_report", null, null, null, null, null, null);
+        Cursor cursor = getReadableDatabase().query("incident_report", null, null, null, null, null, "_id DESC");
         if(cursor != null){
             if (cursor.moveToFirst()) {
                 do {
@@ -97,7 +97,7 @@ public class Database extends SQLiteAssetHelper {
 
     public ArrayList<Nitrate_Report> getNitrateReportList(){
         ArrayList<Nitrate_Report> nitrateReports = new ArrayList<>();
-        Cursor cursor = getReadableDatabase().query("nitrate_report", null, null, null, null, null, null);
+        Cursor cursor = getReadableDatabase().query("nitrate_report", null, null, null, null, null, "_id DESC");
         if(cursor != null){
             if (cursor.moveToFirst()) {
                 do {
@@ -178,7 +178,7 @@ public class Database extends SQLiteAssetHelper {
 
     public ArrayList<Water_Report> getWaterReportList(){
         ArrayList<Water_Report> waterReports = new ArrayList<>();
-        Cursor cursor = getReadableDatabase().query("water_report", null, null, null, null, null, null);
+        Cursor cursor = getReadableDatabase().query("water_report", null, null, null, null, null, "_id DESC");
         if(cursor != null){
             if (cursor.moveToFirst()) {
                 do {
