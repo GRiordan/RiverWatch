@@ -9,11 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.vuw.project1.riverwatch.R;
-<<<<<<< HEAD
 import com.vuw.project1.riverwatch.bluetooth.MainBluetoothActivity;
-=======
 import com.vuw.project1.riverwatch.colour_algorithm.CameraActivity;
->>>>>>> 575da5d4fc4af5fdafc6ea2424dff333ec2181d2
 
 public class MainActivity extends AppCompatActivity {
     private Button reportButton;
