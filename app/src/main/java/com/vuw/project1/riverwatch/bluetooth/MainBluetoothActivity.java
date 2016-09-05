@@ -149,7 +149,7 @@ public class MainBluetoothActivity extends BlunoLibrary {
 
         findViewById(R.id.progressBar).setVisibility(View.GONE);
         // TODO Auto-generated method stub
-        //serialReceivedText.append(theString);							//append the text into the EditText
+        serialReceivedText.append(data);							//append the text into the EditText
         //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
         //((ScrollView)serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
 
