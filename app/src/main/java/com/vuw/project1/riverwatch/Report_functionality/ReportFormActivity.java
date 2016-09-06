@@ -2,7 +2,6 @@ package com.vuw.project1.riverwatch.Report_functionality;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +23,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import java.util.Date;
@@ -80,7 +80,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         String extraDetailsText = extraDetails.getText().toString();
         String imagePath = getImagePath();
         BasicLoc loc = getLocation();
-       // Incident_Object currentIncident = new Incident_Object(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
+        Incident_Report currentIncident = new Incident_Report(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
         Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ReportFormActivity.this,MainActivity.class);
         startActivity(intent);
