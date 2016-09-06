@@ -45,7 +45,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Water Measurement Device Tests"
+            android:text="Water Tests"
             android:textColor="@color/white"
             android:background="@drawable/button"
             android:id="@+id/waterButton"
