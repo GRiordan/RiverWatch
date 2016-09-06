@@ -25,11 +25,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:textSize="10sp"
+            android:textSize="18sp"
             android:layout_below="@+id/editText2"
             android:layout_alignStart="@+id/editText2"
             android:layout_alignEnd="@+id/serialSendText"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/black" />
     </ScrollView>
 
     <Button
@@ -52,7 +53,8 @@
         android:textSize="25sp"
         android:layout_marginTop="22dp"
         android:layout_below="@+id/buttonTest"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black" />
 
     <Button
         android:id="@+id/buttonScan"
