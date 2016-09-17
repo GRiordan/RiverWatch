@@ -47,6 +47,7 @@ public class WaterQualityCommands {
      */
     public static JSONObject formatRetiredData(String message){
         //Log.i(TAG, message);
+        System.out.println("!!!!!!! FORMATTING");
         message = message.replace("[databegin]","");
         message = message.replace("[dataend]","");
         try {

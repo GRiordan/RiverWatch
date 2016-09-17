@@ -36,7 +36,7 @@ public abstract  class BlunoLibrary  extends Activity {
 	private Context mainContext=this;
 
 	public abstract void onConnectionStateChange(connectionStateEnum theconnectionStateEnum);
-	public abstract void onSerialReceived(String theString);
+	public abstract void onSerialReceived(String theString, Context mainContext);
 
 	public void serialSend(String theString){
 		if (mConnectionState == connectionStateEnum.isConnected) {
@@ -80,7 +80,7 @@ public abstract  class BlunoLibrary  extends Activity {
 	
 	public boolean mConnected = false;
 
-    private final static String TAG = BlunoLibrary.class.getSimpleName();
+    protected final static String TAG = BlunoLibrary.class.getSimpleName();
 
     private Runnable mConnectingOverTimeRunnable=new Runnable(){
 
@@ -318,7 +318,7 @@ public abstract  class BlunoLibrary  extends Activity {
 					}
             	}
             	else if (mSCharacteristic==mSerialPortCharacteristic) {
-            		onSerialReceived(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+            		onSerialReceived(intent.getStringExtra(BluetoothLeService.EXTRA_DATA), mainContext);
 				}
             	
             
