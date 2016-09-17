@@ -212,7 +212,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             }
 
             //start a new activity
-            Intent intent = new Intent(CameraActivity.this, NitrateResultsActivity.class);
+            Intent intent = new Intent(CameraActivity.this, ResultsTabbedActivity.class);
             intent.putExtra("nitrate", analysis.getNitrate());
             intent.putExtra("nitrite", analysis.getNitrite());
             intent.putExtra("left", left);
