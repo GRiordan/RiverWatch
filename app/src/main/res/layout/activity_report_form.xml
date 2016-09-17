@@ -49,9 +49,6 @@
 
     </ImageView>
 
-
-
-        -->
     <fragment
         android:id="@+id/map_fragment"
         class="com.google.android.gms.maps.MapFragment"
@@ -68,7 +65,7 @@
     </fragment>
 
     <Button
-        android:id="@+id/submission_details_control"
+        android:id="@+id/submit_button"
         style="@style/Button"
         android:text="SUBMIT" >
     </Button>
