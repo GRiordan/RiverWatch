@@ -3,6 +3,7 @@ package com.vuw.project1.riverwatch.ui;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +28,10 @@ public class History_WaterActivity_Item extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_water);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Bundle extras = getIntent().getExtras();
         long id = 0;
@@ -76,5 +81,15 @@ public class History_WaterActivity_Item extends AppCompatActivity {
         Conductivity.setText("Conductivity: "+report.conductivity);
         Turbidity = (TextView) findViewById(R.id.turbidity);
         Turbidity.setText("Turbidity: "+report.turbidity);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
