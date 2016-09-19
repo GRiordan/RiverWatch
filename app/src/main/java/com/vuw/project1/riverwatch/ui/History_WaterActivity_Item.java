@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -53,14 +54,16 @@ public class History_WaterActivity_Item extends AppCompatActivity {
         Water_Report report = new Database(this).getWaterReportById(id);
         Image = (ImageView) findViewById(R.id.image);
         Glide.with(this)
-                .load(report.image)
-                .placeholder(R.mipmap.ic_launcher)
+                .load(Uri.parse(report.image))
+                .placeholder(null)
                 .crossFade()
+                .centerCrop()
                 .into(Image);
         Description = (TextView) findViewById(R.id.description);
         Description.setText(report.description);
         Name = (TextView) findViewById(R.id.name);
         Name.setText("Name: "+report.name);
+        setTitle(report.name);
         Location = (TextView) findViewById(R.id.location);
         Location.setText("Location: "+report.location);
         Date = (TextView) findViewById(R.id.date);
