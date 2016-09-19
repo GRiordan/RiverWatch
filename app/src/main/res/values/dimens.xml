@@ -28,4 +28,6 @@
     <!-- custom -->
     <dimen name="min_dialog_width">250dp</dimen>
     <dimen name="report_image_height">120dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
 </resources>

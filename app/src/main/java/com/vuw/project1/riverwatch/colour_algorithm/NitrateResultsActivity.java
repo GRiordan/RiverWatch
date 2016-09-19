@@ -104,7 +104,7 @@ public class NitrateResultsActivity extends AppCompatActivity {
                         //TODO: add code to add this result to history
 
                         DialogFragment saveDialog = new SaveToDatabaseDialogFragment();
-
+                        Database db = new Database(NitrateResultsActivity.this);
                         Bundle bundle = new Bundle();
                         bundle.putString("location", "temp");
                         bundle.putString("description", info);
@@ -114,7 +114,6 @@ public class NitrateResultsActivity extends AppCompatActivity {
                         bundle.putDouble("nitrite", nitrite);
                         bundle.putDouble("longitude", 10);
                         bundle.putDouble("latitude", 10);
-
                         saveDialog.setArguments(bundle);
                         saveDialog.show(getFragmentManager(), "saveToDatabase");
 
@@ -134,9 +133,9 @@ public class NitrateResultsActivity extends AppCompatActivity {
     public static class SaveToDatabaseDialogFragment extends DialogFragment {
         private String name,location, date, description, image;
         private Double latitude, longitude, nitrate, nitrite;
-        private Activity activity;
 
-        public SaveToDatabaseDialogFragment() {}
+        public SaveToDatabaseDialogFragment() {
+        }
 
 
         @Override
@@ -157,6 +156,7 @@ public class NitrateResultsActivity extends AppCompatActivity {
                             EditText nameEditText = (EditText) v.findViewById(R.id.nameEditText);
                             name = nameEditText.getText().toString();
 
+
                             Bundle bundle = getArguments();
                             location = bundle.getString("location");
                             date = bundle.getString("date");
@@ -166,7 +166,12 @@ public class NitrateResultsActivity extends AppCompatActivity {
                             latitude = bundle.getDouble("latitude");
                             nitrate = bundle.getDouble("nitrate");
                             nitrite = bundle.getDouble("nitrite");
-                            //Database database = new Database(activity);
+                            NitrateResultsActivity n = new NitrateResultsActivity();
+                            Database db = new Database(n);
+                            if(db != null){
+                                System.out.print("Here");
+                            }
+                            long id1 = db.saveNitrateReport(name, location, latitude, longitude, date, description, image, nitrate, nitrite);
                             Intent intent = new Intent(getActivity(), MainActivity.class);
                             startActivity(intent);
                         }

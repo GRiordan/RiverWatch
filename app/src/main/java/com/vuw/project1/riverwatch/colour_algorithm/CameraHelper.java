@@ -24,8 +24,10 @@ import java.util.List;
  */
 public class CameraHelper {
     private WindowManager wm;
+    private String imagePath;
 
     public CameraHelper(WindowManager wm) {
+        imagePath = "";
         this.wm = wm;
     }
 
@@ -100,10 +102,25 @@ public class CameraHelper {
      * @param type
      * @return
      */
-    public static File getOutputMediaFile(int type){
+    public File getOutputMediaFile(int type){
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 
+
+        File mediaFile;
+        if (type == 1){
+            imagePath = generateImagePath();
+            mediaFile = new File(imagePath);
+
+        } else {
+            return null;
+        }
+
+        return mediaFile;
+    }
+
+
+    private String generateImagePath(){
         File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES), "NitrateTestPictures");
 
@@ -117,15 +134,13 @@ public class CameraHelper {
 
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        File mediaFile;
-        if (type == 1){
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                    "IMG_"+ timeStamp + ".jpg");
-        } else {
-            return null;
-        }
+        imagePath = mediaStorageDir.getPath() + File.separator +
+                "IMG_"+ timeStamp + ".jpg";
+        return imagePath;
+    }
 
-        return mediaFile;
+    public String getImagePath() {
+        return imagePath;
     }
 
     /**
