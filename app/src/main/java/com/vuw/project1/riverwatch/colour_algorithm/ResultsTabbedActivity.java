@@ -120,6 +120,8 @@ public class ResultsTabbedActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_abort) {
+            Intent intent = new Intent(ResultsTabbedActivity.this, MainActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -142,7 +144,12 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         return true;
     }
 
-
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ResultsTabbedActivity.this, CameraActivity.class);
+        startActivity(intent);
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
