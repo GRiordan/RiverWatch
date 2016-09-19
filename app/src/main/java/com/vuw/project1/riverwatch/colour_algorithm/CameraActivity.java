@@ -199,6 +199,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
             //create intent with analysis object
             File pictureFile = helper.getOutputMediaFile(1);
+            String imagePath = helper.getImagePath();
 
             //write the picture to memory
             try {
@@ -213,6 +214,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
             //start a new activity
             Intent intent = new Intent(CameraActivity.this, ResultsTabbedActivity.class);
+            intent.putExtra("image_path", imagePath);
             intent.putExtra("nitrate", analysis.getNitrate());
             intent.putExtra("nitrite", analysis.getNitrite());
             intent.putExtra("left", left);

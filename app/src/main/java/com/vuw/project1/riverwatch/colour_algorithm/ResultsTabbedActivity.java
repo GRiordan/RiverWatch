@@ -22,6 +22,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.database.Database;
+import com.vuw.project1.riverwatch.ui.MainActivity;
+
+import java.util.Date;
 
 public class ResultsTabbedActivity extends AppCompatActivity {
 
@@ -46,7 +50,8 @@ public class ResultsTabbedActivity extends AppCompatActivity {
     private Double nitrite;
     private Bitmap left;
     private Bitmap right;
-    private final Intent intent = getIntent();
+    private FloatingActionButton fab;
+    private String imagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +77,27 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         mapFragment = new MapFragment();
         infoFragment = new InfoFragment();
 
+        Intent intent = getIntent();
         nitrate = intent.getExtras().getDouble("nitrate");
         nitrite = intent.getExtras().getDouble("nitrite");
         left = (Bitmap) intent.getParcelableExtra("left");
         right = (Bitmap) intent.getParcelableExtra("right");
+        imagePath = intent.getExtras().getString("image_path");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                boolean saved = saveToDatabase();
+
+                if(!saved){
+                    Snackbar.make(view, "Saving to database failed, please fill out all sections", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+                else {
+                    Intent intent = new Intent(ResultsTabbedActivity.this, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -109,6 +124,22 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * attempts to save a nitrate/ite result to the database
+     * @return true if saved, false if something was not filled out correctly
+     */
+    public boolean saveToDatabase(){
+        String info = infoFragment.getInfo();
+        String name = infoFragment.getName();
+        String location = "placeholder";
+        Double latitude = 10.0;
+        Double longitude = 10.0;
+        String date = new Date(System.currentTimeMillis()).toString();
+        Database db = new Database(this);
+        long id1 = db.saveNitrateReport(name, location, latitude, longitude, date, info, imagePath, nitrate, nitrite);
+        return true;
     }
 
 
@@ -138,13 +169,9 @@ public class ResultsTabbedActivity extends AppCompatActivity {
             else {
                 //return mapFragment
                 Bundle args = new Bundle();
-                args.putInt("section_number", 2);
-                args.putDouble("nitrate", nitrate);
-                args.putDouble("nitrite", nitrite);
-                args.putParcelable("left", left);
-                args.putParcelable("right", right);
-                infoFragment.setArguments(args);
-                return infoFragment;
+                args.putString("info_string", "This is where the map will be");
+                mapFragment.setArguments(args);
+                return mapFragment;
             }
 
 

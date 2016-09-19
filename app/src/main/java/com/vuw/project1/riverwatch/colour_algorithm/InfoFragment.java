@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.vuw.project1.riverwatch.R;
 
 import java.math.RoundingMode;
@@ -23,7 +25,8 @@ import java.text.DecimalFormat;
  */
 public class InfoFragment extends Fragment {
 
-    private Button doneButton;
+    private EditText name;
+    private EditText info;
 
     /**
      * The fragment argument representing the section number for this
@@ -71,22 +74,19 @@ public class InfoFragment extends Fragment {
         nitrateView.setText("Nitrate: " + df.format(nitrate));
         nitriteView.setText("Nitrite: " + df.format(nitrite));
 
-        doneButton = (Button) rootView.findViewById(R.id.doneButton);
-
-
-        // button for closing the virtual keyboard
-        doneButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (v != null) {
-                            //InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-                            //imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-                        }
-                    }
-                }
-        );
+        // set text view for information
+        info = (EditText) rootView.findViewById(R.id.infoEditText);
+        name = (EditText) rootView.findViewById(R.id.nameEditText);
 
         return rootView;
     }
+
+    public String getName(){
+        return name.getText().toString();
+    }
+
+    public String getInfo(){
+        return info.getText().toString();
+    }
+
 }
