@@ -7,12 +7,21 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
 
@@ -34,24 +43,22 @@
         <activity android:name=".bluetooth.MainBluetoothActivity" />
         <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.NitrateActivity" />
-        <activity android:name=".ui.HistoryActivity" />
-        <activity android:name=".ui.History_IncidentActivity" />
+        <activity android:name=".ui.HistoryActivity" android:label="History"/>
+        <activity android:name=".ui.History_IncidentActivity" android:label="Incident Reports"/>
         <activity android:name=".ui.History_IncidentActivity_Item" />
-        <activity android:name=".ui.History_NitrateActivity" />
+        <activity android:name=".ui.History_NitrateActivity" android:label="Nitrate Tests" />
         <activity android:name=".ui.History_NitrateActivity_Item" />
-        <activity android:name=".ui.History_WaterActivity" />
+        <activity android:name=".ui.History_WaterActivity" android:label="Water Tests"/>
         <activity android:name=".ui.History_WaterActivity_Item" />
         <activity
             android:name=".colour_algorithm.CameraActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Report_functionality.ReportFormActivity"></activity>
-        <activity android:name=".colour_algorithm.NitrateResultsActivity"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".Report_functionality.ReportFormActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC0aOMrkPdDhp7jGEQK4Ol1g84WKCNsT-E"/>
@@ -59,8 +66,18 @@
 
         <service android:name="com.vuw.project1.riverwatch.bluetooth.BluetoothLeService" android:enabled="true"/>
 
+            android:value="AIzaSyC0aOMrkPdDhp7jGEQK4Ol1g84WKCNsT-E" />
+
+        <activity android:name=".colour_algorithm.NitrateResultsActivity" />
+        <activity
+            android:name=".colour_algorithm.ResultsTabbedActivity"
+            android:label="@string/title_activity_results_tabbed"
+            android:parentActivityName=".colour_algorithm.CameraActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.vuw.project1.riverwatch.colour_algorithm.CameraActivity" />
+        </activity>
     </application>
-
-
 
 </manifest>

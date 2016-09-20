@@ -1,7 +1,9 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +28,10 @@ public class History_WaterActivity_Item extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_water);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Bundle extras = getIntent().getExtras();
         long id = 0;
@@ -54,13 +60,15 @@ public class History_WaterActivity_Item extends AppCompatActivity {
         Image = (ImageView) findViewById(R.id.image);
         Glide.with(this)
                 .load(report.image)
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(null)
                 .crossFade()
+                .centerCrop()
                 .into(Image);
         Description = (TextView) findViewById(R.id.description);
         Description.setText(report.description);
         Name = (TextView) findViewById(R.id.name);
         Name.setText("Name: "+report.name);
+        setTitle(report.name);
         Location = (TextView) findViewById(R.id.location);
         Location.setText("Location: "+report.location);
         Date = (TextView) findViewById(R.id.date);
@@ -73,5 +81,15 @@ public class History_WaterActivity_Item extends AppCompatActivity {
         Conductivity.setText("Conductivity: "+report.conductivity);
         Turbidity = (TextView) findViewById(R.id.turbidity);
         Turbidity.setText("Turbidity: "+report.turbidity);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

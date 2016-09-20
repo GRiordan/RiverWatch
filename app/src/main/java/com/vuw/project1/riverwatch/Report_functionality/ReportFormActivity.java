@@ -1,7 +1,11 @@
 package com.vuw.project1.riverwatch.Report_functionality;
 
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +27,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.database.Database;
+import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
@@ -61,7 +67,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
             findViewById(R.id.submission_details_photo).setVisibility(View.GONE);
         }
 
-        submitButton = (Button) findViewById(R.id.submission_details_control);
+        submitButton = (Button) findViewById(R.id.submit_button);
         submitButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -72,7 +78,6 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     }
 
     public void submit(){
-        //TODO attemmpt to submit to website
 
         //Save to history
         String date = new Date(System.currentTimeMillis()).toString();
@@ -80,7 +85,15 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         String extraDetailsText = extraDetails.getText().toString();
         String imagePath = getImagePath();
         BasicLoc loc = getLocation();
-        Incident_Report currentIncident = new Incident_Report(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
+        //Incident_Report currentIncident = new Incident_Report(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
+        Database database = new Database(this);
+        database.saveIncidentReport(descriptionText,"placeHolder location string",location.latitude,location.longitude,date,extraDetailsText,imagePath);
+        //TODO attemmpt to submit to website
+        final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if(network != null && network.isConnected()){
+
+        }
+        //Finish up activity
         Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ReportFormActivity.this,MainActivity.class);
         startActivity(intent);
@@ -91,15 +104,6 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     //------------------------------------------Google API methods for location services----------------------------------------------
 
     public void setupMap(){
-            /*MapFragment mapFragment = (MapFragment) getFragmentManager()
-                    .findFragmentById(R.id.map_fragment);*/
-        /*
-        MapFragment mapFragment = MapFragment.newInstance();
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.replace(R.id.map_fragment, mapFragment);
-        ft.commit();
-        mapFragment.getMapAsync(this);*/
-
         MapFragment mMapFragment = MapFragment.newInstance();
         FragmentTransaction fragmentTransaction =
                 getFragmentManager().beginTransaction();
@@ -107,7 +111,6 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         fragmentTransaction.commit();
 
         mMapFragment.getMapAsync(this);
-
     }
 
 
