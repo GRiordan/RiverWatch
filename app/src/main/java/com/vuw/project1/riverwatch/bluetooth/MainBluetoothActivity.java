@@ -232,10 +232,9 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                                 System.out.println(id + "!!!!!!!");
 
                             }
-                            long id = database.saveWaterReport("report", "location", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), "desc", "image", 22,
-                                   13, 23, 12);
+                            //long id = database.saveWaterReport("report", "location", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), "desc", "image", 22,
+                            //       13, 23, 12);
 
-                            System.out.println(id + "!!!!!!!");
 
                            WaterQualityReport report = new WaterQualityReport(
                                     new com.vuw.project1.riverwatch.bluetooth.Location(location.getLatitude(),location.getLongitude()),

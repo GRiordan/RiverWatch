@@ -20,13 +20,13 @@ public class WaterQualityCommands {
 
     private static final String TAG = WaterQualityCommands.class.getSimpleName();
 
-    private static final String DEVICE_ID = "DeviceID";
-    private static final String SAMPLE_ID = "SampleID";
-    private static final String CONDUCTIVITY = "Conductivity";
+    private static final String DEVICE_ID = "DID";
+    private static final String SAMPLE_ID = "SID";
+    private static final String CONDUCTIVITY = "EC";
     private static final String PH = "pH";
-    private static final String TURBIDITY = "Turbidity";
-    private static final String TIME_SINCE_LAST = "TimeSinceLast";
-    private static final String TEMPERATURE = "Temperature";
+    private static final String TURBIDITY = "Trb";
+    private static final String TIME_SINCE_LAST = "TSL";
+    private static final String TEMPERATURE = "Tmp";
 
     public static String getRetrieveDataCommand(){
         return "RetrieveData";
@@ -47,7 +47,6 @@ public class WaterQualityCommands {
      */
     public static JSONObject formatRetiredData(String message){
         //Log.i(TAG, message);
-        System.out.println("!!!!!!! FORMATTING");
         message = message.replace("[databegin]","");
         message = message.replace("[dataend]","");
         try {
@@ -66,8 +65,8 @@ public class WaterQualityCommands {
         calendar.setTime(dateTime);
         Log.i(TAG, dateTime.toString());
         try {
-            int timeSinceLast = waterQualityData.getInt("TimeSinceLast");
-            calendar.add(GregorianCalendar.MINUTE, timeSinceLast * (-1));
+            //int timeSinceLast = waterQualityData.getInt("TimeSinceLast");
+            //calendar.add(GregorianCalendar.MINUTE, timeSinceLast * (-1));
             Date time = calendar.getTime();
             if (waterQualityData.has("samples")) {
                 //String status = waterQualityData.getString("status");
