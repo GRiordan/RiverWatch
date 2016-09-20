@@ -66,8 +66,6 @@
 
         <service android:name="com.vuw.project1.riverwatch.bluetooth.BluetoothLeService" android:enabled="true"/>
 
-            android:value="AIzaSyC0aOMrkPdDhp7jGEQK4Ol1g84WKCNsT-E" />
-
         <activity android:name=".colour_algorithm.NitrateResultsActivity" />
         <activity
             android:name=".colour_algorithm.ResultsTabbedActivity"

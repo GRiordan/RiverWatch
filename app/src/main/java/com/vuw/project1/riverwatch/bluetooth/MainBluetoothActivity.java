@@ -32,7 +32,6 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
     private Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
 
-
     private TextView serialReceivedText;
 
     private String allData = "";
@@ -126,10 +125,9 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 				buttonScanOnClickProcess();										//Alert Dialog for selecting the BLE device
 			}
 		});
-        System.out.println("BEFORE");
+
         buildGoogleApiClient();
         mGoogleApiClient.connect();
-        System.out.println("AFTER");
 
     }
 
@@ -193,8 +191,8 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 	public void onSerialReceived(String data, final Context mainContext) {                            //Once connection data received, this function will be called
 
         findViewById(R.id.progressBar).setVisibility(View.GONE);
-        // TODO Auto-generated method stub
-        serialReceivedText.append(data);							//append the text into the EditText
+
+        serialReceivedText.append(data);	//append the text into the EditText
         //The Serial data from the BLUNO may be sub-packaged, so using a buffer to hold the String is a good choice.
         //((ScrollView)serialReceivedText.getParent()).fullScroll(View.FOCUS_DOWN);
 
@@ -202,7 +200,7 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
         if (!allData.contains("[dataend]")) {
             //Log.i(TAG, "Current Message:  "+message);
-        } else {
+        } else if (allData.contains("[dataend]")) {
 			// TODO Chnge this back
 			allData.replace("\"Conductivity\":\"\"", "\"Conductivity\":\"1.2\"");
 
@@ -253,6 +251,12 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                 }
 
             }
+        }
+
+        else if (allData.contains("Sready")){
+
+            // TODO send the data that's in the numerical box
+
         }
     }
 
