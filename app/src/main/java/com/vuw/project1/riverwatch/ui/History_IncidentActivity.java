@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
@@ -21,6 +22,11 @@ public class History_IncidentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_list);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         ArrayList<Incident_Report> incidents = new Database(this).getIncidentReportList();
         mAdapter = new AdapterHistory_Incident(this, incidents, new AdapterHistory_Incident.Callback() {
@@ -48,5 +54,15 @@ public class History_IncidentActivity extends AppCompatActivity {
             incidents.add(new Incident_Report(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "https://cathyqmumford.files.wordpress.com/2010/12/connecticut-river-cow.jpg"));
         }
         return incidents;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

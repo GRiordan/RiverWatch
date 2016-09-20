@@ -1,7 +1,9 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +27,10 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_nitrate);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         Bundle extras = getIntent().getExtras();
         long id = 0;
 //        double nitrate = 0.0;
@@ -47,9 +53,10 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
         Nitrate_Report report = new Database(this).getNitrateReportById(id);
         Image = (ImageView) findViewById(R.id.image);
         Glide.with(this)
-                .load(report.image)
-                .placeholder(R.mipmap.ic_launcher)
+                .load(Uri.parse(report.image))
+                .placeholder(null)
                 .crossFade()
+                .centerCrop()
                 .into(Image);
         Nitrate = (TextView) findViewById(R.id.nitrate);
         Nitrate.setText("Nitrate: "+report.nitrate);
@@ -59,9 +66,20 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
         Description.setText(report.description);
         Name = (TextView) findViewById(R.id.name);
         Name.setText("Name: "+report.name);
+        setTitle(report.name);
         Location = (TextView) findViewById(R.id.location);
         Location.setText("Location: "+report.location);
         Date = (TextView) findViewById(R.id.date);
         Date.setText("Date: "+report.date);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
