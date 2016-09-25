@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,11 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
@@ -46,14 +52,6 @@ public class History_IncidentActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(llm);
         recyclerView.setAdapter(mAdapter);
-    }
-
-    public ArrayList<Incident_Report> addDummyData(){
-        ArrayList<Incident_Report> incidents = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            incidents.add(new Incident_Report(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "https://cathyqmumford.files.wordpress.com/2010/12/connecticut-river-cow.jpg"));
-        }
-        return incidents;
     }
 
     @Override
