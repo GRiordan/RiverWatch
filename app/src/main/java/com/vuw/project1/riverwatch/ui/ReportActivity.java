@@ -383,7 +383,6 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
 
     public RotateAnimation getButtonOrientation(int oldOr, int newOr){
         boolean reverse = false;
-
         int from = 0;
         int to = 0;
 
@@ -474,7 +473,6 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
                 outStream.write(data[0]);
                 outStream.flush();
                 outStream.close();
-
                 refreshGallery(outFile);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -482,7 +480,6 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
 
             return null;
         }
-
         @Override
         public void onPostExecute(Void result) {
 
