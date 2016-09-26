@@ -133,7 +133,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
         camera.setParameters(parameters);
         camera.startPreview();
     }
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (camera != null) {
@@ -145,7 +144,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
-
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         if (camera != null) {
@@ -153,5 +151,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-
+    public void onPause() {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            getHolder().removeCallback(this);
+            camera = null;
+        }
+    }
 }
