@@ -52,14 +52,6 @@ public class History_WaterActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<Water_Report> addDummyData(){
-        ArrayList<Water_Report> waterTests = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            waterTests.add(new Water_Report(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "http://vignette1.wikia.nocookie.net/clubpenguin/images/a/a7/Water_Droplet_Pin.PNG/revision/latest?cb=20150314141114", 25, 7, 10, 10));
-        }
-        return waterTests;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

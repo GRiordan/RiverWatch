@@ -50,14 +50,6 @@ public class History_NitrateActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<Nitrate_Report> addDummyData(){
-        ArrayList<Nitrate_Report> incidents = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            incidents.add(new Nitrate_Report(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "http://www.fullstop.com.au/HTMLfilesv2/060_SoilSolution/030_MonitoringNutrients/MonitoringNitrate_Images/020_MatchStripColour300.jpg",10,10));
-        }
-        return incidents;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
