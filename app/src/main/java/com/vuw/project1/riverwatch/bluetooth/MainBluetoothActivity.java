@@ -4,11 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,8 +14,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
-import com.vuw.project1.riverwatch.ui.HistoryActivity;
-import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -219,13 +212,9 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
         if (!allData.contains("[dataend]")) {
             //Log.i(TAG, "Current Message:  "+message);
         } else if (allData.contains("[dataend]")) {
-			// TODO Chnge this back
-			allData.replace("\"Conductivity\":\"\"", "\"Conductivity\":\"1.2\"");
 
             final JSONObject json = WaterQualityCommands.formatRetiredData(allData);
-			System.out.println("START");
-			System.out.println(allData);
-			System.out.println("DONE");
+
             if (json != null) {
                 try {
                     //Log.i(TAG, "Formatted message  " + json.toString());

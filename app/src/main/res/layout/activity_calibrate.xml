@@ -20,7 +20,7 @@
             android:layout_marginStart="22dp" />
 
         <TextView
-            android:text="Sample Interval"
+            android:text="Sample Interval:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -66,13 +66,43 @@
             android:id="@+id/buttonDebug" />
 
         <Button
+            android:text="Reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttonReset"
+            android:layout_above="@+id/sample_value"
+            android:layout_alignEnd="@+id/sample_value" />
+
+        <Button
             android:text="CALIBRATE"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/buttonCalibrate"
             android:layout_below="@+id/buttonDebug"
-            android:layout_alignStart="@+id/buttonDebug"
-            android:layout_marginTop="16dp" />
+            android:layout_alignStart="@+id/buttonDebug" />
+
+        <ScrollView
+            android:layout_width="359dp"
+            android:layout_height="165dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:text="TextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/receivedText"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="11dp" />
+        </ScrollView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/debugStatus"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
+
 </android.support.design.widget.CoordinatorLayout>
