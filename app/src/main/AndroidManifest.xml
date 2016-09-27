@@ -41,6 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".bluetooth.MainBluetoothActivity" />
+        <activity android:name=".bluetooth.MainCalibrateActivity" />
         <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.NitrateActivity" />
         <activity android:name=".ui.HistoryActivity" android:label="History"/>

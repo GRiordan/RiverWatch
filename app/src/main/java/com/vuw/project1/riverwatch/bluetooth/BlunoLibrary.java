@@ -18,6 +18,7 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,7 @@ import com.vuw.project1.riverwatch.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract  class BlunoLibrary  extends Activity {
+public abstract  class BlunoLibrary  extends AppCompatActivity {
 
 	private Context mainContext=this;
 
@@ -117,9 +118,9 @@ public abstract  class BlunoLibrary  extends Activity {
 
 
 		Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-		if(bindService(gattServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE)){
-			System.out.print("HEY");
-		}
+
+		bindService(gattServiceIntent, mServiceConnection, Context.BIND_AUTO_CREATE);
+
         
 		// Initializes list view adapter.
 		mLeDeviceListAdapter = new LeDeviceListAdapter();

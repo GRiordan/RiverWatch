@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -15,6 +19,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
+import com.vuw.project1.riverwatch.ui.HistoryActivity;
+import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,15 +30,17 @@ import java.util.List;
 
 public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
-	private Button buttonScan;
-	private Button buttonTest;
-	private Button buttonRetrieve;
-	private Button buttonStatus;
+
+    private Button buttonScan;
+    private Button buttonTest;
+    private Button buttonRetrieve;
+    private Button buttonStatus;
+    private Button buttonCalibrate;
+
+    private TextView serialReceivedText;
 
     private Location mLastLocation;
     private GoogleApiClient mGoogleApiClient;
-
-    private TextView serialReceivedText;
 
     private String allData = "";
 
@@ -48,7 +56,6 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
     @Override
     public void onConnected(Bundle bundle) {
-        System.out.println("!!!! CONECTED");
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (mLastLocation != null) {
@@ -68,70 +75,82 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_bluetooth);
+
         onCreateProcess();														//onCreate Process by BlunoLibrary
 
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
 
-        serialReceivedText=(TextView) findViewById(R.id.serialReveicedText);	//initial the EditText of the received data
-
         buttonTest = (Button) findViewById(R.id.buttonTest);		//initial the button for sending the data
-        buttonTest.setOnClickListener(new OnClickListener() {
+        buttonTest.setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-
-				//serialSend(serialSendText.getText().toString());				//send the data to the BLUNO
-                serialReceivedText.setText("");
-				findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-				serialSend("Test");
-
-			}
-		});
-
-		buttonRetrieve = (Button) findViewById(R.id.buttonRetrieve);		//initial the button for sending the data
-		buttonRetrieve.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
 
                 serialReceivedText.setText("");
                 findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-				serialSend("RetrieveData");
-			}
-		});
+                serialSend("Test");
 
-		buttonStatus = (Button) findViewById(R.id.buttonStatus);		//initial the button for sending the data
-		buttonStatus.setOnClickListener(new OnClickListener() {
+            }
+        });
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
+        buttonRetrieve = (Button) findViewById(R.id.buttonRetrieve);		//initial the button for sending the data
+        buttonRetrieve.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
 
                 serialReceivedText.setText("");
                 findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
-				serialSend("Status");
-			}
-		});
+                serialSend("RetrieveData");
+            }
+        });
+
+        buttonStatus = (Button) findViewById(R.id.buttonStatus);		//initial the button for sending the data
+        buttonStatus.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+
+                serialReceivedText.setText("");
+                findViewById(R.id.progressBar).setVisibility(View.VISIBLE);
+                serialSend("Status");
+            }
+        });
 
         buttonScan = (Button) findViewById(R.id.buttonScan);					//initial the button for scanning the BLE device
-        buttonScan.setOnClickListener(new OnClickListener() {
+        buttonScan.setOnClickListener(new View.OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
 
-				buttonScanOnClickProcess();										//Alert Dialog for selecting the BLE device
-			}
-		});
+                buttonScanOnClickProcess();										//Alert Dialog for selecting the BLE device
+            }
+        });
+
+        buttonCalibrate = (Button) findViewById(R.id.buttonCalibrate);					//initial the button for scanning the BLE device
+        buttonCalibrate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MainBluetoothActivity.this, MainCalibrateActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+
+        serialReceivedText=(TextView) findViewById(R.id.serialReveicedText);	//initial the EditText of the received data
 
         buildGoogleApiClient();
         mGoogleApiClient.connect();
 
     }
 
-	protected void onResume(){
+    protected void onResume(){
 		super.onResume();
 		System.out.println("BlUNOActivity onResume");
 		onResumeProcess();														//onResume Process by BlunoLibrary
@@ -161,8 +180,7 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
         super.onDestroy();	
         onDestroyProcess();														//onDestroy Process by BlunoLibrary
     }
-
-	@Override
+@Override
 	public void onConnectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
 		switch (theConnectionState) {											//Four connection state
 		case isConnected:
