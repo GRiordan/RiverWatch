@@ -261,12 +261,10 @@ public class MainCalibrateActivity extends BlunoLibrary {
 		// TODO the Bluetooth device has replied with a response to update the data for intervals
 		else if(allData.contains("Sready")){
 
-            if(!interval.isEmpty()){
 
                 serialSend(interval+"\n");
                 allData = "";
 
-            }
 
 
 
