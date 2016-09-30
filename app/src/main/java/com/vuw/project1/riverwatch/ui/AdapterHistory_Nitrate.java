@@ -35,7 +35,7 @@ public class AdapterHistory_Nitrate extends RecyclerView.Adapter<AdapterHistory_
         viewHolder.location.setText(obj.location);
         viewHolder.date.setText(obj.date);
         Glide.with(mContext)
-                .load(Uri.parse(obj.image))
+                .load(obj.image)
                 .placeholder(null)
                 .crossFade()
                 .centerCrop()

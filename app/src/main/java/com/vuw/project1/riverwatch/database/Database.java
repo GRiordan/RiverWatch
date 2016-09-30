@@ -33,6 +33,8 @@ public class Database extends SQLiteAssetHelper {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
                     int idxLocation = cursor.getColumnIndex("location");
+                    int idxLatitude = cursor.getColumnIndex("latitude");
+                    int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
                     int idxDescription = cursor.getColumnIndex("description");
                     int idxImage = cursor.getColumnIndex("image");
@@ -40,6 +42,8 @@ public class Database extends SQLiteAssetHelper {
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
                             cursor.getString(idxLocation),
+                            cursor.getDouble(idxLatitude),
+                            cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
                             cursor.getString(idxDescription),
                             cursor.getString(idxImage)
@@ -60,6 +64,8 @@ public class Database extends SQLiteAssetHelper {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
                     int idxLocation = cursor.getColumnIndex("location");
+                    int idxLatitude = cursor.getColumnIndex("latitude");
+                    int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
                     int idxDescription = cursor.getColumnIndex("description");
                     int idxImage = cursor.getColumnIndex("image");
@@ -67,6 +73,8 @@ public class Database extends SQLiteAssetHelper {
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
                             cursor.getString(idxLocation),
+                            cursor.getDouble(idxLatitude),
+                            cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
                             cursor.getString(idxDescription),
                             cursor.getString(idxImage)
@@ -104,6 +112,8 @@ public class Database extends SQLiteAssetHelper {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
                     int idxLocation = cursor.getColumnIndex("location");
+                    int idxLatitude = cursor.getColumnIndex("latitude");
+                    int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
                     int idxDescription = cursor.getColumnIndex("description");
                     int idxImage = cursor.getColumnIndex("image");
@@ -113,6 +123,8 @@ public class Database extends SQLiteAssetHelper {
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
                             cursor.getString(idxLocation),
+                            cursor.getDouble(idxLatitude),
+                            cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
                             cursor.getString(idxDescription),
                             cursor.getString(idxImage),
@@ -135,6 +147,8 @@ public class Database extends SQLiteAssetHelper {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
                     int idxLocation = cursor.getColumnIndex("location");
+                    int idxLatitude = cursor.getColumnIndex("latitude");
+                    int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
                     int idxDescription = cursor.getColumnIndex("description");
                     int idxImage = cursor.getColumnIndex("image");
@@ -144,6 +158,8 @@ public class Database extends SQLiteAssetHelper {
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
                             cursor.getString(idxLocation),
+                            cursor.getDouble(idxLatitude),
+                            cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
                             cursor.getString(idxDescription),
                             cursor.getString(idxImage),
@@ -185,6 +201,8 @@ public class Database extends SQLiteAssetHelper {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
                     int idxLocation = cursor.getColumnIndex("location");
+                    int idxLatitude = cursor.getColumnIndex("latitude");
+                    int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
                     int idxDescription = cursor.getColumnIndex("description");
                     int idxImage = cursor.getColumnIndex("image");
@@ -196,6 +214,8 @@ public class Database extends SQLiteAssetHelper {
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
                             cursor.getString(idxLocation),
+                            cursor.getDouble(idxLatitude),
+                            cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
                             cursor.getString(idxDescription),
                             cursor.getString(idxImage),
@@ -220,6 +240,8 @@ public class Database extends SQLiteAssetHelper {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
                     int idxLocation = cursor.getColumnIndex("location");
+                    int idxLatitude = cursor.getColumnIndex("latitude");
+                    int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
                     int idxDescription = cursor.getColumnIndex("description");
                     int idxImage = cursor.getColumnIndex("image");
@@ -231,6 +253,8 @@ public class Database extends SQLiteAssetHelper {
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
                             cursor.getString(idxLocation),
+                            cursor.getDouble(idxLatitude),
+                            cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
                             cursor.getString(idxDescription),
                             cursor.getString(idxImage),

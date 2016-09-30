@@ -3,16 +3,23 @@ package com.vuw.project1.riverwatch.ui;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Water_Report;
 
-public class History_WaterActivity_Item extends AppCompatActivity {
+public class History_WaterActivity_Item extends AppCompatActivity implements OnMapReadyCallback {
 
     private ImageView Image;
     private TextView Description;
@@ -23,6 +30,7 @@ public class History_WaterActivity_Item extends AppCompatActivity {
     private TextView PH;
     private TextView Conductivity;
     private TextView Turbidity;
+    private Water_Report report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +64,10 @@ public class History_WaterActivity_Item extends AppCompatActivity {
 //            location = extras.getString("location", "");
 //            date = extras.getString("date", "");
         }
-        Water_Report report = new Database(this).getWaterReportById(id);
+        report = new Database(this).getWaterReportById(id);
         Image = (ImageView) findViewById(R.id.image);
         Glide.with(this)
-                .load(Uri.parse(report.image))
+                .load(report.image)
                 .placeholder(null)
                 .crossFade()
                 .centerCrop()
@@ -81,6 +89,10 @@ public class History_WaterActivity_Item extends AppCompatActivity {
         Conductivity.setText("Conductivity: "+report.conductivity);
         Turbidity = (TextView) findViewById(R.id.turbidity);
         Turbidity.setText("Turbidity: "+report.turbidity);
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -91,5 +103,13 @@ public class History_WaterActivity_Item extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions()
+                .position(new LatLng(report.latitude, report.longitude))
+                .title(report.name));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(report.latitude, report.longitude), 14));
     }
 }
