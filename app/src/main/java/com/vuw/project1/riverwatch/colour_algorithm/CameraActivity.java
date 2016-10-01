@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,7 +24,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.vision.CameraSource;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.ui.NitrateActivity;
 
@@ -69,13 +67,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     @Override
                     public void onClick(View v) {
                         // get an image from the camera
-                        camera.autoFocus(new Camera.AutoFocusCallback() {
-                            @Override
-                            public void onAutoFocus(boolean success, Camera camera) {
-                                camera.takePicture(null, null, picture);
-                            }
-                        });
-
+                        camera.takePicture(null, null, picture);
                     }
                 }
         );
@@ -177,39 +169,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     public void surfaceDestroyed(SurfaceHolder holder) {
         releaseCamera();
     }
-
-    public boolean onTouchEvent(final MotionEvent event){
-        if (event.getAction() == MotionEvent.ACTION_UP){
-            // when the user touches focus the middle strip
-            focusMiddleArea();
-        }
-
-        return true;
-    }
-
-
-    /**
-     * called to fouc the middle strip
-     */
-    private void focusMiddleArea(){
-        Camera.Parameters parameters = camera.getParameters();
-
-        // create the rectangle and add it to the list of focus areas
-        ArrayList<Camera.Area> focusAreas = new ArrayList<Camera.Area>();
-        Rect rect1 = new Rect(-150, -400, 150, 400);
-        focusAreas.add(new Camera.Area(rect1, 1000));
-
-        parameters.setFocusAreas(focusAreas);
-        camera.setParameters(parameters);
-
-        // focus the middle strip
-        camera.autoFocus(new Camera.AutoFocusCallback() {
-            @Override
-            public void onAutoFocus(boolean success, Camera camera) {
-            }
-        });
-    }
-
 
     /**
      *  method to capture the image and process the algorithm
