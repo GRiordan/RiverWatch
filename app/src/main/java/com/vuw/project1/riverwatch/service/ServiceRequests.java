@@ -1,13 +1,11 @@
 package com.vuw.project1.riverwatch.service;
 
-import fantasticfive.riverwatch.models.ImageReportDto;
-import fantasticfive.riverwatch.models.ResponseDto;
-import fantasticfive.riverwatch.models.WaterQualityReportDto;
+import com.vuw.project1.riverwatch.bluetooth.WaterQualityReport;
+import com.vuw.project1.riverwatch.objects.Water_Report;
+
 import retrofit.http.Body;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
-import retrofit.http.Part;
-import retrofit.mime.TypedFile;
 
 /**
  * This class contains the service requests allowing the app
@@ -16,12 +14,12 @@ import retrofit.mime.TypedFile;
  */
 public interface ServiceRequests {
 
-    @Multipart
+    /*@Multipart
     @POST("/api/image")
     ResponseDto postReport(@Part("data") ImageReportDto report,
                            @Part("image") TypedFile image
-    );
+    );*/
 
     @POST("/api/waterquality")
-    ResponseDto postReport(@Body WaterQualityReportDto report);
+    ResponseDto postReport(@Body WaterQualityReport report);
 }

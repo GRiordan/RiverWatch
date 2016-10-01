@@ -8,12 +8,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
+import com.vuw.project1.riverwatch.service.App;
+import com.vuw.project1.riverwatch.service.NetworkChecker;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -246,6 +249,12 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                                     GregorianCalendar.getInstance().getTime(),
                                     samples,
                                     false);
+
+                            if (NetworkChecker.checkNetworkConnected(mainContext)){
+                                Toast.makeText(mainContext, "   Sending.....   ", Toast.LENGTH_SHORT).show();
+                                App app = new App();
+                                app.getInstance().getServiceBroker().sendReport(report);
+                            }
 
                             break;
                         default:

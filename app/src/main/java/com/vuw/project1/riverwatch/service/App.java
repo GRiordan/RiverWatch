@@ -3,12 +3,6 @@ package com.vuw.project1.riverwatch.service;
 import android.app.Application;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.List;
-
 
 /**
  * Custom app class to allow for global use of certain variables, and
@@ -18,6 +12,11 @@ import java.util.List;
 public class App extends Application implements ServiceBroker.ServiceCallbacks {
     private static ServiceBroker serviceBroker;
     private static App instance;
+
+    public App(){
+        instance = this;
+        serviceBroker = new ServiceBroker(this);
+    }
 
     @Override
     public void onCreate() {

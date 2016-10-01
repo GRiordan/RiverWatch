@@ -2,12 +2,12 @@ package com.vuw.project1.riverwatch.service;
 
 import android.os.AsyncTask;
 
-import java.io.File;
+import com.vuw.project1.riverwatch.bluetooth.WaterQualityReport;
+
 import java.io.Serializable;
 
 import retrofit.RestAdapter;
 import retrofit.android.AndroidLog;
-import retrofit.mime.TypedFile;
 
 /**
  * Controls the service requests and responses
@@ -41,27 +41,24 @@ public class ServiceBroker {
      *
      * @param report
      */
-    public void sendReport(final BaseReport report) {
+    public void sendReport(final WaterQualityReport report) {
         new SendReportTask().execute(report);
     }
 
-    private Boolean sendReportToServer(final BaseReport report) {
-        final ResponseDto response;
-        if (report instanceof ImageReport) {
-            response = service.postReport(new ImageReportDto((ImageReport) report), new TypedFile(IMAGE_MIME_TYPE, new File(((ImageReport) report).getImagePath())));
-        } else {
-            response = service.postReport(new WaterQualityReportDto((WaterQualityReport) report));
-        }
+    private Boolean sendReportToServer(final WaterQualityReport report) {
+
+        ResponseDto response = service.postReport(report);
+
 
         final boolean success = response.hasSentSuccessfully();
-        report.reportSent(success);
+        //report.reportSent(success);
         return success;
     }
 
-    private static final class SendReportTask extends AsyncTask<BaseReport, Void, Boolean> implements Serializable {
+    private static final class SendReportTask extends AsyncTask<WaterQualityReport, Void, Boolean> implements Serializable {
 
         @Override
-        protected Boolean doInBackground(final BaseReport... reports) {
+        protected Boolean doInBackground(final WaterQualityReport... reports) {
             return App.getServiceBroker().sendReportToServer(reports[0]);
         }
 
