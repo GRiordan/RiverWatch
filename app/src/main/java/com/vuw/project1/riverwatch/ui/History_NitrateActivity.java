@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
@@ -21,6 +22,11 @@ public class History_NitrateActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_list);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         ArrayList<Nitrate_Report> nitrateTests = new Database(this).getNitrateReportList();
         mAdapter = new AdapterHistory_Nitrate(this, nitrateTests, new AdapterHistory_Nitrate.Callback() {
@@ -44,11 +50,13 @@ public class History_NitrateActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<Nitrate_Report> addDummyData(){
-        ArrayList<Nitrate_Report> incidents = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            incidents.add(new Nitrate_Report(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "http://www.fullstop.com.au/HTMLfilesv2/060_SoilSolution/030_MonitoringNutrients/MonitoringNitrate_Images/020_MatchStripColour300.jpg",10,10));
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
-        return incidents;
+        return super.onOptionsItemSelected(item);
     }
 }

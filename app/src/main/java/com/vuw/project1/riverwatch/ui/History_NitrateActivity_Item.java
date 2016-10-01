@@ -1,16 +1,25 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 
-public class History_NitrateActivity_Item extends AppCompatActivity {
+public class History_NitrateActivity_Item extends AppCompatActivity implements OnMapReadyCallback {
 
     private ImageView Image;
     private TextView Nitrate;
@@ -19,11 +28,16 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
     private TextView Name;
     private TextView Location;
     private TextView Date;
+    private Nitrate_Report report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_nitrate);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         Bundle extras = getIntent().getExtras();
         long id = 0;
@@ -44,12 +58,13 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
 //            location = extras.getString("location", "");
 //            date = extras.getString("date", "");
         }
-        Nitrate_Report report = new Database(this).getNitrateReportById(id);
+        report = new Database(this).getNitrateReportById(id);
         Image = (ImageView) findViewById(R.id.image);
         Glide.with(this)
                 .load(report.image)
-                .placeholder(R.mipmap.ic_launcher)
+                .placeholder(null)
                 .crossFade()
+                .centerCrop()
                 .into(Image);
         Nitrate = (TextView) findViewById(R.id.nitrate);
         Nitrate.setText("Nitrate: "+report.nitrate);
@@ -59,9 +74,32 @@ public class History_NitrateActivity_Item extends AppCompatActivity {
         Description.setText(report.description);
         Name = (TextView) findViewById(R.id.name);
         Name.setText("Name: "+report.name);
+        setTitle(report.name);
         Location = (TextView) findViewById(R.id.location);
         Location.setText("Location: "+report.location);
         Date = (TextView) findViewById(R.id.date);
         Date.setText("Date: "+report.date);
+
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap map) {
+        map.addMarker(new MarkerOptions()
+            .position(new LatLng(report.latitude, report.longitude))
+            .title(report.name));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(report.latitude, report.longitude), 14));
     }
 }

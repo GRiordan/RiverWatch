@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
@@ -21,6 +22,11 @@ public class History_WaterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_list);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler);
         ArrayList<Water_Report> waterTests = new Database(this).getWaterReportList();
         mAdapter = new AdapterHistory_Water(this, waterTests, new AdapterHistory_Water.Callback() {
@@ -46,11 +52,13 @@ public class History_WaterActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    public ArrayList<Water_Report> addDummyData(){
-        ArrayList<Water_Report> waterTests = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
-            waterTests.add(new Water_Report(i, "test name"+i, "test location", "DD/MM/YYYY", "test description\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", "http://vignette1.wikia.nocookie.net/clubpenguin/images/a/a7/Water_Droplet_Pin.PNG/revision/latest?cb=20150314141114", 25, 7, 10, 10));
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
-        return waterTests;
+        return super.onOptionsItemSelected(item);
     }
 }

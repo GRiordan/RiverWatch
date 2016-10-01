@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
-import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -25,7 +24,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.vision.CameraSource;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 import com.vuw.project1.riverwatch.ui.NitrateActivity;
@@ -70,13 +68,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     @Override
                     public void onClick(View v) {
                         // get an image from the camera
-                        camera.autoFocus(new Camera.AutoFocusCallback() {
-                            @Override
-                            public void onAutoFocus(boolean success, Camera camera) {
-                                camera.takePicture(null, null, picture);
-                            }
-                        });
-
+                        camera.takePicture(null, null, picture);
                     }
                 }
         );
@@ -217,7 +209,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         Intent intent = new Intent(CameraActivity.this, MainActivity.class);
         startActivity(intent);
     }
-
 
     /**
      *  method to capture the image and process the algorithm

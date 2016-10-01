@@ -429,8 +429,4 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
             pictureTaken();
         }
     }
-
-
-
-
 }
