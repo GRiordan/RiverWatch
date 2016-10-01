@@ -27,6 +27,7 @@ import android.widget.RelativeLayout;
 
 import com.google.android.gms.vision.CameraSource;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.ui.MainActivity;
 import com.vuw.project1.riverwatch.ui.NitrateActivity;
 
 import java.io.File;
@@ -208,6 +209,13 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             public void onAutoFocus(boolean success, Camera camera) {
             }
         });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
 
