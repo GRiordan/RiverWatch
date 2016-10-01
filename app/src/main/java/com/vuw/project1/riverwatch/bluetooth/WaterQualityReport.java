@@ -27,7 +27,6 @@ public class WaterQualityReport {
             this.color = color;
         }
     }
-
     private final List<Sample> samples;
     private Health health;
     private double averageConductivity;

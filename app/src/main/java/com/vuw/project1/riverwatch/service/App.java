@@ -3,6 +3,8 @@ package com.vuw.project1.riverwatch.service;
 import android.app.Application;
 import android.widget.Toast;
 
+import com.vuw.project1.riverwatch.util.DateHelper;
+
 
 /**
  * Custom app class to allow for global use of certain variables, and
@@ -16,11 +18,15 @@ public class App extends Application implements ServiceBroker.ServiceCallbacks {
     public App(){
         instance = this;
         serviceBroker = new ServiceBroker(this);
+
+        new DateHelper();
+
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
 
         instance = this;
         serviceBroker = new ServiceBroker(this);
@@ -60,6 +66,6 @@ public class App extends Application implements ServiceBroker.ServiceCallbacks {
     @Override
     public void OnReportSentResponse(final Boolean response) {
         final String message = response ? "A report has been sent" : "A report failed to send";
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

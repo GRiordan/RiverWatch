@@ -57,7 +57,7 @@ public class WaterQualityCommands {
         return null;
     }
 
-    public static List<Sample> makeReportList(JSONObject waterQualityData){
+    public static List<Sample> makeReportList(JSONObject waterQualityData, Location location){
         List<Sample> list = new ArrayList<>();
 
         Date dateTime = GregorianCalendar.getInstance().getTime();
@@ -76,6 +76,8 @@ public class WaterQualityCommands {
                     JSONObject json = array.getJSONObject(i);
                     Log.i(TAG, json.toString());
                     list.add(new Sample(
+                            time,
+                            new com.vuw.project1.riverwatch.bluetooth.Location(location.getLatitude(), location.getLongitude()),
                             json.getDouble(CONDUCTIVITY),
                             json.getDouble(TEMPERATURE),
                             json.getDouble(TURBIDITY),
@@ -88,6 +90,8 @@ public class WaterQualityCommands {
             }
             else {
                 list.add(new Sample(
+                        time,
+                        new com.vuw.project1.riverwatch.bluetooth.Location(location.getLatitude(), location.getLongitude()),
                         waterQualityData.getDouble(CONDUCTIVITY),
                         waterQualityData.getDouble(TEMPERATURE),
                         waterQualityData.getDouble(TURBIDITY),

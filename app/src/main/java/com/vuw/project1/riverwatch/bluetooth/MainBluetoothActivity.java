@@ -27,6 +27,8 @@ import java.util.List;
 public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
 
+    private App app;
+
     private Button buttonScan;
     private Button buttonTest;
     private Button buttonRetrieve;
@@ -73,7 +75,7 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 		setContentView(R.layout.activity_bluetooth);
 
         onCreateProcess();														//onCreate Process by BlunoLibrary
-
+        app = new App();
         serialBegin(115200);													//set the Uart Baudrate on BLE chip to 115200
 
         buttonTest = (Button) findViewById(R.id.buttonTest);		//initial the button for sending the data
@@ -228,7 +230,9 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                         case "complete":
                             //Handles on receiving data.
 							android.location.Location location = ((MainBluetoothActivity) mainContext).getLocation();
-                            List<Sample> samples = WaterQualityCommands.makeReportList(json);
+                            List<Sample> samples = WaterQualityCommands.makeReportList(json, location);
+
+                            WaterQualityReport report = new WaterQualityReport(new com.vuw.project1.riverwatch.bluetooth.Location(location.getLatitude(), location.getLongitude()),GregorianCalendar.getInstance().getTime(), samples, false);
 
                             Database database = new Database(this);
 
@@ -244,15 +248,9 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                             //       13, 23, 12);
 
 
-                           WaterQualityReport report = new WaterQualityReport(
-                                    new com.vuw.project1.riverwatch.bluetooth.Location(location.getLatitude(),location.getLongitude()),
-                                    GregorianCalendar.getInstance().getTime(),
-                                    samples,
-                                    false);
 
                             if (NetworkChecker.checkNetworkConnected(mainContext)){
                                 Toast.makeText(mainContext, "   Sending.....   ", Toast.LENGTH_SHORT).show();
-                                App app = new App();
                                 app.getInstance().getServiceBroker().sendReport(report);
                             }
 

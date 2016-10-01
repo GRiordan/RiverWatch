@@ -18,7 +18,7 @@ public class ServiceBroker {
         void OnReportSentResponse(final Boolean response);
     }
 
-    private static final String END_POINT = "wainz.org.nz";
+    private static final String END_POINT = "http://wainz.org.nz";
     private static final String IMAGE_MIME_TYPE = "application/pdf";
 
     private ServiceCallbacks callbacks;
@@ -66,7 +66,7 @@ public class ServiceBroker {
         protected void onPostExecute(final Boolean response) {
             super.onPostExecute(response);
 
-
+            System.out.println(response);
             App.getServiceBroker().callbacks.OnReportSentResponse(response);
         }
     }
