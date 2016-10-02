@@ -5,6 +5,7 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -80,6 +81,7 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
             final Camera.Parameters parameters = camera.getParameters();
             final Camera.Size previewSize = getBestPreviewSize(parameters);
             parameters.setPreviewSize(previewSize.width, previewSize.height);
+            parameters.setPictureSize(previewSize.width, previewSize.height);
             Display display = ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
 
             if (display.getRotation() == Surface.ROTATION_0) {
@@ -91,9 +93,14 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
                 camera.setDisplayOrientation(180);
                 parameters.setRotation(180);
             }
+            try{
+                camera.setParameters(parameters);
+                camera.setPreviewDisplay(holder);
+                camera.startPreview();
+            }catch(IOException e){
+                Log.d("cameraPreview", "Error starting camera preview: " + e.getMessage());
+            }
 
-            camera.setParameters(parameters);
-            camera.startPreview();
         }
     }
 
@@ -133,7 +140,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
         camera.setParameters(parameters);
         camera.startPreview();
     }
-
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         if (camera != null) {
@@ -145,7 +151,6 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
             }
         }
     }
-
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         if (camera != null) {
@@ -153,5 +158,12 @@ public class Preview extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
-
+    public void onPause() {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+            getHolder().removeCallback(this);
+            camera = null;
+        }
+    }
 }
