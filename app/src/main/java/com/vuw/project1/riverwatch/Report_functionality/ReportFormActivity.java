@@ -30,6 +30,7 @@ import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
+import com.vuw.project1.riverwatch.service.App;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import java.util.Date;
@@ -85,13 +86,12 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         String extraDetailsText = extraDetails.getText().toString();
         String imagePath = getImagePath();
         BasicLoc loc = getLocation();
-        //Incident_Report currentIncident = new Incident_Report(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
         Database database = new Database(this);
         database.saveIncidentReport(descriptionText,"placeHolder location string",location.latitude,location.longitude,date,extraDetailsText,imagePath);
         //TODO attemmpt to submit to website
         final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
-
+            App.getServiceBroker().sendReport(new IncidentReport());
         }
         //Finish up activity
         Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();
