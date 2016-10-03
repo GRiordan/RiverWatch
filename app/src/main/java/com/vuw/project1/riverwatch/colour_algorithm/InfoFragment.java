@@ -101,7 +101,6 @@ public class InfoFragment extends Fragment {
     public void setNitrateNitrite(Bundle result){
         Double nitrate = result.getDouble("nitrate");
         Double nitrite = result.getDouble("nitrite");
-
         // set text views to nitrite and nitrate levels
         DecimalFormat df = new DecimalFormat("#.##");
         df.setRoundingMode(RoundingMode.CEILING);

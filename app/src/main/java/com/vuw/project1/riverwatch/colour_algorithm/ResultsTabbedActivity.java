@@ -176,6 +176,8 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bundle result) {
+            nitrate = result.getDouble("nitrate");
+            nitrite = result.getDouble("nitrite");
             infoFragment.setNitrateNitrite(result);
             infoFragment.setLayoutsVisible();
 
