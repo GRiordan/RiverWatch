@@ -2,6 +2,9 @@ package com.vuw.project1.riverwatch.colour_algorithm;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,7 +28,11 @@ import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
+import java.io.FileInputStream;
 import java.util.Date;
+import java.util.HashMap;
+
+import static com.vuw.project1.riverwatch.R.id.stripOverlay;
 
 public class ResultsTabbedActivity extends AppCompatActivity {
 
@@ -50,6 +57,7 @@ public class ResultsTabbedActivity extends AppCompatActivity {
     private Double nitrite;
     private Bitmap left;
     private Bitmap right;
+    private Bitmap middle;
     private FloatingActionButton fab;
     private String imagePath;
 
@@ -78,10 +86,9 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         infoFragment = new InfoFragment();
 
         Intent intent = getIntent();
-        nitrate = intent.getExtras().getDouble("nitrate");
-        nitrite = intent.getExtras().getDouble("nitrite");
         left = (Bitmap) intent.getParcelableExtra("left");
         right = (Bitmap) intent.getParcelableExtra("right");
+        middle = (Bitmap) intent.getParcelableExtra("middle");
         imagePath = intent.getExtras().getString("image_path");
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -151,6 +158,27 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private class AnalysisTask extends AsyncTask<String, Void, Bundle> {
+
+        @Override
+        protected Bundle doInBackground(String... params) {
+            //process images
+            Analysis analysis = new Analysis();
+            analysis.processImages(left, middle, right, getApplicationContext());
+
+            Bundle args = new Bundle();
+            args.putDouble("nitrate", analysis.getNitrate());
+            args.putDouble("nitrite", analysis.getNitrite());
+            return args;
+        }
+
+        protected void onPostExecute(Bundle result) {
+            infoFragment.setNitrateNitrite(result);
+            infoFragment.setLayoutsVisible();
+
+        }
+    }
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -166,11 +194,11 @@ public class ResultsTabbedActivity extends AppCompatActivity {
             if(position == 0){
                 Bundle args = new Bundle();
                 args.putInt("section_number", 1);
-                args.putDouble("nitrate", nitrate);
-                args.putDouble("nitrite", nitrite);
                 args.putParcelable("left", left);
                 args.putParcelable("right", right);
+                args.putString("imgPath", imagePath);
                 infoFragment.setArguments(args);
+                new AnalysisTask().execute("temp");
                 return infoFragment;
             }
             else {
@@ -180,10 +208,6 @@ public class ResultsTabbedActivity extends AppCompatActivity {
                 mapFragment.setArguments(args);
                 return mapFragment;
             }
-
-
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
         }
 
         @Override

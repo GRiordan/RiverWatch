@@ -3,6 +3,7 @@ package com.vuw.project1.riverwatch.colour_algorithm;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.vision.text.Text;
@@ -27,6 +30,14 @@ public class InfoFragment extends Fragment {
 
     private EditText name;
     private EditText info;
+    private TextView nitrateTextView;
+    private TextView nitriteTextView;
+    private ImageView leftView;
+    private ImageView rightView;
+    private LinearLayout nitrateView;
+    private LinearLayout nitriteView;
+    private ProgressBar progressBar;
+
 
     /**
      * The fragment argument representing the section number for this
@@ -54,10 +65,14 @@ public class InfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_nitrate_info, container, false);
 
-        TextView nitrateView = (TextView) rootView.findViewById(R.id.nitrateTextView);
-        TextView nitriteView = (TextView) rootView.findViewById(R.id.nitriteTextView);
-        ImageView leftView = (ImageView) rootView.findViewById(R.id.nitrateImageView);
-        ImageView rightView = (ImageView) rootView.findViewById(R.id.nitriteImageView);
+        // start analysis task
+        nitrateView = (LinearLayout) rootView.findViewById(R.id.nitrateLinearLayout);
+        nitriteView = (LinearLayout) rootView.findViewById(R.id.nitriteLinearLayout);
+        nitrateTextView = (TextView) rootView.findViewById(R.id.nitrateTextView);
+        nitriteTextView = (TextView) rootView.findViewById(R.id.nitriteTextView);
+        leftView = (ImageView) rootView.findViewById(R.id.nitrateImageView);
+        rightView = (ImageView) rootView.findViewById(R.id.nitriteImageView);
+        progressBar= (ProgressBar) rootView.findViewById(R.id.progressBar2);
 
         final Double nitrate = getArguments().getDouble("nitrate");
         final Double nitrite = getArguments().getDouble("nitrite");
@@ -67,12 +82,6 @@ public class InfoFragment extends Fragment {
         Bitmap right = (Bitmap) getArguments().getParcelable("right");
         leftView.setImageBitmap(left);
         rightView.setImageBitmap(right);
-
-        // set text views to nitrite and nitrate levels
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.setRoundingMode(RoundingMode.CEILING);
-        nitrateView.setText("Nitrate: " + df.format(nitrate));
-        nitriteView.setText("Nitrite: " + df.format(nitrite));
 
         // set text view for information
         info = (EditText) rootView.findViewById(R.id.infoEditText);
@@ -89,4 +98,21 @@ public class InfoFragment extends Fragment {
         return info.getText().toString();
     }
 
+    public void setNitrateNitrite(Bundle result){
+        Double nitrate = result.getDouble("nitrate");
+        Double nitrite = result.getDouble("nitrite");
+
+        // set text views to nitrite and nitrate levels
+        DecimalFormat df = new DecimalFormat("#.##");
+        df.setRoundingMode(RoundingMode.CEILING);
+        nitrateTextView.setText("Nitrate: " + df.format(nitrate));
+        nitriteTextView.setText("Nitrite: " + df.format(nitrite));
+    }
+
+    public void setLayoutsVisible(){
+        // make the views visible
+        nitriteView.setVisibility(View.VISIBLE);
+        nitrateView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
+    }
 }

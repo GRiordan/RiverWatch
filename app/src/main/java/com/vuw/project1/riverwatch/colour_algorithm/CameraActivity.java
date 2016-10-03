@@ -233,11 +233,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             Bitmap middle = Bitmap.createBitmap(cameraBitmap, midR.left, midR.top+statusBarHeight, midR.width(), midR.height());
             Bitmap right = Bitmap.createBitmap(cameraBitmap, rightR.left, rightR.top+statusBarHeight, rightR.width(), rightR.height());
 
-            Analysis analysis = new Analysis();
-
-            //process images
-            analysis.processImages(left, middle, right, getApplicationContext());
-
             //create intent with analysis object
             File pictureFile = helper.getOutputMediaFile(1);
             String imagePath = helper.getImagePath();
@@ -256,8 +251,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             //start a new activity
             Intent intent = new Intent(CameraActivity.this, ResultsTabbedActivity.class);
             intent.putExtra("image_path", imagePath);
-            intent.putExtra("nitrate", analysis.getNitrate());
-            intent.putExtra("nitrite", analysis.getNitrite());
             intent.putExtra("left", left);
             intent.putExtra("middle", middle);
             intent.putExtra("right", right);
