@@ -69,7 +69,15 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     @Override
                     public void onClick(View v) {
                         // get an image from the camera
-                        camera.takePicture(null, null, picture);
+                        relativeLayout.setClickable(false);
+                        camera.autoFocus(new Camera.AutoFocusCallback() {
+                            @Override
+                            public void onAutoFocus(boolean success, Camera camera) {
+
+                                captureButton.setClickable(false);
+                                camera.takePicture(null, null, picture);
+                            }
+                        });
                     }
                 }
         );
@@ -217,6 +225,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private Camera.PictureCallback picture = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
+
             //TODO: setup async task for saving to SD card
 
             //create new analysis
