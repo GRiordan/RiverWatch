@@ -91,7 +91,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         //TODO attemmpt to submit to website
         final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
-            App.getServiceBroker().sendReport(new IncidentReport());
+            App.getServiceBroker().sendReport(new IncidentReport(descriptionText, extraDetailsText, imagePath, loc));
         }
         //Finish up activity
         Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();

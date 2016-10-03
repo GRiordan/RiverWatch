@@ -2,6 +2,7 @@ package com.vuw.project1.riverwatch.service;
 
 import android.os.AsyncTask;
 
+import com.vuw.project1.riverwatch.Report_functionality.ImageReportDto;
 import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.bluetooth.WaterQualityReport;
 
@@ -46,6 +47,11 @@ public class ServiceBroker {
         new SendReportTask().execute(report);
     }
 
+    public void sendReport(final IncidentReport report){
+        new SendIncidentReportTask().execute(report);
+    }
+
+
     private Boolean sendReportToServer(final WaterQualityReport report) {
 
         ResponseDto response = service.postReport(report);
@@ -57,7 +63,8 @@ public class ServiceBroker {
     }
 
     private Boolean sendReportToServer(final IncidentReport report){
-        ResponseDto response = service.postReport(report, report.getImageTypedFile());
+        ImageReportDto dtoReport = report.getDTO();
+        ResponseDto response = service.postReport(dtoReport, report.getImageTypedFile());
 
         final boolean success = response.hasSentSuccessfully();
 
@@ -65,15 +72,25 @@ public class ServiceBroker {
 
     }
 
+    private static final class SendIncidentReportTask extends AsyncTask<IncidentReport, Void, Boolean> implements Serializable{
+        @Override
+        protected Boolean doInBackground(final IncidentReport... reports){
+            return App.getServiceBroker().sendReportToServer(reports[0]);
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean response) {
+            super.onPostExecute(response);
+
+            System.out.println(response);
+            App.getServiceBroker().callbacks.OnReportSentResponse(response);
+        }
+    }
+
     private static final class SendReportTask extends AsyncTask<WaterQualityReport, Void, Boolean> implements Serializable {
 
         @Override
         protected Boolean doInBackground(final WaterQualityReport... reports) {
-            return App.getServiceBroker().sendReportToServer(reports[0]);
-        }
-
-
-        protected Boolean doInBackground(final IncidentReport... reports){
             return App.getServiceBroker().sendReportToServer(reports[0]);
         }
 
