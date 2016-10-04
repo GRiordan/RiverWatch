@@ -6,6 +6,9 @@ import com.vuw.project1.riverwatch.objects.Water_Report;
 import retrofit.http.Body;
 import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
+import retrofit.mime.TypedFile;
+import com.vuw.project1.riverwatch.Report_functionality.ImageReportDto;
 
 /**
  * This class contains the service requests allowing the app
@@ -14,11 +17,11 @@ import retrofit.http.POST;
  */
 public interface ServiceRequests {
 
-    /*@Multipart
+    @Multipart
     @POST("/api/image")
     ResponseDto postReport(@Part("data") ImageReportDto report,
                            @Part("image") TypedFile image
-    );*/
+    );
 
     @POST("/api/waterquality")
     ResponseDto postReport(@Body WaterQualityReport report);
