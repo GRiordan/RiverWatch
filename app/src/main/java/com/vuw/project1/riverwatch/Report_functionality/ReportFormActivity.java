@@ -87,11 +87,11 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         String imagePath = getImagePath();
         BasicLoc loc = getLocation();
         Database database = new Database(this);
-        database.saveIncidentReport(descriptionText,"placeHolder location string",location.latitude,location.longitude,date,extraDetailsText,imagePath);
+        database.saveIncidentReport(descriptionText,"placeHolder location string",location.getLatitude(),location.getLongitude(),date,extraDetailsText,imagePath);
         //TODO attemmpt to submit to website
         final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
-            App.getServiceBroker().sendReport(new IncidentReport(descriptionText, extraDetailsText, imagePath, loc));
+            App.getServiceBroker().sendReport(new IncidentReport(descriptionText, extraDetailsText, imagePath, loc,date));
         }
         //Finish up activity
         Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();

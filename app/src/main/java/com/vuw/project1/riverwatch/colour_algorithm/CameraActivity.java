@@ -25,8 +25,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
-import com.google.android.gms.vision.CameraSource;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.ui.MainActivity;
 import com.vuw.project1.riverwatch.ui.NitrateActivity;
 
 import java.io.File;
@@ -69,13 +69,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     @Override
                     public void onClick(View v) {
                         // get an image from the camera
-                        camera.autoFocus(new Camera.AutoFocusCallback() {
-                            @Override
-                            public void onAutoFocus(boolean success, Camera camera) {
-                                camera.takePicture(null, null, picture);
-                            }
-                        });
-
+                        camera.takePicture(null, null, picture);
                     }
                 }
         );
@@ -210,6 +204,12 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         });
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(CameraActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 
     /**
      *  method to capture the image and process the algorithm

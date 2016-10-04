@@ -84,6 +84,8 @@ public class BluetoothLeService extends Service {
             "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
     public final static String EXTRA_DATA =
             "com.example.bluetooth.le.EXTRA_DATA";
+//    public final static UUID UUID_HEART_RATE_MEASUREMENT =
+//            UUID.fromString(SampleGattAttributes.HEART_RATE_MEASUREMENT);
 
     // Implements callback methods for GATT events that the app cares about.  For example,
     // connection change and services discovered.
@@ -150,9 +152,11 @@ public class BluetoothLeService extends Service {
 		            			bluetoothGattCharacteristicHelper.mCharacteristic.setValue(bluetoothGattCharacteristicHelper.mCharacteristicValue.substring(0, MAX_CHARACTERISTIC_LENGTH).getBytes("ISO-8859-1"));
 
 	            	        } catch (UnsupportedEncodingException e) {
+	            	            // this should never happen because "US-ASCII" is hard-coded.
 	            	            throw new IllegalStateException(e);
 	            	        }
-
+	            			
+	            			
 	            	        if(mBluetoothGatt.writeCharacteristic(bluetoothGattCharacteristicHelper.mCharacteristic))
 	            	        {
 	            	        	System.out.println("writeCharacteristic init "+new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue())+ ":success");
@@ -178,7 +182,11 @@ public class BluetoothLeService extends Service {
 	            	        }
 	            			bluetoothGattCharacteristicHelper.mCharacteristicValue = "";
 
+//	            			System.out.print("before pop:");
+//	            			System.out.println(mCharacteristicRingBuffer.size());
 	            			mCharacteristicRingBuffer.pop();
+//	            			System.out.print("after pop:");
+//	            			System.out.println(mCharacteristicRingBuffer.size());
 	            		}
 	            	}
 	        	}
@@ -219,13 +227,23 @@ public class BluetoothLeService extends Service {
 	            	        if(mBluetoothGatt.writeCharacteristic(bluetoothGattCharacteristicHelper.mCharacteristic))
 	            	        {
 	            	        	System.out.println("writeCharacteristic init "+new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue())+ ":success");
+//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[0]);
+//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[1]);
+//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[2]);
+//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[3]);
+//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[4]);
+//	            	        	System.out.println((byte)bluetoothGattCharacteristicHelper.mCharacteristic.getValue()[5]);
 
 	            	        }else{
 	            	        	System.out.println("writeCharacteristic init "+new String(bluetoothGattCharacteristicHelper.mCharacteristic.getValue())+ ":failure");
 	            	        }
 	            			bluetoothGattCharacteristicHelper.mCharacteristicValue = "";
 
+//		            			System.out.print("before pop:");
+//		            			System.out.println(mCharacteristicRingBuffer.size());
 		            			mCharacteristicRingBuffer.pop();
+//		            			System.out.print("after pop:");
+//		            			System.out.println(mCharacteristicRingBuffer.size());
 	            		}
 	            	}
 	        		
@@ -306,14 +324,18 @@ public class BluetoothLeService extends Service {
 //        }
     }
 
-    public class LocalBinder extends Binder {
-        BluetoothLeService getService() {
+
+
+    private final IBinder mBinder = new LocalBinder();
+    public class LocalBinder extends Binder{
+        public BluetoothLeService getService(){
             return BluetoothLeService.this;
         }
     }
 
-    @Override
     public IBinder onBind(Intent intent) {
+        System.out.print("BINDING\n");
+
         return mBinder;
     }
 
@@ -326,14 +348,13 @@ public class BluetoothLeService extends Service {
         return super.onUnbind(intent);
     }
 
-    private final IBinder mBinder = new LocalBinder();
-
     /**
      * Initializes a reference to the local Bluetooth adapter.
      *
      * @return Return true if the initialization is successful.
      */
     public boolean initialize() {
+        System.out.println("INITIALISING");
         // For API level 18 and above, get a reference to BluetoothAdapter through
         // BluetoothManager.
     	System.out.println("BluetoothLeService initialize"+mBluetoothManager);
@@ -371,6 +392,20 @@ public class BluetoothLeService extends Service {
             return false;
         }
 
+        // Previously connected device.  Try to reconnect.
+//        if (mBluetoothDeviceAddress != null && address.equals(mBluetoothDeviceAddress)
+//                && mBluetoothGatt != null) {
+//            Log.d(TAG, "Trying to use an existing mBluetoothGatt for connection.");
+//            if (mBluetoothGatt.connect()) {
+//            	System.out.println("mBluetoothGatt connect");
+//                mConnectionState = STATE_CONNECTING;
+//                return true;
+//            } else {
+//            	System.out.println("mBluetoothGatt else connect");
+//                return false;
+//            }
+//        }
+
         final BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
         if (device == null) {
             Log.w(TAG, "Device not found.  Unable to connect.");
@@ -398,7 +433,7 @@ public class BluetoothLeService extends Service {
     public void disconnect() {
     	System.out.println("BluetoothLeService disconnect");
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
+            Log.w(TAG, "BluetoothAdapter not initialized1");
             return;
         }
         mBluetoothGatt.disconnect();
@@ -426,7 +461,7 @@ public class BluetoothLeService extends Service {
      */
     public void readCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
+            Log.w(TAG, "BluetoothAdapter not initialized2");
             return;
         }
         mBluetoothGatt.readCharacteristic(characteristic);
@@ -442,7 +477,7 @@ public class BluetoothLeService extends Service {
      */
     public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
+            Log.w(TAG, "BluetoothAdapter not initialized3");
             return;
         }
         
@@ -477,10 +512,22 @@ public class BluetoothLeService extends Service {
     public void setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
                                               boolean enabled) {
         if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
+            Log.w(TAG, "BluetoothAdapter not initialized4");
             return;
         }
         mBluetoothGatt.setCharacteristicNotification(characteristic, enabled);
+
+        //BluetoothGattDescriptor descriptor = characteristic.getDescriptor(characteristic.getUuid());
+        //descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+        //mBluetoothGatt.writeDescriptor(descriptor);
+    	
+        // This is specific to Heart Rate Measurement.
+//        if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
+//            BluetoothGattDescriptor descriptor = characteristic.getDescriptor(
+//                    UUID.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
+//            descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+//            mBluetoothGatt.writeDescriptor(descriptor);
+//        }
     }
 
     /**
@@ -493,6 +540,10 @@ public class BluetoothLeService extends Service {
         if (mBluetoothGatt == null) return null;
 
         return mBluetoothGatt.getServices();
+    }
+
+    public BluetoothAdapter getmBluetootAdapter(){
+        return this.mBluetoothAdapter;
     }
     
     

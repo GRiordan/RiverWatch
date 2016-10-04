@@ -271,7 +271,7 @@ public class Database extends SQLiteAssetHelper {
     }
 
     /**
-     * Database database = new Database(this);
+     * Database database = new Database(MainActivity.this);
      long id = database.saveIncidentReport("test name", "location", 10, 10, "DD/MM/YYYY", "description", "img");
      ^how to call
      */

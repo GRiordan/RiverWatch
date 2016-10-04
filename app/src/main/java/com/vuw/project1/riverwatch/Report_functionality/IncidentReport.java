@@ -13,12 +13,14 @@ public class IncidentReport {
     private String extraText;
     private String imagePath;
     private BasicLoc location;
+    private String date;
 
-    public IncidentReport(String descT, String extraT, String imageP, BasicLoc loc){
+    public IncidentReport(String descT, String extraT, String imageP, BasicLoc loc,String date){
         descText = descT;
         extraText = extraT;
         imagePath = imageP;
         location = loc;
+        this.date = date;
     }
 
 
@@ -31,4 +33,21 @@ public class IncidentReport {
         return new ImageReportDto(this);
 
     }
+
+    public String getDescription(){
+        return descText;
+    }
+
+    public BasicLoc getLocation(){
+        return location;
+    }
+
+    public String getExtraText(){
+        return extraText;
+    }
+
+    public String getDate(){
+        return date;
+    }
+
 }

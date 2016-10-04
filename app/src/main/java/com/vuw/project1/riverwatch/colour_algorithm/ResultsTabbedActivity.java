@@ -135,9 +135,9 @@ public class ResultsTabbedActivity extends AppCompatActivity {
     public boolean saveToDatabase(){
         String info = infoFragment.getInfo();
         String name = infoFragment.getName();
-        String location = "placeholder";
-        Double latitude = 10.0;
-        Double longitude = 10.0;
+        String location = "Placeholder";
+        Double latitude = mapFragment.getLat();
+        Double longitude = mapFragment.getLng();
         String date = new Date(System.currentTimeMillis()).toString();
         Database db = new Database(this);
         long id1 = db.saveNitrateReport(name, location, latitude, longitude, date, info, imagePath, nitrate, nitrite);
