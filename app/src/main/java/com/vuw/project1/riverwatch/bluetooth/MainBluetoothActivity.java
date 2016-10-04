@@ -244,10 +244,6 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                                 System.out.println(id + "!!!!!!!");
 
                             }
-                            //long id = database.saveWaterReport("report", "location", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), "desc", "image", 22,
-                            //       13, 23, 12);
-
-
 
                             if (NetworkChecker.checkNetworkConnected(mainContext)){
                                 Toast.makeText(mainContext, "   Sending.....   ", Toast.LENGTH_SHORT).show();
