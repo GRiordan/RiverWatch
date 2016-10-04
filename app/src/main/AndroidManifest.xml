@@ -10,8 +10,6 @@
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-feature android:name="android.hardware.camera" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -22,9 +20,6 @@
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="false"/>
-
 
 
     <application
@@ -40,10 +35,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".bluetooth.MainBluetoothActivity" />
-        <activity android:name=".bluetooth.MainCalibrateActivity" />
         <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.NitrateActivity" />
+        <activity android:name=".bluetooth.MainBluetoothActivity" />
+        <activity android:name=".bluetooth.MainCalibrateActivity" />
         <activity android:name=".ui.HistoryActivity" android:label="History"/>
         <activity android:name=".ui.History_IncidentActivity" android:label="Incident Reports"/>
         <activity android:name=".ui.History_IncidentActivity_Item" />
@@ -62,10 +57,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC0aOMrkPdDhp7jGEQK4Ol1g84WKCNsT-E"/>
-
-
-        <service android:name="com.vuw.project1.riverwatch.bluetooth.BluetoothLeService" android:enabled="true"/>
+            android:value="AIzaSyC0aOMrkPdDhp7jGEQK4Ol1g84WKCNsT-E" />
 
         <activity android:name=".colour_algorithm.NitrateResultsActivity" />
         <activity
@@ -77,6 +69,12 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.vuw.project1.riverwatch.colour_algorithm.CameraActivity" />
         </activity>
+
+        <service
+            android:name=".bluetooth.BluetoothLeService"
+            android:enabled="true"
+            android:label="bluetooth_le_service"></service>
+
     </application>
 
 </manifest>

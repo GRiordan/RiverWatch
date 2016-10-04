@@ -153,29 +153,29 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 		System.out.println("BlUNOActivity onResume");
 		onResumeProcess();														//onResume Process by BlunoLibrary
 	}
-	
-	
-	
+
+
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		onActivityResultProcess(requestCode, resultCode, data);					//onActivityResult Process by BlunoLibrary
 		super.onActivityResult(requestCode, resultCode, data);
 	}
-	
+
     @Override
     protected void onPause() {
         super.onPause();
         onPauseProcess();														//onPause Process by BlunoLibrary
     }
-	
+
 	protected void onStop() {
 		super.onStop();
 		onStopProcess();														//onStop Process by BlunoLibrary
 	}
-    
+
 	@Override
     protected void onDestroy() {
-        super.onDestroy();	
+        super.onDestroy();
         onDestroyProcess();														//onDestroy Process by BlunoLibrary
     }
 @Override
