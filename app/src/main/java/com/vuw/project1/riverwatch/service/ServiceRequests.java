@@ -1,6 +1,7 @@
 package com.vuw.project1.riverwatch.service;
 
 import com.vuw.project1.riverwatch.bluetooth.WaterQualityReport;
+import com.vuw.project1.riverwatch.colour_algorithm.ReportDto;
 import com.vuw.project1.riverwatch.objects.Water_Report;
 
 import retrofit.http.Body;
@@ -20,6 +21,12 @@ public interface ServiceRequests {
     @Multipart
     @POST("/api/image")
     ResponseDto postReport(@Part("data") ImageReportDto report,
+                           @Part("image") TypedFile image
+    );
+
+    @Multipart
+    @POST("/api/chemicaldata")
+    ResponseDto postReport(@Part("data") ReportDto report,
                            @Part("image") TypedFile image
     );
 

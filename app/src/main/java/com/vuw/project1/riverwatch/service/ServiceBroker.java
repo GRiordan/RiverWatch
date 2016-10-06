@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import com.vuw.project1.riverwatch.Report_functionality.ImageReportDto;
 import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.bluetooth.WaterQualityReport;
+import com.vuw.project1.riverwatch.colour_algorithm.NitrateResult;
+import com.vuw.project1.riverwatch.colour_algorithm.ReportDto;
 
 import java.io.Serializable;
 
@@ -51,6 +53,10 @@ public class ServiceBroker {
         new SendIncidentReportTask().execute(report);
     }
 
+    public void sendReport(final NitrateResult report){
+        new SendNitrateReportTask().execute(report);
+    }
+
 
     private Boolean sendReportToServer(final WaterQualityReport report) {
 
@@ -70,6 +76,30 @@ public class ServiceBroker {
 
         return success;
 
+    }
+
+    private Boolean sendReportToServer(final NitrateResult report) {
+        ReportDto dtoReport = report.getDTO();
+        ResponseDto response = service.postReport(dtoReport, report.getImageTypedFile());
+
+
+        final boolean success = response.hasSentSuccessfully();
+        //report.reportSent(success);
+        return success;
+    }
+
+    private static final class SendNitrateReportTask extends AsyncTask<NitrateResult, Void, Boolean> implements Serializable{
+        @Override
+        protected Boolean doInBackground(final NitrateResult... reports){
+            return App.getServiceBroker().sendReportToServer(reports[0]);
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean response) {
+            super.onPostExecute(response);
+
+            App.getServiceBroker().callbacks.OnReportSentResponse(response);
+        }
     }
 
     private static final class SendIncidentReportTask extends AsyncTask<IncidentReport, Void, Boolean> implements Serializable{
