@@ -8,6 +8,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 import com.vuw.project1.riverwatch.objects.Water_Report;
+import com.vuw.project1.riverwatch.objects.Water_Report_Sample;
 
 import java.util.ArrayList;
 
@@ -84,6 +85,11 @@ public class Database extends SQLiteAssetHelper {
             cursor.close();
         }
         return incident;
+    }
+
+    public void deleteIncidentReportById(long id){
+        getWritableDatabase().delete("incident_report", "_id = ?", new String[]{""+id});
+
     }
 
     /**
@@ -173,6 +179,11 @@ public class Database extends SQLiteAssetHelper {
         return nitrateReport;
     }
 
+    public void deleteNitrateReportById(long id){
+        getWritableDatabase().delete("nitrate_report", "_id = ?", new String[]{""+id});
+
+    }
+
     /**
      * Database database = new Database(MainActivity.this);
      long id = database.saveIncidentReport("test name", "location", 10, 10, "DD/MM/YYYY", "description", "img");
@@ -200,29 +211,15 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
-                    int idxDescription = cursor.getColumnIndex("description");
-                    int idxImage = cursor.getColumnIndex("image");
-                    int idxTemperature = cursor.getColumnIndex("temperature");
-                    int idxPH = cursor.getColumnIndex("pH");
-                    int idxConductivity = cursor.getColumnIndex("conductivity");
-                    int idxTurbidity = cursor.getColumnIndex("turbidity");
                     waterReports.add(new Water_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
-                            cursor.getString(idxDate),
-                            cursor.getString(idxDescription),
-                            cursor.getString(idxImage),
-                            cursor.getDouble(idxTemperature),
-                            cursor.getDouble(idxPH),
-                            cursor.getDouble(idxConductivity),
-                            cursor.getDouble(idxTurbidity)
+                            cursor.getString(idxDate)
                     ));
                 } while (cursor.moveToNext());
             }
@@ -239,29 +236,15 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
-                    int idxDescription = cursor.getColumnIndex("description");
-                    int idxImage = cursor.getColumnIndex("image");
-                    int idxTemperature = cursor.getColumnIndex("temperature");
-                    int idxPH = cursor.getColumnIndex("pH");
-                    int idxConductivity = cursor.getColumnIndex("conductivity");
-                    int idxTurbidity = cursor.getColumnIndex("turbidity");
                     waterReport = new Water_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
-                            cursor.getString(idxDate),
-                            cursor.getString(idxDescription),
-                            cursor.getString(idxImage),
-                            cursor.getDouble(idxTemperature),
-                            cursor.getDouble(idxPH),
-                            cursor.getDouble(idxConductivity),
-                            cursor.getDouble(idxTurbidity)
+                            cursor.getString(idxDate)
                     );
                 } while (cursor.moveToNext());
             }
@@ -289,5 +272,32 @@ public class Database extends SQLiteAssetHelper {
         values.put("conductivity", conductivity);
         values.put("turbidity", turbidity);
         return getWritableDatabase().insert("water_report", null, values);
+    }
+
+    public ArrayList<Water_Report_Sample> getWaterReportSamplesList(long id){
+        ArrayList<Water_Report_Sample> waterReportSamples = new ArrayList<>();
+        Cursor cursor = getReadableDatabase().query("water_report_samples", null, "fk_water_report_id = ?", new String[]{Long.toString(id)}, null, null, "_id DESC");
+        if(cursor != null){
+            if (cursor.moveToFirst()) {
+                do {
+                    int idxId = cursor.getColumnIndex("_id");
+                    int idxTime = cursor.getColumnIndex("time");
+                    int idxTemperature = cursor.getColumnIndex("temperature");
+                    int idxPH = cursor.getColumnIndex("pH");
+                    int idxConductivity = cursor.getColumnIndex("conductivity");
+                    int idxTurbidity = cursor.getColumnIndex("turbidity");
+                    waterReportSamples.add(new Water_Report_Sample(
+                            cursor.getLong(idxId),
+                            cursor.getString(idxTime),
+                            cursor.getDouble(idxTemperature),
+                            cursor.getDouble(idxPH),
+                            cursor.getDouble(idxConductivity),
+                            cursor.getDouble(idxTurbidity)
+                    ));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return waterReportSamples;
     }
 }

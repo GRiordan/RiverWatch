@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 
 import java.util.ArrayList;
@@ -46,6 +47,13 @@ public class AdapterHistory_Nitrate extends RecyclerView.Adapter<AdapterHistory_
                 mCallback.open(obj);
             }
         });
+        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mCallback.delete(obj);
+                return false;
+            }
+        });
     }
     @Override
     public ShowViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -69,5 +77,11 @@ public class AdapterHistory_Nitrate extends RecyclerView.Adapter<AdapterHistory_
     }
     interface Callback {
         void open(Nitrate_Report obj);
+        void delete(Nitrate_Report obj);
+    }
+
+    public void updateList(ArrayList<Nitrate_Report> list){
+        this.mContent = list;
+        notifyDataSetChanged();
     }
 }

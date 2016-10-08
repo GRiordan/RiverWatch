@@ -46,6 +46,13 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
                 mCallback.open(obj);
             }
         });
+        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mCallback.delete(obj);
+                return false;
+            }
+        });
     }
     @Override
     public ShowViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -69,5 +76,11 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
     }
     interface Callback {
         void open(Incident_Report obj);
+        void delete(Incident_Report obj);
+    }
+
+    public void updateList(ArrayList<Incident_Report> list){
+        this.mContent = list;
+        notifyDataSetChanged();
     }
 }
