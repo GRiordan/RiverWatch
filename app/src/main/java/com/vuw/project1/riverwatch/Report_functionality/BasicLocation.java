@@ -3,11 +3,11 @@ package com.vuw.project1.riverwatch.Report_functionality;
 /**
  * Created by Alex on 04/09/2016.
  */
-public class BasicLoc {
+public class BasicLocation {
     double longitude;
     double latitude;
 
-    public BasicLoc(double lat, double lon){
+    public BasicLocation(double lat, double lon){
         longitude = lon;
         latitude = lat;
     }

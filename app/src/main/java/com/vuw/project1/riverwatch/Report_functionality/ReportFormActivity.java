@@ -3,7 +3,6 @@ package com.vuw.project1.riverwatch.Report_functionality;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -28,8 +27,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
-import com.vuw.project1.riverwatch.objects.Incident_Report;
-import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import java.util.Date;
@@ -41,7 +38,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     private ImageView image;
     private Button submitButton;
     private String imagePath;
-    private BasicLoc location;
+    private BasicLocation location;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap map;
 
@@ -84,7 +81,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         String descriptionText = description.getText().toString();
         String extraDetailsText = extraDetails.getText().toString();
         String imagePath = getImagePath();
-        BasicLoc loc = getLocation();
+        BasicLocation loc = getLocation();
         //Incident_Report currentIncident = new Incident_Report(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
         Database database = new Database(this);
         database.saveIncidentReport(descriptionText,"placeHolder location string",location.latitude,location.longitude,date,extraDetailsText,imagePath);
@@ -172,9 +169,9 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         return getIntent().getExtras().getString("IMAGE_PATH");
     }
 
-    public BasicLoc getLocation(){
+    public BasicLocation getLocation(){
         double latitude = Double.valueOf(getIntent().getExtras().getString("LATITUDE"));
         double longitude = Double.valueOf(getIntent().getExtras().getString("LONGITUDE"));
-        return new BasicLoc(latitude,longitude);
+        return new BasicLocation(latitude,longitude);
     }
 }
