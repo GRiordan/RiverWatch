@@ -32,8 +32,10 @@ public class History_WaterActivity extends AppCompatActivity {
         mAdapter = new AdapterHistory_Water(this, waterTests, new AdapterHistory_Water.Callback() {
             @Override
             public void open(Water_Report obj) {
-                Intent intent = new Intent(History_WaterActivity.this, History_WaterActivity_Item.class);
+                Intent intent = new Intent(History_WaterActivity.this, History_WaterActivity_Samples.class);
                 intent.putExtra("id", obj.id);
+                intent.putExtra("latitude", obj.latitude);
+                intent.putExtra("longitude", obj.longitude);
 //                intent.putExtra("name", obj.name);
 //                intent.putExtra("location", obj.location);
 //                intent.putExtra("date", obj.date);

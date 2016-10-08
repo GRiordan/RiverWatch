@@ -1,14 +1,19 @@
 package com.vuw.project1.riverwatch.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
+import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 
 import java.util.ArrayList;
@@ -42,6 +47,23 @@ public class History_NitrateActivity extends AppCompatActivity {
 //                intent.putExtra("nitrate", obj.nitrate);
 //                intent.putExtra("nitrite", obj.nitrite);
                 startActivity(intent);
+            }
+            @Override
+            public void delete(final Nitrate_Report obj) {
+                new AlertDialog.Builder(History_NitrateActivity.this)
+                        .setTitle("Delete Report")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Database database = new Database(History_NitrateActivity.this);
+                                database.deleteNitrateReportById(obj.id);
+                                ArrayList<Nitrate_Report> list = database.getNitrateReportList();
+                                mAdapter.updateList(list);
+                                Toast.makeText(History_NitrateActivity.this, obj.name+" deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
             }
         });
         GridLayoutManager llm = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);

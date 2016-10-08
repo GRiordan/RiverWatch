@@ -1,12 +1,16 @@
 package com.vuw.project1.riverwatch.ui;
 
 import android.app.FragmentTransaction;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -46,6 +50,23 @@ public class History_IncidentActivity extends AppCompatActivity {
 //                intent.putExtra("description", obj.description);
 //                intent.putExtra("image", obj.image);
                 startActivity(intent);
+            }
+            @Override
+            public void delete(final Incident_Report obj) {
+                new AlertDialog.Builder(History_IncidentActivity.this)
+                        .setTitle("Delete Report")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                Database database = new Database(History_IncidentActivity.this);
+                                database.deleteIncidentReportById(obj.id);
+                                ArrayList<Incident_Report> list = database.getIncidentReportList();
+                                mAdapter.updateList(list);
+                                Toast.makeText(History_IncidentActivity.this, obj.name+" deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
             }
         });
         GridLayoutManager llm = new GridLayoutManager(this, 1, GridLayoutManager.VERTICAL, false);
