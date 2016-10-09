@@ -16,6 +16,7 @@
 
 package com.vuw.project1.riverwatch.bluetooth;
 
+
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;

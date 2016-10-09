@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:context="com.vuw.project1.riverwatch.colour_algorithm.ResultsTabbedActivity">
 
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"

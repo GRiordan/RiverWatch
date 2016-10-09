@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.service;
 
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

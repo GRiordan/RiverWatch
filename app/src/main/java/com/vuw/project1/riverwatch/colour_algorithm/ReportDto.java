@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
+
 import com.google.gson.annotations.SerializedName;
 import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
 

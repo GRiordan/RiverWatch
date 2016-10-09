@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.bluetooth;
 
+
 @SuppressWarnings("unchecked")
 public class RingBuffer<T> {
 

@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.service;
 
+
 import com.google.gson.annotations.SerializedName;
 
 /**
