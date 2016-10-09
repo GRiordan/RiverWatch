@@ -43,7 +43,7 @@ public class History_WaterActivity_Samples extends AppCompatActivity {
             longitude = extras.getDouble("longitude", 0);
         }
 
-        final String[] titles = new String[]{"Samples", "Location", "Temperature", "pH Level", "Conductivity", "Turbidity"};
+        final String[] titles = new String[]{"Samples", "Location", "Graphs"};
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -54,6 +54,8 @@ public class History_WaterActivity_Samples extends AppCompatActivity {
                         return History_WaterActivityFragment1.newInstance(id);
                     case 1:
                         return History_WaterActivityFragment2_Location.newInstance(latitude, longitude);
+                    case 2:
+                        return History_WaterActivityFragment3_Graph.newInstance(id);
                     default:
                         return History_WaterActivityFragment1.newInstance(-1);
                 }

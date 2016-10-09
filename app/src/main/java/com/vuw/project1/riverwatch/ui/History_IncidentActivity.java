@@ -66,6 +66,12 @@ public class History_IncidentActivity extends AppCompatActivity {
                                 Toast.makeText(History_IncidentActivity.this, obj.name+" deleted", Toast.LENGTH_SHORT).show();
                             }
                         })
+                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        })
                         .show();
             }
         });

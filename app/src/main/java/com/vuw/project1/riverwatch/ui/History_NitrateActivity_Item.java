@@ -26,7 +26,6 @@ public class History_NitrateActivity_Item extends AppCompatActivity implements O
     private TextView Nitrite;
     private TextView Description;
     private TextView Name;
-    private TextView Location;
     private TextView Date;
     private Nitrate_Report report;
 
@@ -75,8 +74,6 @@ public class History_NitrateActivity_Item extends AppCompatActivity implements O
         Name = (TextView) findViewById(R.id.name);
         Name.setText("Name: "+report.name);
         setTitle(report.name);
-        Location = (TextView) findViewById(R.id.location);
-        Location.setText("Location: "+report.location);
         Date = (TextView) findViewById(R.id.date);
         Date.setText("Date: "+report.date);
 

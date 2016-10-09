@@ -1,11 +1,7 @@
 package com.vuw.project1.riverwatch.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +14,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.database.Database;
-import com.vuw.project1.riverwatch.objects.Water_Report_Sample;
-
-import java.util.ArrayList;
 
 /**
  * Created by James on 8/10/2016.
@@ -53,7 +45,7 @@ public class History_WaterActivityFragment2_Location extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.activity_water_map, container, false);
+        mView = inflater.inflate(R.layout.activity_history_water_map, container, false);
         return mView;
     }
 

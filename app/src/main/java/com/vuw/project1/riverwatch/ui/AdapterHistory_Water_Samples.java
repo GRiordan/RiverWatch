@@ -29,7 +29,7 @@ public class AdapterHistory_Water_Samples extends RecyclerView.Adapter<AdapterHi
     @Override
     public void onBindViewHolder(final ShowViewHolder viewHolder, int position) {
         final Water_Report_Sample obj = mContent.get(position);
-        viewHolder.time.setText(obj.time);
+        viewHolder.time.setText("+"+obj.time+"mins");
         viewHolder.conductivity.setText("Conductivity: "+obj.conductivity);
         viewHolder.pH.setText("pH: "+obj.pH);
         viewHolder.temperature.setText("Temperature: "+obj.temperature);

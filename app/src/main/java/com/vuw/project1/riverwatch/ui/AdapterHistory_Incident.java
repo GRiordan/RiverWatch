@@ -32,7 +32,6 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
     public void onBindViewHolder(final ShowViewHolder viewHolder, int position) {
         final Incident_Report obj = mContent.get(position);
         viewHolder.title.setText(obj.name);
-        viewHolder.location.setText(obj.location);
         viewHolder.date.setText(obj.date);
         Glide.with(mContext)
                 .load(obj.image)
@@ -62,14 +61,12 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
     class ShowViewHolder extends RecyclerView.ViewHolder {
         View view;
         TextView title;
-        TextView location;
         TextView date;
         ImageView image;
         ShowViewHolder(View v) {
             super(v);
             view = v;
             title = (TextView) v.findViewById(R.id.name);
-            location = (TextView) v.findViewById(R.id.location);
             date = (TextView) v.findViewById(R.id.date);
             image = (ImageView) v.findViewById(R.id.image);
         }

@@ -33,6 +33,11 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
         final Water_Report obj = mContent.get(position);
         viewHolder.name.setText(obj.name);
         viewHolder.date.setText(obj.date);
+        Glide.with(mContext)
+                .load("http://vignette1.wikia.nocookie.net/clubpenguin/images/a/a7/Water_Droplet_Pin.PNG/revision/latest?cb=20150314141114")
+                .placeholder(null)
+                .crossFade()
+                .into(viewHolder.image);
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,16 +47,18 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
     }
     @Override
     public ShowViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.element_history_water_test, viewGroup, false);
+        View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.element_history, viewGroup, false);
         return new AdapterHistory_Water.ShowViewHolder(itemView);
     }
     class ShowViewHolder extends RecyclerView.ViewHolder {
         View view;
+        ImageView image;
         TextView name;
         TextView date;
         ShowViewHolder(View v) {
             super(v);
             view = v;
+            image = (ImageView) v.findViewById(R.id.image);
             name = (TextView) v.findViewById(R.id.name);
             date = (TextView) v.findViewById(R.id.date);
         }
