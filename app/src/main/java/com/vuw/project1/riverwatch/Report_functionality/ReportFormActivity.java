@@ -42,7 +42,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     private ImageView image;
     private Button submitButton;
     private String imagePath;
-    private BasicLoc location;
+    private BasicLocation location;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap map;
 
@@ -85,7 +85,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         String descriptionText = description.getText().toString();
         String extraDetailsText = extraDetails.getText().toString();
         String imagePath = getImagePath();
-        BasicLoc loc = getLocation();
+        BasicLocation loc = getLocation();
         Database database = new Database(this);
         database.saveIncidentReport(descriptionText,"placeHolder location string",location.getLatitude(),location.getLongitude(),date,extraDetailsText,imagePath);
         //TODO attemmpt to submit to website
@@ -172,9 +172,9 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         return getIntent().getExtras().getString("IMAGE_PATH");
     }
 
-    public BasicLoc getLocation(){
+    public BasicLocation getLocation(){
         double latitude = Double.valueOf(getIntent().getExtras().getString("LATITUDE"));
         double longitude = Double.valueOf(getIntent().getExtras().getString("LONGITUDE"));
-        return new BasicLoc(latitude,longitude);
+        return new BasicLocation(latitude,longitude);
     }
 }

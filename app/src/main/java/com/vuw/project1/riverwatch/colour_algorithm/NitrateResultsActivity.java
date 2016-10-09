@@ -99,7 +99,7 @@ public class NitrateResultsActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         EditText editText = (EditText) findViewById(R.id.infoEditText);
                         String info = editText.getText().toString();
-                        NitrateResult result = new NitrateResult(nitrate, nitrite, info);
+//                        NitrateResult result = new NitrateResult(nitrate, nitrite, info);
 
                         //TODO: add code to add this result to history
 

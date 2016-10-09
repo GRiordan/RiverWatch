@@ -10,13 +10,13 @@ import java.io.Serializable;
  */
 
 
-public class BasicLoc implements Serializable {
+public class BasicLocation implements Serializable {
     @SerializedName("lat")
     private double longitude;
     @SerializedName("long")
     private double latitude;
 
-    public BasicLoc(double lat, double lon){
+    public BasicLocation(double lat, double lon){
         longitude = lon;
         latitude = lat;
     }
@@ -33,7 +33,7 @@ public class BasicLoc implements Serializable {
         return new Gson().toJson(this);
     }
 
-    public static BasicLoc fromJson(final String jsonLocation) {
-        return new Gson().fromJson(jsonLocation, BasicLoc.class);
+    public static BasicLocation fromJson(final String jsonLocation) {
+        return new Gson().fromJson(jsonLocation, BasicLocation.class);
     }
 }

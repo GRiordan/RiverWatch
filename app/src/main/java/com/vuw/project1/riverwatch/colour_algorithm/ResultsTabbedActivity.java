@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.Report_functionality.BasicLoc;
+import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
 import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.service.App;
@@ -154,7 +154,7 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         //TODO: uncomment this to submit to website, the website code will need to be refactored to properly accept it
         /*final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
-            App.getServiceBroker().sendReport(new NitrateResult(nitrate, nitrite, info ,new BasicLoc(latitude, longitude),imagePath, date));
+            App.getServiceBroker().sendReport(new NitrateResult(nitrate, nitrite, info ,new BasicLocation(latitude, longitude),imagePath, date));
         }*/
 
 

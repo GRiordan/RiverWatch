@@ -1,7 +1,7 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
 import com.google.gson.annotations.SerializedName;
-import com.vuw.project1.riverwatch.Report_functionality.BasicLoc;
+import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
 
 /**
  * Created by George on 6/10/2016.
@@ -10,7 +10,7 @@ import com.vuw.project1.riverwatch.Report_functionality.BasicLoc;
 public class ReportDto {
 
     @SerializedName("geolocation")
-    private final BasicLoc location;
+    private final BasicLocation location;
 
     @SerializedName("name")
     private final String name;

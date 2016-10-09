@@ -12,10 +12,10 @@ public class IncidentReport {
     private String descText;
     private String extraText;
     private String imagePath;
-    private BasicLoc location;
+    private BasicLocation location;
     private String date;
 
-    public IncidentReport(String descT, String extraT, String imageP, BasicLoc loc,String date){
+    public IncidentReport(String descT, String extraT, String imageP, BasicLocation loc,String date){
         descText = descT;
         extraText = extraT;
         imagePath = imageP;
@@ -38,7 +38,7 @@ public class IncidentReport {
         return descText;
     }
 
-    public BasicLoc getLocation(){
+    public BasicLocation getLocation(){
         return location;
     }
 

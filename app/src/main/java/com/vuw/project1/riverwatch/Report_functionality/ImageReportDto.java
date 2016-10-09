@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class ImageReportDto {
     @SerializedName("geolocation")
-    private final BasicLoc location;
+    private final BasicLocation location;
 
     @SerializedName("name")
     private final String name;

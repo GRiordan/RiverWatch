@@ -1,6 +1,6 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
-import com.vuw.project1.riverwatch.Report_functionality.BasicLoc;
+import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
 import com.vuw.project1.riverwatch.Report_functionality.ImageReportDto;
 
 import java.io.File;
@@ -14,15 +14,15 @@ public class NitrateResult {
     private Double nitrate;
     private Double nitrite;
     private String info;
-    private BasicLoc location;
+    private BasicLocation location;
     private String imagePath;
     private String date;
 
-    public NitrateResult(Double nitrate, Double nitrite, String info, BasicLoc location, String imagePath, String date){
+    public NitrateResult(Double nitrate, Double nitrite, String info, String imagePath, String date){
         this.nitrate = nitrate;
         this.nitrite = nitrite;
         this.info = info;
-        this.location = location;
+//        this.location = location;
         this.imagePath = imagePath;
         this.date = date;
     }
@@ -49,7 +49,7 @@ public class NitrateResult {
         return info;
     }
 
-    public BasicLoc getLocation(){
+    public BasicLocation getLocation(){
         return location;
     }
 
