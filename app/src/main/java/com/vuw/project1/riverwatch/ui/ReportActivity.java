@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.ui;
 
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -105,6 +106,66 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
         locationRequest.setInterval(10000);
         locationRequest.setFastestInterval(5000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    }
+
+    public static Camera getCameraInstance() {
+        Camera c = null;
+        try {
+            c = Camera.open(); // attempt to get a Camera instance
+        } catch (Exception e) {
+            // Camera is not available (in use or does not exist)
+        }
+        return c;
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        if (mGoogleApiClient.isConnected() ) {
+            startLocationUpdates();
+        }
+
+        int numCams = Camera.getNumberOfCameras();
+        if (numCams > 0) {
+            try {
+                //returns null if the camera is unavailable
+                if(camera == null){
+                    camera = getCameraInstance();
+                }
+                if(camera != null){
+                    //set camera to continually auto-focus
+                    Camera.Parameters params = camera.getParameters();
+                    params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                    camera.setParameters(params);
+
+                    camPreview.setCamera(camera);
+
+
+
+                    if(mOrientationListener != null){
+                        mOrientationListener.enable();
+                    }
+                }
+                else{
+                    Toast.makeText(this, "Cam is null may need to go back to main activity", Toast.LENGTH_LONG).show();
+                }
+            } catch (RuntimeException ex) {
+                Toast.makeText(this, "Camera failed to start\n" + ex.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onPause(){
+        stopLocationUpdates();
+        if(camera != null){
+            camPreview.onPause();
+        }
+        super.onPause();
+        if(mOrientationListener != null){
+            mOrientationListener.disable();
+        }
     }
 
     @Override
@@ -323,7 +384,6 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
 
     public RotateAnimation getButtonOrientation(int oldOr, int newOr){
         boolean reverse = false;
-
         int from = 0;
         int to = 0;
 
@@ -414,7 +474,6 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
                 outStream.write(data[0]);
                 outStream.flush();
                 outStream.close();
-
                 refreshGallery(outFile);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -422,7 +481,6 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
 
             return null;
         }
-
         @Override
         public void onPostExecute(Void result) {
 

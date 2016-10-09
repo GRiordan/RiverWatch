@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.ui;
 
+
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -64,12 +65,6 @@ public class History_IncidentActivity extends AppCompatActivity {
                                 ArrayList<Incident_Report> list = database.getIncidentReportList();
                                 mAdapter.updateList(list);
                                 Toast.makeText(History_IncidentActivity.this, obj.name+" deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .setNegativeButton("no", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
                             }
                         })
                         .show();

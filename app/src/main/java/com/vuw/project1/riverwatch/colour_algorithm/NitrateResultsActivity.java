@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -99,7 +100,7 @@ public class NitrateResultsActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         EditText editText = (EditText) findViewById(R.id.infoEditText);
                         String info = editText.getText().toString();
-                        NitrateResult result = new NitrateResult(nitrate, nitrite, info);
+//                        NitrateResult result = new NitrateResult(nitrate, nitrite, info);
 
                         //TODO: add code to add this result to history
 
@@ -171,7 +172,7 @@ public class NitrateResultsActivity extends AppCompatActivity {
                             if(db != null){
                                 System.out.print("Here");
                             }
-                            long id1 = db.saveNitrateReport(name, location, latitude, longitude, date, description, image, nitrate, nitrite);
+                            long id1 = db.saveNitrateReport(name, latitude, longitude, date, description, image, nitrate, nitrite);
                             Intent intent = new Intent(getActivity(), MainActivity.class);
                             startActivity(intent);
                         }

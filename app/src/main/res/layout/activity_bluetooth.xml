@@ -67,11 +67,74 @@
         android:textSize="20dip" />
 
     <Button
+        android:id="@+id/buttonTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:padding="20dp"
+        android:layout_marginTop="23dp"
+        android:layout_below="@+id/buttonScan"
+        android:layout_alignStart="@+id/editText2"
+        android:enabled="false" />
+
+    <Button
         android:id="@+id/buttonScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/serialSendText"
+        android:text="Scan"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:padding="20dp"
         android:layout_alignParentTop="true"
-        android:text="Scan" />
+        android:layout_alignStart="@+id/buttonTest"
+        android:layout_alignEnd="@+id/editText2" />
+
+
+    <Button
+        android:id="@+id/buttonRetrieve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Retrieve"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:padding="20dp"
+        android:layout_alignTop="@+id/buttonStatus"
+        android:layout_alignEnd="@+id/buttonScan"
+        android:enabled="false" />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar"
+        android:indeterminate="true"
+        android:visibility="gone"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="SETTINGS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonCalibrate"
+        android:layout_alignBaseline="@+id/editText2"
+        android:layout_alignBottom="@+id/editText2"
+        android:layout_alignEnd="@+id/scrollView"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:padding="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textColor="@color/white"
+        android:background="@drawable/button"
+        android:padding="20dp"
+        android:id="@+id/buttonStatus"
+        android:enabled="false"
+        android:layout_toStartOf="@+id/buttonCalibrate"
+        android:layout_above="@+id/editText2" />
 
 </RelativeLayout>

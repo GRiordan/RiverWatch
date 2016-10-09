@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.database;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -93,7 +94,7 @@ public class Database extends SQLiteAssetHelper {
      long id = database.saveIncidentReport("test name", "location", 10, 10, "DD/MM/YYYY", "description", "img");
      ^how to call
      */
-    public long saveIncidentReport(String name, String location, double latitude, double longitude, String date, String description, String image){
+    public long saveIncidentReport(String name, double latitude, double longitude, String date, String description, String image){
         ContentValues values = new ContentValues();
         values.put("name", name);
         values.put("latitude", latitude);
@@ -180,7 +181,7 @@ public class Database extends SQLiteAssetHelper {
      long id = database.saveIncidentReport("test name", "location", 10, 10, "DD/MM/YYYY", "description", "img");
      ^how to call
      */
-    public long saveNitrateReport(String name, String location, double latitude, double longitude, String date, String description, String image, double nitrate, double nitrite){
+    public long saveNitrateReport(String name, double latitude, double longitude, String date, String description, String image, double nitrate, double nitrite){
         ContentValues values = new ContentValues();
         values.put("name", name);
         values.put("latitude", latitude);

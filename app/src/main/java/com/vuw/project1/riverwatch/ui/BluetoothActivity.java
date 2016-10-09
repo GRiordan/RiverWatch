@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.bluetooth.BluetoothLeService;
 
 import java.util.ArrayList;
 import java.util.List;

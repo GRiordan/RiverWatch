@@ -1,6 +1,5 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
