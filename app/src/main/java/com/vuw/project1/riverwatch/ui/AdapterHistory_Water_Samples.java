@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.objects.Water_Report;
 import com.vuw.project1.riverwatch.objects.Water_Report_Sample;
 
 import java.util.ArrayList;

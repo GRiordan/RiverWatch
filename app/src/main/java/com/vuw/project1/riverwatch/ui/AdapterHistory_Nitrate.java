@@ -2,7 +2,6 @@ package com.vuw.project1.riverwatch.ui;
 
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 
 import java.util.ArrayList;

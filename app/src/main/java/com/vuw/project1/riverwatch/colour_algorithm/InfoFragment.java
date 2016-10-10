@@ -1,24 +1,18 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.android.gms.vision.text.Text;
 import com.vuw.project1.riverwatch.R;
 
 import java.math.RoundingMode;

@@ -1,46 +1,29 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Rect;
 import android.os.AsyncTask;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
-import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.database.Database;
-import com.vuw.project1.riverwatch.service.App;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
-import java.io.FileInputStream;
 import java.util.Date;
-import java.util.HashMap;
-
-import static com.vuw.project1.riverwatch.R.id.stripOverlay;
 
 public class ResultsTabbedActivity extends AppCompatActivity {
 

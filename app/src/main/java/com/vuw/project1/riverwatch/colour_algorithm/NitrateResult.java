@@ -2,7 +2,6 @@ package com.vuw.project1.riverwatch.colour_algorithm;
 
 
 import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
-import com.vuw.project1.riverwatch.Report_functionality.ImageReportDto;
 
 import java.io.File;
 

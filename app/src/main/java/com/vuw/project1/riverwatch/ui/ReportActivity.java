@@ -1,17 +1,17 @@
 package com.vuw.project1.riverwatch.ui;
 
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.SurfaceHolder;
@@ -21,9 +21,7 @@ import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
-import android.hardware.Camera;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -34,8 +32,6 @@ import com.google.android.gms.location.LocationServices;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.Report_functionality.Preview;
 import com.vuw.project1.riverwatch.Report_functionality.ReportFormActivity;
-
-
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,22 +1,14 @@
 package com.vuw.project1.riverwatch.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.database.Database;
-import com.vuw.project1.riverwatch.objects.Water_Report;
-import com.vuw.project1.riverwatch.objects.Water_Report_Sample;
-
-import java.util.ArrayList;
 
 public class History_WaterActivity_Samples extends AppCompatActivity {
 

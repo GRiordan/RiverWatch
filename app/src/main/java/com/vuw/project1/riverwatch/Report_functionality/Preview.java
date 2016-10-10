@@ -1,17 +1,14 @@
 package com.vuw.project1.riverwatch.Report_functionality;
 
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.Camera;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Display;
 import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import java.io.IOException;

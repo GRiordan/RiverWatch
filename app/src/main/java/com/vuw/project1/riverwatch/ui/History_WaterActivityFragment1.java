@@ -1,6 +1,5 @@
 package com.vuw.project1.riverwatch.ui;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,8 +13,6 @@ import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Water_Report_Sample;
 
 import java.util.ArrayList;
-
-import static com.vuw.project1.riverwatch.R.id.view;
 
 /**
  * Created by James on 8/10/2016.
