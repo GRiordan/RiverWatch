@@ -1,6 +1,5 @@
 package com.vuw.project1.riverwatch.bluetooth;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
@@ -63,6 +62,8 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
     }
 
     protected synchronized void buildGoogleApiClient() {
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -71,9 +72,9 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
     }
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_bluetooth);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_bluetooth);
 
         onCreateProcess();														//onCreate Process by BlunoLibrary
         app = new App();
@@ -150,62 +151,70 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
     }
 
     protected void onResume(){
-		super.onResume();
-		System.out.println("BlUNOActivity onResume");
-		onResumeProcess();														//onResume Process by BlunoLibrary
-	}
+        super.onResume();
+        System.out.println("BlUNOActivity onResume");
+        onResumeProcess();														//onResume Process by BlunoLibrary
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+
+    }
 
 
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		onActivityResultProcess(requestCode, resultCode, data);					//onActivityResult Process by BlunoLibrary
-		super.onActivityResult(requestCode, resultCode, data);
-	}
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        onActivityResultProcess(requestCode, resultCode, data);					//onActivityResult Process by BlunoLibrary
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
         onPauseProcess();														//onPause Process by BlunoLibrary
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
+
     }
 
-	protected void onStop() {
-		super.onStop();
-		onStopProcess();														//onStop Process by BlunoLibrary
-	}
+    protected void onStop() {
+        super.onStop();
+        onStopProcess();														//onStop Process by BlunoLibrary
+        findViewById(R.id.progressBar).setVisibility(View.GONE);
 
-	@Override
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         onDestroyProcess();														//onDestroy Process by BlunoLibrary
     }
-@Override
-	public void onConnectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
-		switch (theConnectionState) {											//Four connection state
-		case isConnected:
-			buttonScan.setText("Connected");
-            buttonStatus.setEnabled(true);
-            buttonRetrieve.setEnabled(true);
-            buttonTest.setEnabled(true);
-			break;
-		case isConnecting:
-			buttonScan.setText("Connecting");
-			break;
-		case isToScan:
-			buttonScan.setText("Scan");
-			break;
-		case isScanning:
-			buttonScan.setText("Scanning");
-			break;
-		case isDisconnecting:
-			buttonScan.setText("isDisconnecting");
-			break;
-		default:
-			break;
-		}
-	}
+    @Override
+    public void onConnectionStateChange(connectionStateEnum theConnectionState) {//Once connection state changes, this function will be called
+        switch (theConnectionState) {											//Four connection state
+            case isConnected:
+                buttonScan.setText("Connected");
+                buttonStatus.setEnabled(true);
+                buttonRetrieve.setEnabled(true);
+                buttonTest.setEnabled(true);
+                findViewById(R.id.progressBar).setVisibility(View.GONE);
 
-	public void onSerialReceived(String data, final Context mainContext) {                            //Once connection data received, this function will be called
+                break;
+            case isConnecting:
+                buttonScan.setText("Connecting");
+                break;
+            case isToScan:
+                buttonScan.setText("Scan");
+                break;
+            case isScanning:
+                buttonScan.setText("Scanning");
+                break;
+            case isDisconnecting:
+                buttonScan.setText("isDisconnecting");
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void onSerialReceived(String data, final Context mainContext) {                            //Once connection data received, this function will be called
 
         findViewById(R.id.progressBar).setVisibility(View.GONE);
 
@@ -230,7 +239,7 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                     switch (status) {
                         case "complete":
                             //Handles on receiving data.
-							android.location.Location location = ((MainBluetoothActivity) mainContext).getLocation();
+                            android.location.Location location = ((MainBluetoothActivity) mainContext).getLocation();
                             List<Sample> samples = WaterQualityCommands.makeReportList(json, location);
 
                             WaterQualityReport report = new WaterQualityReport(new com.vuw.project1.riverwatch.bluetooth.Location(location.getLatitude(), location.getLongitude()),GregorianCalendar.getInstance().getTime(), samples, false);
@@ -239,9 +248,10 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
                             for (Sample sample : samples) {
 
-                                long id = database.saveWaterReport("report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString());
+                                //long id = database.saveWaterReport("report", "location", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), "desc", "image", sample.getTemperature(),
+                                 //       sample.getPh(), sample.getConductivity(), sample.getTurbidity());
 
-                                System.out.println(id + "!!!!!!!");
+                                //System.out.println(id + "!!!!!!!");
 
                             }
 
