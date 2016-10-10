@@ -23,7 +23,9 @@ public class ServiceBroker {
         void OnReportSentResponse(final Boolean response);
     }
 
-    private static final String END_POINT = "http://wainz.org.nz";
+    //private static final String END_POINT = "http://wainz.org.nz";
+    //for testing purposes
+    private static final String END_POINT = "https://www-test.wainz.org.nz";
     private static final String IMAGE_MIME_TYPE = "application/pdf";
 
     private ServiceCallbacks callbacks;
