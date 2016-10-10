@@ -148,7 +148,7 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         //TODO: uncomment this to submit to website, the website code will need to be refactored to properly accept it
         /*final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
-            App.getServiceBroker().sendReport(new NitrateResult(nitrate, nitrite, info ,new BasicLocation(latitude, longitude),imagePath, date));
+            new App().getServiceBroker().sendReport(new NitrateResult(nitrate, nitrite, info ,new BasicLocation(latitude, longitude),imagePath, date));
         }*/
 
 
