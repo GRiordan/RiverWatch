@@ -70,7 +70,15 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     @Override
                     public void onClick(View v) {
                         // get an image from the camera
-                        camera.takePicture(null, null, picture);
+                        relativeLayout.setClickable(false);
+                        camera.autoFocus(new Camera.AutoFocusCallback() {
+                            @Override
+                            public void onAutoFocus(boolean success, Camera camera) {
+
+                                captureButton.setClickable(false);
+                                camera.takePicture(null, null, picture);
+                            }
+                        });
                     }
                 }
         );
@@ -218,6 +226,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     private Camera.PictureCallback picture = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
+
             //TODO: setup async task for saving to SD card
 
             //create new analysis
@@ -233,11 +242,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             Bitmap left = Bitmap.createBitmap(cameraBitmap, leftR.left, leftR.top+statusBarHeight, leftR.width(), leftR.height());
             Bitmap middle = Bitmap.createBitmap(cameraBitmap, midR.left, midR.top+statusBarHeight, midR.width(), midR.height());
             Bitmap right = Bitmap.createBitmap(cameraBitmap, rightR.left, rightR.top+statusBarHeight, rightR.width(), rightR.height());
-
-            Analysis analysis = new Analysis();
-
-            //process images
-            analysis.processImages(left, middle, right, getApplicationContext());
 
             //create intent with analysis object
             File pictureFile = helper.getOutputMediaFile(1);
@@ -257,8 +261,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             //start a new activity
             Intent intent = new Intent(CameraActivity.this, ResultsTabbedActivity.class);
             intent.putExtra("image_path", imagePath);
-            intent.putExtra("nitrate", analysis.getNitrate());
-            intent.putExtra("nitrite", analysis.getNitrite());
             intent.putExtra("left", left);
             intent.putExtra("middle", middle);
             intent.putExtra("right", right);
