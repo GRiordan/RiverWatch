@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.vuw.project1.riverwatch.ui;
+package com.vuw.project1.riverwatch.bluetooth;
+
 
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;

@@ -1,9 +1,9 @@
 package com.vuw.project1.riverwatch.Report_functionality;
 
+
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
-import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
@@ -30,6 +30,7 @@ import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
+import com.vuw.project1.riverwatch.service.App;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import java.util.Date;
@@ -41,7 +42,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
     private ImageView image;
     private Button submitButton;
     private String imagePath;
-    private BasicLoc location;
+    private BasicLocation location;
     private GoogleApiClient mGoogleApiClient;
     private GoogleMap map;
 
@@ -84,14 +85,13 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         String descriptionText = description.getText().toString();
         String extraDetailsText = extraDetails.getText().toString();
         String imagePath = getImagePath();
-        BasicLoc loc = getLocation();
-        //Incident_Report currentIncident = new Incident_Report(1,descriptionText,"placeHolder location string",date,extraDetailsText,imagePath);
+        BasicLocation loc = getLocation();
         Database database = new Database(this);
-        database.saveIncidentReport(descriptionText,"placeHolder location string",location.latitude,location.longitude,date,extraDetailsText,imagePath);
+        database.saveIncidentReport(descriptionText, location.getLatitude(),location.getLongitude(),date,extraDetailsText,imagePath);
         //TODO attemmpt to submit to website
         final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
-
+            App.getServiceBroker().sendReport(new IncidentReport(descriptionText, extraDetailsText, imagePath, loc,date));
         }
         //Finish up activity
         Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();
@@ -172,9 +172,9 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
         return getIntent().getExtras().getString("IMAGE_PATH");
     }
 
-    public BasicLoc getLocation(){
+    public BasicLocation getLocation(){
         double latitude = Double.valueOf(getIntent().getExtras().getString("LATITUDE"));
         double longitude = Double.valueOf(getIntent().getExtras().getString("LONGITUDE"));
-        return new BasicLoc(latitude,longitude);
+        return new BasicLocation(latitude,longitude);
     }
 }

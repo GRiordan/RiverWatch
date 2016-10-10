@@ -7,6 +7,7 @@
     tools:context="com.vuw.project1.riverwatch.ui.ReportActivity"
     android:id="@+id/activity_report">
 
+
     <com.vuw.project1.riverwatch.Report_functionality.Preview
         android:id="@+id/preview"
         android:layout_width="match_parent"

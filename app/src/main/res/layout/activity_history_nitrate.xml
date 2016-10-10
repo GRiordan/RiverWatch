@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dip"
@@ -28,11 +29,6 @@
                 tools:text="name"
                 android:id="@+id/name"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="location"
-                android:id="@+id/location"/>
 
             <TextView
                 android:layout_width="match_parent"

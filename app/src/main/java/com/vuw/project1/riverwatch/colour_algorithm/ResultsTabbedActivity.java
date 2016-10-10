@@ -1,10 +1,14 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.AsyncTask;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,7 +30,10 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
+import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.database.Database;
+import com.vuw.project1.riverwatch.service.App;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import java.io.FileInputStream;
@@ -100,6 +107,8 @@ public class ResultsTabbedActivity extends AppCompatActivity {
             public void onClick(View view) {
                 boolean saved = saveToDatabase();
 
+
+
                 if(!saved){
                     Snackbar.make(view, "Saving to database failed, please fill out all sections", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -150,7 +159,16 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         Double longitude = mapFragment.getLng();
         String date = new Date(System.currentTimeMillis()).toString();
         Database db = new Database(this);
-        long id1 = db.saveNitrateReport(name, location, latitude, longitude, date, info, imagePath, nitrate, nitrite);
+        long id1 = db.saveNitrateReport(name, latitude, longitude, date, info, imagePath, nitrate, nitrite);
+
+        // submit to the website
+        //TODO: uncomment this to submit to website, the website code will need to be refactored to properly accept it
+        /*final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        if(network != null && network.isConnected()){
+            App.getServiceBroker().sendReport(new NitrateResult(nitrate, nitrite, info ,new BasicLocation(latitude, longitude),imagePath, date));
+        }*/
+
+
         return true;
     }
 

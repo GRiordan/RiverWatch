@@ -12,6 +12,7 @@
     android:background="@color/dark_bkgrd"
     tools:context="com.vuw.project1.riverwatch.Report_functionality.ReportFormActivity">
 
+
     <EditText
         android:id="@+id/submission_details_description"
         style="@style/Text.White.Medium"

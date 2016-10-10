@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.ui;
 
+
 import android.content.Context;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -31,14 +32,12 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
     @Override
     public void onBindViewHolder(final ShowViewHolder viewHolder, int position) {
         final Water_Report obj = mContent.get(position);
-        viewHolder.title.setText(obj.name);
-        viewHolder.location.setText(obj.location);
+        viewHolder.name.setText(obj.name);
         viewHolder.date.setText(obj.date);
         Glide.with(mContext)
-                .load(obj.image)
+                .load("http://vignette1.wikia.nocookie.net/clubpenguin/images/a/a7/Water_Droplet_Pin.PNG/revision/latest?cb=20150314141114")
                 .placeholder(null)
                 .crossFade()
-                .centerCrop()
                 .into(viewHolder.image);
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,17 +53,15 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
     }
     class ShowViewHolder extends RecyclerView.ViewHolder {
         View view;
-        TextView title;
-        TextView location;
-        TextView date;
         ImageView image;
+        TextView name;
+        TextView date;
         ShowViewHolder(View v) {
             super(v);
             view = v;
-            title = (TextView) v.findViewById(R.id.name);
-            location = (TextView) v.findViewById(R.id.location);
-            date = (TextView) v.findViewById(R.id.date);
             image = (ImageView) v.findViewById(R.id.image);
+            name = (TextView) v.findViewById(R.id.name);
+            date = (TextView) v.findViewById(R.id.date);
         }
     }
     interface Callback {

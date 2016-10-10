@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.database;
 
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -8,6 +9,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 import com.vuw.project1.riverwatch.objects.Water_Report;
+import com.vuw.project1.riverwatch.objects.Water_Report_Sample;
 
 import java.util.ArrayList;
 
@@ -32,7 +34,6 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
@@ -41,7 +42,6 @@ public class Database extends SQLiteAssetHelper {
                     incidents.add(new Incident_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
@@ -63,7 +63,6 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
@@ -72,7 +71,6 @@ public class Database extends SQLiteAssetHelper {
                     incident = new Incident_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
@@ -86,15 +84,19 @@ public class Database extends SQLiteAssetHelper {
         return incident;
     }
 
+    public void deleteIncidentReportById(long id){
+        getWritableDatabase().delete("incident_report", "_id = ?", new String[]{""+id});
+
+    }
+
     /**
      * Database database = new Database(MainActivity.this);
      long id = database.saveIncidentReport("test name", "location", 10, 10, "DD/MM/YYYY", "description", "img");
      ^how to call
      */
-    public long saveIncidentReport(String name, String location, double latitude, double longitude, String date, String description, String image){
+    public long saveIncidentReport(String name, double latitude, double longitude, String date, String description, String image){
         ContentValues values = new ContentValues();
         values.put("name", name);
-        values.put("location", location);
         values.put("latitude", latitude);
         values.put("longitude", longitude);
         values.put("date", date);
@@ -111,7 +113,6 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
@@ -122,7 +123,6 @@ public class Database extends SQLiteAssetHelper {
                     nitrateReports.add(new Nitrate_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
@@ -146,7 +146,6 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
@@ -157,7 +156,6 @@ public class Database extends SQLiteAssetHelper {
                     nitrateReport = new Nitrate_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
                             cursor.getString(idxDate),
@@ -173,15 +171,19 @@ public class Database extends SQLiteAssetHelper {
         return nitrateReport;
     }
 
+    public void deleteNitrateReportById(long id){
+        getWritableDatabase().delete("nitrate_report", "_id = ?", new String[]{""+id});
+
+    }
+
     /**
      * Database database = new Database(MainActivity.this);
      long id = database.saveIncidentReport("test name", "location", 10, 10, "DD/MM/YYYY", "description", "img");
      ^how to call
      */
-    public long saveNitrateReport(String name, String location, double latitude, double longitude, String date, String description, String image, double nitrate, double nitrite){
+    public long saveNitrateReport(String name, double latitude, double longitude, String date, String description, String image, double nitrate, double nitrite){
         ContentValues values = new ContentValues();
         values.put("name", name);
-        values.put("location", location);
         values.put("latitude", latitude);
         values.put("longitude", longitude);
         values.put("date", date);
@@ -200,29 +202,15 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
-                    int idxDescription = cursor.getColumnIndex("description");
-                    int idxImage = cursor.getColumnIndex("image");
-                    int idxTemperature = cursor.getColumnIndex("temperature");
-                    int idxPH = cursor.getColumnIndex("pH");
-                    int idxConductivity = cursor.getColumnIndex("conductivity");
-                    int idxTurbidity = cursor.getColumnIndex("turbidity");
                     waterReports.add(new Water_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
-                            cursor.getString(idxDate),
-                            cursor.getString(idxDescription),
-                            cursor.getString(idxImage),
-                            cursor.getDouble(idxTemperature),
-                            cursor.getDouble(idxPH),
-                            cursor.getDouble(idxConductivity),
-                            cursor.getDouble(idxTurbidity)
+                            cursor.getString(idxDate)
                     ));
                 } while (cursor.moveToNext());
             }
@@ -239,29 +227,15 @@ public class Database extends SQLiteAssetHelper {
                 do {
                     int idxId = cursor.getColumnIndex("_id");
                     int idxName = cursor.getColumnIndex("name");
-                    int idxLocation = cursor.getColumnIndex("location");
                     int idxLatitude = cursor.getColumnIndex("latitude");
                     int idxLongitude = cursor.getColumnIndex("longitude");
                     int idxDate = cursor.getColumnIndex("date");
-                    int idxDescription = cursor.getColumnIndex("description");
-                    int idxImage = cursor.getColumnIndex("image");
-                    int idxTemperature = cursor.getColumnIndex("temperature");
-                    int idxPH = cursor.getColumnIndex("pH");
-                    int idxConductivity = cursor.getColumnIndex("conductivity");
-                    int idxTurbidity = cursor.getColumnIndex("turbidity");
                     waterReport = new Water_Report(
                             cursor.getLong(idxId),
                             cursor.getString(idxName),
-                            cursor.getString(idxLocation),
                             cursor.getDouble(idxLatitude),
                             cursor.getDouble(idxLongitude),
-                            cursor.getString(idxDate),
-                            cursor.getString(idxDescription),
-                            cursor.getString(idxImage),
-                            cursor.getDouble(idxTemperature),
-                            cursor.getDouble(idxPH),
-                            cursor.getDouble(idxConductivity),
-                            cursor.getDouble(idxTurbidity)
+                            cursor.getString(idxDate)
                     );
                 } while (cursor.moveToNext());
             }
@@ -275,19 +249,50 @@ public class Database extends SQLiteAssetHelper {
      long id = database.saveIncidentReport("test name", "location", 10, 10, "DD/MM/YYYY", "description", "img");
      ^how to call
      */
-    public long saveWaterReport(String name, String location, double latitude, double longitude, String date, String description, String image, double temperature, double pH, double conductivity, double turbidity){
+    public long saveWaterReport(String name, double latitude, double longitude, String date){
         ContentValues values = new ContentValues();
         values.put("name", name);
-        values.put("location", location);
         values.put("latitude", latitude);
         values.put("longitude", longitude);
         values.put("date", date);
-        values.put("description", description);
-        values.put("image", image);
+        return getWritableDatabase().insert("water_report", null, values);
+    }
+
+    public long saveWaterReportSample(long fk_water_report_id, double temperature, double pH, double conductivity, double turbidity, int time){
+        ContentValues values = new ContentValues();
+        values.put("fk_water_report_id", fk_water_report_id);
         values.put("temperature", temperature);
         values.put("pH", pH);
         values.put("conductivity", conductivity);
         values.put("turbidity", turbidity);
-        return getWritableDatabase().insert("water_report", null, values);
+        values.put("time", time);
+        return getWritableDatabase().insert("water_report_samples", null, values);
+    }
+
+    public ArrayList<Water_Report_Sample> getWaterReportSamplesList(long id){
+        ArrayList<Water_Report_Sample> waterReportSamples = new ArrayList<>();
+        Cursor cursor = getReadableDatabase().query("water_report_samples", null, "fk_water_report_id = ?", new String[]{Long.toString(id)}, null, null, "_id ASC");
+        if(cursor != null){
+            if (cursor.moveToFirst()) {
+                do {
+                    int idxId = cursor.getColumnIndex("_id");
+                    int idxTime = cursor.getColumnIndex("time");
+                    int idxTemperature = cursor.getColumnIndex("temperature");
+                    int idxPH = cursor.getColumnIndex("pH");
+                    int idxConductivity = cursor.getColumnIndex("conductivity");
+                    int idxTurbidity = cursor.getColumnIndex("turbidity");
+                    waterReportSamples.add(new Water_Report_Sample(
+                            cursor.getLong(idxId),
+                            cursor.getInt(idxTime),
+                            cursor.getDouble(idxTemperature),
+                            cursor.getDouble(idxPH),
+                            cursor.getDouble(idxConductivity),
+                            cursor.getDouble(idxTurbidity)
+                    ));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+        return waterReportSamples;
     }
 }

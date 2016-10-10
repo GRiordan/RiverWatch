@@ -1,5 +1,6 @@
 package com.vuw.project1.riverwatch.ui;
 
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,6 @@ public class History_IncidentActivity_Item extends AppCompatActivity implements 
     private ImageView Image;
     private TextView Description;
     private TextView Name;
-    private TextView Location;
     private TextView Date;
     private Incident_Report report;
 
@@ -65,8 +65,6 @@ public class History_IncidentActivity_Item extends AppCompatActivity implements 
         Name = (TextView) findViewById(R.id.name);
         Name.setText("Name: "+report.name);
         setTitle(report.name);
-        Location = (TextView) findViewById(R.id.location);
-        Location.setText("Location: "+report.location);
         Date = (TextView) findViewById(R.id.date);
         Date.setText("Date: "+report.date);
 
