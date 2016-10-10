@@ -25,7 +25,4 @@ public final class DateHelper {
         return serverFormat.format(date) + "+00:00";
     }
 
-    public static String dateToString(final Date date) {
-        return displayFormat.format(date);
-    }
 }
