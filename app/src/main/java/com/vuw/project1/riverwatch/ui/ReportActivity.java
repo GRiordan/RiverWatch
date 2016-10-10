@@ -32,6 +32,7 @@ import com.google.android.gms.location.LocationServices;
 import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.Report_functionality.Preview;
 import com.vuw.project1.riverwatch.Report_functionality.ReportFormActivity;
+import com.vuw.project1.riverwatch.Report_functionality.ReportTabbedActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -290,7 +291,8 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
      * After the image has been saved this method will startm the reportFormActivity with the image and other information
      */
     public void pictureTaken(){
-        Intent intent = new Intent(ReportActivity.this,ReportFormActivity.class );
+        //Intent intent = new Intent(ReportActivity.this,ReportFormActivity.class );
+        Intent intent = new Intent(ReportActivity.this,ReportTabbedActivity.class );
         intent.putExtra("IMAGE_PATH", imagePath);
         intent.putExtra("LATITUDE",String.valueOf(lastLocation.getLatitude()));
         intent.putExtra("LONGITUDE",String.valueOf(lastLocation.getLongitude()));

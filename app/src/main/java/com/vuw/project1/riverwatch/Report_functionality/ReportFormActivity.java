@@ -167,6 +167,7 @@ public class ReportFormActivity extends AppCompatActivity implements OnMapReadyC
 
 
     public String getImagePath(){
+
         return getIntent().getExtras().getString("IMAGE_PATH");
     }
 
