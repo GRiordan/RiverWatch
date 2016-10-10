@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.vuw.project1.riverwatch.R;
+
+import java.util.Date;
 
 /**
  * Created by Alex on 10/10/2016.
@@ -17,10 +20,10 @@ import com.vuw.project1.riverwatch.R;
 public class ReportInfoFragment extends Fragment {
     private EditText description;
     private EditText extraDetails;
-    private ImageView image;
     private Button submitButton;
     private String imagePath;
-    private BasicLocation location;
+    private ReportTabbedActivity parent;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
@@ -29,9 +32,38 @@ public class ReportInfoFragment extends Fragment {
         description = (EditText) rootView.findViewById(R.id.submission_details_description);
         extraDetails = (EditText) rootView.findViewById(R.id.submission_details_extra_details);
 
+        submitButton = (Button) rootView.findViewById(R.id.submit_button);
+        submitButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                submit();
+            }
+        });
 
+        imagePath = getArguments().getString("ImagePath");
+        if (imagePath != null && !imagePath.equals("")) {
+            final ImageView imageView = (ImageView) rootView.findViewById(R.id.submission_details_photo);
+            float imgWeight = ((LinearLayout.LayoutParams) (imageView.getLayoutParams())).weight;
+            ScreenDimensions dimensioner = new ScreenDimensions(getActivity().getBaseContext());
+            int imgHeight = (int) (dimensioner.getScreenHeight() * imgWeight);
+            imageView.setImageBitmap(BitMapDisplay.decodeSampledBitmapFromPath(imagePath, imgHeight));
+        } else {
+            rootView.findViewById(R.id.submission_details_photo).setVisibility(View.GONE);
+        }
 
         return rootView;
     }
 
+
+    public void submit(){
+        String date = new Date(System.currentTimeMillis()).toString();
+        String descriptionText = description.getText().toString();
+        String extraDetailsText = extraDetails.getText().toString();
+        parent.submit(date, descriptionText,extraDetailsText);
+
+    }
+
+    public void setParent(ReportTabbedActivity p){
+        parent = p;
+    }
 }
