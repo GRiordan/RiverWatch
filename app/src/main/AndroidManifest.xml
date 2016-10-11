@@ -50,7 +50,6 @@
             android:name=".colour_algorithm.CameraActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".Report_functionality.ReportFormActivity" />
         <activity android:name=".Report_functionality.ReportTabbedActivity"
                   android:theme="@style/AppTheme.NoActionBar"></activity>
         <meta-data
