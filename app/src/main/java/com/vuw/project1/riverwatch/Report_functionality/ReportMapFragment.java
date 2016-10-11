@@ -52,8 +52,9 @@ public class ReportMapFragment extends Fragment implements OnMapReadyCallback, G
                     .addApi(LocationServices.API)
                     .build();
         }
-        longitude = getArguments().getDouble("lon");
-        latitude = getArguments().getDouble("lat");
+        longitude = getArguments().getDouble("Lon");
+        latitude = getArguments().getDouble("Lat");
+
         return rootView;
     }
 
