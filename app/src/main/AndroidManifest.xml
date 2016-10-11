@@ -37,7 +37,8 @@
         </activity>
         <activity android:name=".ui.ReportActivity" />
         <activity android:name=".ui.NitrateActivity" />
-        <activity android:name=".bluetooth.MainBluetoothActivity" />
+        <activity android:name=".bluetooth.MainBluetoothActivity"
+            android:theme="@style/BluetoothTheme"/>
         <activity android:name=".bluetooth.MainCalibrateActivity" />
         <activity android:name=".ui.HistoryActivity" android:label="History"/>
         <activity android:name=".ui.History_IncidentActivity" android:label="Incident Reports"/>
@@ -59,7 +60,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC0aOMrkPdDhp7jGEQK4Ol1g84WKCNsT-E" />
 
-        <activity android:name=".colour_algorithm.NitrateResultsActivity" />
         <activity
             android:name=".colour_algorithm.ResultsTabbedActivity"
             android:label="@string/title_activity_results_tabbed"

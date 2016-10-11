@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.vuw.project1.riverwatch.bluetooth.MainBluetoothActivity"
+    android:id= "@+id/menu_actions" >
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@drawable/mr_ic_settings_light"
+        android:color="@color/white"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="always" />
+</menu>
