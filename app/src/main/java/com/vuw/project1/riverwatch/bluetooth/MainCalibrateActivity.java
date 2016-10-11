@@ -241,7 +241,7 @@ public class MainCalibrateActivity extends BlunoLibrary {
                 //    serialReceivedText.setText("");
                 //}
 
-                buttonCalibrate.setEnabled(true);
+                buttonCalibrate.setEnabled(false);
 
                 //serialSend("blank");
                 // TODO make a timer for 3 seconds
