@@ -77,10 +77,10 @@ public class ReportTabbedActivity extends AppCompatActivity {
         Database database = new Database(this);
         database.saveIncidentReport(descriptionText, location.getLatitude(),location.getLongitude(),date,extraDetailsText,imagePath);
         //TODO attemmpt to submit to website
-        /*final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+        final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
             new App().getServiceBroker().sendReport(new IncidentReport(descriptionText, extraDetailsText, imagePath, location,date));
-        }*/
+        }
         //Finish up activity
         Toast.makeText(getBaseContext(),"thank you for your submission",Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(ReportTabbedActivity.this,MainActivity.class);
