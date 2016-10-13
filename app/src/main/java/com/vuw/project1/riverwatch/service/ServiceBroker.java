@@ -25,7 +25,7 @@ public class ServiceBroker {
 
     //private static final String END_POINT = "http://wainz.org.nz";
     //for testing purposes
-    private static final String END_POINT = "https://www-test.wainz.org.nz";
+    private static final String END_POINT = "https://www.wainz.org.nz";
     private static final String IMAGE_MIME_TYPE = "application/pdf";
 
     private ServiceCallbacks callbacks;
