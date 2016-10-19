@@ -130,7 +130,6 @@ public class ServiceBroker {
         protected void onPostExecute(final Boolean response) {
             super.onPostExecute(response);
 
-            System.out.println(response);
             App.getServiceBroker().callbacks.OnReportSentResponse(response);
         }
     }
