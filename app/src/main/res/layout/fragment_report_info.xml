@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|top"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:background="@color/dark_bkgrd"
+        tools:context="com.vuw.project1.riverwatch.Report_functionality.ReportInfoFragment">
+
+
+        <EditText
+            android:id="@+id/submission_details_description"
+            style="@style/Text.White.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:imeOptions="actionNext"
+            android:layout_margin="@dimen/common_margin_half"
+            android:layout_marginBottom="@dimen/common_margin_quarter"
+            android:hint="What's happening in the photo?" >
+        </EditText>
+
+        <EditText
+            android:id="@+id/submission_details_extra_details"
+            style="@style/Text.White.SmallMed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:imeOptions="actionDone"
+            android:layout_marginLeft="@dimen/common_margin_half"
+            android:layout_marginRight="@dimen/common_margin_half"
+            android:hint="Extra details?" >
+        </EditText>
+
+        <ImageView
+            android:id="@+id/submission_details_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.75"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/common_margin_half"
+            android:layout_marginRight="@dimen/common_margin_half"
+            android:adjustViewBounds="true"
+            android:contentDescription="a picture">
+
+        </ImageView>
+
+        <Button
+            android:id="@+id/submit_button"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/common_margin_half"
+            android:layout_marginRight="@dimen/common_margin_half"
+            android:text="SUBMIT" >
+        </Button>
+
+        <Button
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+        </Button>
+    </LinearLayout>
+</ScrollView>

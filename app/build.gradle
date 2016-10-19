@@ -9,15 +9,19 @@ android {
         applicationId "com.vuw.project1.riverwatch"
         minSdkVersion 18
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
+        versionCode 201
+        versionName "v2.01"
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
@@ -34,4 +38,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.0.+'
     compile 'com.jjoe64:graphview:4.2.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha1'
+    compile 'com.android.support:multidex:1.0.0'
 }

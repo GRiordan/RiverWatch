@@ -272,6 +272,8 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                             long id = database.saveWaterReport("placeholder", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString());
 
                             int sampleCount = 0;
+
+                            //TODO get the sample rate from the device
                             int SAMPLE_RATE = 5;
 
                             for (Sample sample : samples) {
