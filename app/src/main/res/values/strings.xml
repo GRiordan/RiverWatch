@@ -3,5 +3,6 @@
     <string name="error_bluetooth_not_supported">Bluetooth not supported.</string>
     <string name="title_activity_results_tabbed">Nitrate and Nitrite Results</string>
     <string name="action_abort">Cancel Test</string>
+    <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
 </resources>
