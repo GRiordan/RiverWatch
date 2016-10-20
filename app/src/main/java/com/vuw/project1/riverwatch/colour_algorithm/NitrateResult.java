@@ -18,11 +18,11 @@ public class NitrateResult {
     private String imagePath;
     private String date;
 
-    public NitrateResult(Double nitrate, Double nitrite, String info, String imagePath, String date){
+    public NitrateResult(Double nitrate, Double nitrite, String info,BasicLocation location, String imagePath, String date){
         this.nitrate = nitrate;
         this.nitrite = nitrite;
         this.info = info;
-//        this.location = location;
+        this.location = location;
         this.imagePath = imagePath;
         this.date = date;
     }
