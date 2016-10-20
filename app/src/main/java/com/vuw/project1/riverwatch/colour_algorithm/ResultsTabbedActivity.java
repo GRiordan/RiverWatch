@@ -1,8 +1,11 @@
 package com.vuw.project1.riverwatch.colour_algorithm;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,9 +21,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
 import com.vuw.project1.riverwatch.database.Database;
+import com.vuw.project1.riverwatch.service.App;
 import com.vuw.project1.riverwatch.ui.MainActivity;
 
 import java.util.Date;
@@ -149,8 +155,11 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         /*final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
             new App().getServiceBroker().sendReport(new NitrateResult(nitrate, nitrite, info ,new BasicLocation(latitude, longitude),imagePath, date));
+            return true;
+        }
+        else {
+            Toast.makeText(this, "Sending to network failed, try again later", Toast.LENGTH_SHORT).show();
         }*/
-
 
         return true;
     }

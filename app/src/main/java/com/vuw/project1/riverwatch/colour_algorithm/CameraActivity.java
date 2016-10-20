@@ -56,14 +56,8 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
                     public void onClick(View v) {
                         // get an image from the camera
                         relativeLayout.setClickable(false);
-                        camera.autoFocus(new Camera.AutoFocusCallback() {
-                            @Override
-                            public void onAutoFocus(boolean success, Camera camera) {
-
-                                captureButton.setClickable(false);
-                                camera.takePicture(null, null, picture);
-                            }
-                        });
+                        captureButton.setClickable(false);
+                        camera.takePicture(null, null, picture);
                     }
                 }
         );
