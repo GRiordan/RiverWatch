@@ -269,18 +269,11 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
                             Database database = new Database(this);
 
-                            long id = database.saveWaterReport("placeholder", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString());
-
-                            int sampleCount = 0;
-
-                            //TODO get the sample rate from the device
-                            int SAMPLE_RATE = 5;
+                            long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString());
 
                             for (Sample sample : samples) {
 
-                                database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sampleCount);
-
-                                sampleCount += SAMPLE_RATE;
+                                database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
 
                             }
 
@@ -300,6 +293,8 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                 }
 
             }
+            allData = "";
+
         }
 
         else if (allData.contains("Sready")){

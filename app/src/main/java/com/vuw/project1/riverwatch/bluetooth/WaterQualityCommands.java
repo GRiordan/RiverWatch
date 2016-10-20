@@ -28,6 +28,7 @@ public class WaterQualityCommands {
     private static final String TURBIDITY = "Trb";
     private static final String TIME_SINCE_LAST = "TSL";
     private static final String TEMPERATURE = "Tmp";
+    private static final String TSL = "TSL";
 
     public static String getRetrieveDataCommand(){
         return "RetrieveData";
@@ -82,7 +83,8 @@ public class WaterQualityCommands {
                             json.getDouble(CONDUCTIVITY),
                             json.getDouble(TEMPERATURE),
                             json.getDouble(TURBIDITY),
-                            json.getDouble(PH)));
+                            json.getDouble(PH),
+                            json.getDouble(TSL)));
 
                     calendar.add(GregorianCalendar.MINUTE, (int) (json.getDouble(TIME_SINCE_LAST) * (-1)));
                     time = calendar.getTime();
@@ -96,7 +98,8 @@ public class WaterQualityCommands {
                         waterQualityData.getDouble(CONDUCTIVITY),
                         waterQualityData.getDouble(TEMPERATURE),
                         waterQualityData.getDouble(TURBIDITY),
-                        waterQualityData.getDouble(PH)));
+                        waterQualityData.getDouble(PH),
+                        waterQualityData.getDouble(TSL)));
             }
         } catch (JSONException e) {
             Log.e(TAG, e.toString());
