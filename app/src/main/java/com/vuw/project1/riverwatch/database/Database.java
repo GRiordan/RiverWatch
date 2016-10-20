@@ -173,7 +173,6 @@ public class Database extends SQLiteAssetHelper {
 
     public void deleteNitrateReportById(long id){
         getWritableDatabase().delete("nitrate_report", "_id = ?", new String[]{""+id});
-
     }
 
     /**
@@ -294,5 +293,10 @@ public class Database extends SQLiteAssetHelper {
             cursor.close();
         }
         return waterReportSamples;
+    }
+
+    public void deleteWaterReportById(long id){
+        getWritableDatabase().delete("water_report", "_id = ?", new String[]{""+id});
+        getWritableDatabase().delete("water_report_samples", "fk_water_report_id = ?", new String[]{""+id});
     }
 }

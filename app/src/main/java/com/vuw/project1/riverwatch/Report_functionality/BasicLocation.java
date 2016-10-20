@@ -11,9 +11,9 @@ import java.io.Serializable;
 
 
 public class BasicLocation implements Serializable {
-    @SerializedName("lat")
-    private double longitude;
     @SerializedName("long")
+    private double longitude;
+    @SerializedName("lat")
     private double latitude;
 
     public BasicLocation(double lat, double lon){
