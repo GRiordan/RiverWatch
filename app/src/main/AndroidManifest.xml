@@ -38,7 +38,8 @@
         <activity android:name=".ui.ReportActivity"
             android:parentActivityName=".ui.MainActivity"/>
         <activity android:name=".ui.NitrateActivity" />
-        <activity android:name=".bluetooth.MainBluetoothActivity" />
+        <activity android:name=".bluetooth.MainBluetoothActivity"
+            android:theme="@style/BluetoothTheme"/>
         <activity android:name=".bluetooth.MainCalibrateActivity" />
         <activity android:name=".ui.HistoryActivity" android:label="History"/>
         <activity android:name=".ui.History_IncidentActivity" android:label="Incident Reports"/>

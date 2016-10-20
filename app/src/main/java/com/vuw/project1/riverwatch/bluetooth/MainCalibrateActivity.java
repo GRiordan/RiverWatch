@@ -214,8 +214,6 @@ public class MainCalibrateActivity extends BlunoLibrary {
 
             // TODO send the data that's in the numerical box
 
-			System.out.println("CALIBRATIONS!!!!");
-
         }
 
 
@@ -241,7 +239,7 @@ public class MainCalibrateActivity extends BlunoLibrary {
                 //    serialReceivedText.setText("");
                 //}
 
-                buttonCalibrate.setEnabled(true);
+                buttonCalibrate.setEnabled(false);
 
                 //serialSend("blank");
                 // TODO make a timer for 3 seconds
@@ -261,13 +259,8 @@ public class MainCalibrateActivity extends BlunoLibrary {
 
 		// TODO the Bluetooth device has replied with a response to update the data for intervals
 		else if(allData.contains("Sready")){
-
-
                 serialSend(interval+"\n");
                 allData = "";
-
-
-
 
 		}
         else if(allData.contains("Sdone")){
@@ -281,8 +274,6 @@ public class MainCalibrateActivity extends BlunoLibrary {
             allData = "";
 
         }
-
-
 
 		else{
             //serialSend("exit");

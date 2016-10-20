@@ -2,9 +2,14 @@ package com.vuw.project1.riverwatch.bluetooth;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -72,9 +77,39 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_settings, menu);
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case R.id.action_settings:
+
+                Intent intent = new Intent(MainBluetoothActivity.this, MainCalibrateActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bluetooth);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        myToolbar.setTitleTextColor(Color.WHITE);
+
+        setSupportActionBar(myToolbar);
 
         onCreateProcess();														//onCreate Process by BlunoLibrary
         app = new App();
@@ -130,25 +165,13 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
             }
         });
 
-        buttonCalibrate = (Button) findViewById(R.id.buttonCalibrate);					//initial the button for scanning the BLE device
-        buttonCalibrate.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(MainBluetoothActivity.this, MainCalibrateActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-
         serialReceivedText=(TextView) findViewById(R.id.serialReveicedText);	//initial the EditText of the received data
 
         buildGoogleApiClient();
         mGoogleApiClient.connect();
 
     }
+
 
     protected void onResume(){
         super.onResume();
@@ -249,6 +272,8 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                             long id = database.saveWaterReport("placeholder", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString());
 
                             int sampleCount = 0;
+
+                            //TODO get the sample rate from the device
                             int SAMPLE_RATE = 5;
 
                             for (Sample sample : samples) {

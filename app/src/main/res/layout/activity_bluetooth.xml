@@ -5,10 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="360dp"
+        android:layout_height="453dp"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
+        android:layout_marginTop="50dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -103,18 +112,6 @@
                 android:layout_centerHorizontal="true" />
 
             <Button
-                android:text="SETTINGS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/buttonCalibrate"
-                android:layout_alignBaseline="@+id/editText2"
-                android:layout_alignBottom="@+id/editText2"
-                android:layout_alignEnd="@+id/scrollView"
-                android:textColor="@color/white"
-                android:background="@drawable/button"
-                android:padding="20dp" />
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Status"
@@ -123,8 +120,9 @@
                 android:padding="20dp"
                 android:id="@+id/buttonStatus"
                 android:enabled="false"
-                android:layout_toStartOf="@+id/buttonCalibrate"
-                android:layout_above="@+id/editText2" />
+                android:layout_above="@+id/editText2"
+                android:layout_toEndOf="@+id/buttonTest"
+                android:layout_marginStart="7dp" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
