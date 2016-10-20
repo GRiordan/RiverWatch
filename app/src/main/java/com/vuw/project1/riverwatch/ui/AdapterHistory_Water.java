@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Water_Report;
 
 import java.util.ArrayList;
@@ -44,6 +45,13 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
                 mCallback.open(obj);
             }
         });
+        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                mCallback.delete(obj);
+                return false;
+            }
+        });
     }
     @Override
     public ShowViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -65,5 +73,11 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
     }
     interface Callback {
         void open(Water_Report obj);
+        void delete(Water_Report obj);
+    }
+
+    public void updateList(ArrayList<Water_Report> list){
+        this.mContent = list;
+        notifyDataSetChanged();
     }
 }
