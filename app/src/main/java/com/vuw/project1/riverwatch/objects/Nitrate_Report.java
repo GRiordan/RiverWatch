@@ -15,8 +15,9 @@ public class Nitrate_Report {
     public String image;
     public double nitrate;
     public double nitrite;
+    public int submitted;
 
-    public Nitrate_Report(long id, String name, double latitude, double longitude, String date, String description, String image, double nitrate, double nitrite){
+    public Nitrate_Report(long id, String name, double latitude, double longitude, String date, String description, String image, double nitrate, double nitrite, int submitted){
         this.id = id;
         this.name = name;
         this.latitude = latitude;
@@ -26,5 +27,6 @@ public class Nitrate_Report {
         this.image = image;
         this.nitrate = nitrate;
         this.nitrite = nitrite;
+        this.submitted = submitted;
     }
 }

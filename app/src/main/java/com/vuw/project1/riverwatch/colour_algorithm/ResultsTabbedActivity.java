@@ -148,7 +148,7 @@ public class ResultsTabbedActivity extends AppCompatActivity {
         Double longitude = mapFragment.getLng();
         String date = new Date(System.currentTimeMillis()).toString();
         Database db = new Database(this);
-        long id1 = db.saveNitrateReport(name, latitude, longitude, date, info, imagePath, nitrate, nitrite);
+        long id1 = db.saveNitrateReport(name, latitude, longitude, date, info, imagePath, nitrate, nitrite,0);
 
         // submit to the website
         //TODO: uncomment this to submit to website, the website code will need to be refactored to properly accept it

@@ -13,8 +13,9 @@ public class Incident_Report {
     public String date;
     public String description;
     public String image;
+    public int submitted;
 
-    public Incident_Report(long id, String name, double latitude, double longitude, String date, String description, String image){
+    public Incident_Report(long id, String name, double latitude, double longitude, String date, String description, String image, int submitted){
         this.id = id;
         this.name = name;
         this.latitude = latitude;
@@ -22,5 +23,6 @@ public class Incident_Report {
         this.date = date;
         this.description = description;
         this.image = image;
+        this.submitted = submitted;
     }
 }

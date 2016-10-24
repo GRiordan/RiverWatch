@@ -1,19 +1,26 @@
 package com.vuw.project1.riverwatch.ui;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
+import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
+import com.vuw.project1.riverwatch.service.App;
 
 import java.util.ArrayList;
 
@@ -54,7 +61,30 @@ public class History_IncidentActivity extends AppCompatActivity {
                                 database.deleteIncidentReportById(obj.id);
                                 ArrayList<Incident_Report> list = database.getIncidentReportList();
                                 mAdapter.updateList(list);
-                                Toast.makeText(History_IncidentActivity.this, obj.name+" deleted", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(History_IncidentActivity.this, "successfully deleted", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+                        .show();
+            }
+            @Override
+            public void submit(final Incident_Report obj) {
+                new AlertDialog.Builder(History_IncidentActivity.this)
+                        .setTitle("Submit Report to Website")
+                        .setMessage("Are you sure?")
+                        .setPositiveButton("yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                final NetworkInfo network = ((ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+                                if (network != null && network.isConnected()) {
+                                    new App().getServiceBroker().sendReport(new IncidentReport(obj.name, obj.description, obj.image, new BasicLocation(obj.latitude, obj.longitude), obj.date));
+                                    Database database = new Database(History_IncidentActivity.this);
+                                    database.submittedIncidentReportById(obj.id);
+                                    ArrayList<Incident_Report> list = database.getIncidentReportList();
+                                    mAdapter.updateList(list);
+                                    Toast.makeText(History_IncidentActivity.this, "successfully submitted", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(History_IncidentActivity.this, "unable to connect", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .show();

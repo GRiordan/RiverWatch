@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,6 +40,19 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
                 .placeholder(null)
                 .crossFade()
                 .into(viewHolder.image);
+        if(obj.submitted == 1) {
+            viewHolder.button.setAlpha(.25f);
+            viewHolder.button.setEnabled(false);
+        } else{
+            viewHolder.button.setAlpha(1f);
+            viewHolder.button.setEnabled(true);
+        }
+        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.submit(obj);
+            }
+        });
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,17 +77,20 @@ public class AdapterHistory_Water extends RecyclerView.Adapter<AdapterHistory_Wa
         ImageView image;
         TextView name;
         TextView date;
+        Button button;
         ShowViewHolder(View v) {
             super(v);
             view = v;
             image = (ImageView) v.findViewById(R.id.image);
             name = (TextView) v.findViewById(R.id.name);
             date = (TextView) v.findViewById(R.id.date);
+            button = (Button) v.findViewById(R.id.submit_button);
         }
     }
     interface Callback {
         void open(Water_Report obj);
         void delete(Water_Report obj);
+        void submit(Water_Report obj);
     }
 
     public void updateList(ArrayList<Water_Report> list){

@@ -2,16 +2,22 @@ package com.vuw.project1.riverwatch.ui;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.vuw.project1.riverwatch.R;
+import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.objects.Incident_Report;
+import com.vuw.project1.riverwatch.service.App;
 
 import java.util.ArrayList;
 
@@ -39,6 +45,19 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
                 .crossFade()
                 .centerCrop()
                 .into(viewHolder.image);
+        if(obj.submitted == 1) {
+            viewHolder.button.setAlpha(.25f);
+            viewHolder.button.setEnabled(false);
+        } else{
+            viewHolder.button.setAlpha(1f);
+            viewHolder.button.setEnabled(true);
+        }
+        viewHolder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.submit(obj);
+            }
+        });
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,17 +82,20 @@ public class AdapterHistory_Incident extends RecyclerView.Adapter<AdapterHistory
         TextView title;
         TextView date;
         ImageView image;
+        Button button;
         ShowViewHolder(View v) {
             super(v);
             view = v;
             title = (TextView) v.findViewById(R.id.name);
             date = (TextView) v.findViewById(R.id.date);
             image = (ImageView) v.findViewById(R.id.image);
+            button = (Button) v.findViewById(R.id.submit_button);
         }
     }
     interface Callback {
         void open(Incident_Report obj);
         void delete(Incident_Report obj);
+        void submit(Incident_Report obj);
     }
 
     public void updateList(ArrayList<Incident_Report> list){

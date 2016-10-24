@@ -269,7 +269,7 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
                             Database database = new Database(this);
 
-                            long id = database.saveWaterReport("placeholder", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString());
+                            long id = database.saveWaterReport("placeholder", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(),0);
 
                             int sampleCount = 0;
 
