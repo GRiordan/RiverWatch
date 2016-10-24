@@ -38,11 +38,8 @@ public class History_IncidentActivity extends AppCompatActivity {
             public void open(Incident_Report obj) {
                 Intent intent = new Intent(History_IncidentActivity.this, History_IncidentActivity_Item.class);
                 intent.putExtra("id", obj.id);
-//                intent.putExtra("name", obj.name);
-//                intent.putExtra("location", obj.location);
-//                intent.putExtra("date", obj.date);
-//                intent.putExtra("description", obj.description);
-//                intent.putExtra("image", obj.image);
+                intent.putExtra("latitude", obj.latitude);
+                intent.putExtra("longitude", obj.longitude);
                 startActivity(intent);
             }
             @Override

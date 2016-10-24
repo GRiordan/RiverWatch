@@ -25,15 +25,15 @@ import static com.vuw.project1.riverwatch.R.id.graph_turbidity;
  * Created by James on 8/10/2016.
  */
 
-public class History_WaterActivityFragment3_Graph extends Fragment {
+public class History_WaterActivityFragment_Graph extends Fragment {
 
     private GraphView graphView_temperature;
     private GraphView graphView_pH;
     private GraphView graphView_conductivity;
     private GraphView graphView_turbidity;
 
-    static History_WaterActivityFragment3_Graph newInstance(long id){
-        History_WaterActivityFragment3_Graph fragment = new History_WaterActivityFragment3_Graph();
+    static History_WaterActivityFragment_Graph newInstance(long id){
+        History_WaterActivityFragment_Graph fragment = new History_WaterActivityFragment_Graph();
         Bundle bundle = new Bundle();
         bundle.putLong("id", id);
         fragment.setArguments(bundle);

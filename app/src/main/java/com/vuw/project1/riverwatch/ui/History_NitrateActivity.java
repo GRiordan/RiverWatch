@@ -37,13 +37,8 @@ public class History_NitrateActivity extends AppCompatActivity {
             public void open(Nitrate_Report obj) {
                 Intent intent = new Intent(History_NitrateActivity.this, History_NitrateActivity_Item.class);
                 intent.putExtra("id", obj.id);
-//                intent.putExtra("name", obj.name);
-//                intent.putExtra("location", obj.location);
-//                intent.putExtra("date", obj.date);
-//                intent.putExtra("description", obj.description);
-//                intent.putExtra("image", obj.image);
-//                intent.putExtra("nitrate", obj.nitrate);
-//                intent.putExtra("nitrite", obj.nitrite);
+                intent.putExtra("latitude", obj.latitude);
+                intent.putExtra("longitude", obj.longitude);
                 startActivity(intent);
             }
             @Override

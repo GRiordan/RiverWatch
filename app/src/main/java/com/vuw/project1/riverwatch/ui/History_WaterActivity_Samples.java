@@ -35,7 +35,7 @@ public class History_WaterActivity_Samples extends AppCompatActivity {
             longitude = extras.getDouble("longitude", 0);
         }
 
-        final String[] titles = new String[]{"Samples", "Location", "Graphs"};
+        final String[] titles = new String[]{"Samples", "Map", "Graphs"};
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -43,13 +43,13 @@ public class History_WaterActivity_Samples extends AppCompatActivity {
             public Fragment getItem(int position) {
                 switch(position){
                     case 0:
-                        return History_WaterActivityFragment1.newInstance(id);
+                        return History_WaterActivityFragment_Samples.newInstance(id);
                     case 1:
-                        return History_WaterActivityFragment2_Location.newInstance(latitude, longitude);
+                        return History_ActivityFragment_Map.newInstance(latitude, longitude);
                     case 2:
-                        return History_WaterActivityFragment3_Graph.newInstance(id);
+                        return History_WaterActivityFragment_Graph.newInstance(id);
                     default:
-                        return History_WaterActivityFragment1.newInstance(-1);
+                        return History_WaterActivityFragment_Samples.newInstance(-1);
                 }
             }
 
