@@ -2,73 +2,69 @@ package com.vuw.project1.riverwatch.ui;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.database.Database;
-import com.vuw.project1.riverwatch.objects.Incident_Report;
 
-public class History_IncidentActivity_Item extends AppCompatActivity implements OnMapReadyCallback {
+public class History_IncidentActivity_Item extends AppCompatActivity{
 
-    private ImageView Image;
-    private TextView Description;
-    private TextView Name;
-    private TextView Date;
-    private Incident_Report report;
+    long id;
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_incident);
+        setContentView(R.layout.activity_container);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Bundle extras = getIntent().getExtras();
-        long id = 0;
-//        String description = "";
-//        String image = "";
-//        String name = "";
-//        String location = "";
-//        String date = "";
+        id = 0;
+        latitude = 0;
+        longitude = 0;
         if(extras != null){
             id = extras.getLong("id", 0);
-//            description = extras.getString("description", "");
-//            image = extras.getString("image", "");
-//            name = extras.getString("name", "");
-//            location = extras.getString("location", "");
-//            date = extras.getString("date", "");
+            latitude = extras.getDouble("latitude", 0);
+            longitude = extras.getDouble("longitude", 0);
         }
-        report = new Database(this).getIncidentReportById(id);
-        Image = (ImageView) findViewById(R.id.image);
-        Glide.with(this)
-                .load(report.image)
-                .placeholder(null)
-                .crossFade()
-                .centerCrop()
-                .into(Image);
-        Description = (TextView) findViewById(R.id.description);
-        Description.setText(report.description);
-        Name = (TextView) findViewById(R.id.name);
-        Name.setText("Name: "+report.name);
-        setTitle(report.name);
-        Date = (TextView) findViewById(R.id.date);
-        Date.setText("Date: "+report.date);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        final String[] titles = new String[]{"Info", "Map"};
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch(position){
+                    case 0:
+                        return History_IncidentActivityFragment_Info.newInstance(id);
+                    case 1:
+                        return History_ActivityFragment_Map.newInstance(latitude, longitude);
+                    default:
+                        return History_IncidentActivityFragment_Info.newInstance(-1);
+                }
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position){
+                return titles[position];
+            }
+
+            @Override
+            public int getCount() {
+                return titles.length;
+            }
+        });
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -79,15 +75,5 @@ public class History_IncidentActivity_Item extends AppCompatActivity implements 
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        if(report != null) {
-            map.addMarker(new MarkerOptions()
-                .position(new LatLng(report.latitude, report.longitude))
-                .title(report.name));
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(report.latitude, report.longitude), 14));
-        }
     }
 }

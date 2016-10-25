@@ -2,6 +2,10 @@ package com.vuw.project1.riverwatch.ui;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -18,67 +22,60 @@ import com.vuw.project1.riverwatch.R;
 import com.vuw.project1.riverwatch.database.Database;
 import com.vuw.project1.riverwatch.objects.Nitrate_Report;
 
-public class History_NitrateActivity_Item extends AppCompatActivity implements OnMapReadyCallback {
+public class History_NitrateActivity_Item extends AppCompatActivity{
 
-    private ImageView Image;
-    private TextView Nitrate;
-    private TextView Nitrite;
-    private TextView Description;
-    private TextView Name;
-    private TextView Date;
-    private Nitrate_Report report;
+    long id;
+    double latitude;
+    double longitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history_nitrate);
+        setContentView(R.layout.activity_container);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
         Bundle extras = getIntent().getExtras();
-        long id = 0;
-//        double nitrate = 0.0;
-//        double nitrite = 0.0;
-//        String description = "";
-//        String image = "";
-//        String name = "";
-//        String location = "";
-//        String date = "";
+        id = 0;
+        latitude = 0;
+        longitude = 0;
         if(extras != null){
             id = extras.getLong("id", 0);
-//            nitrate = extras.getDouble("nitrate", 0.0);
-//            nitrite = extras.getDouble("nitrite", 0.0);
-//            description = extras.getString("description", "");
-//            image = extras.getString("image", "");
-//            name = extras.getString("name", "");
-//            location = extras.getString("location", "");
-//            date = extras.getString("date", "");
+            latitude = extras.getDouble("latitude", 0);
+            longitude = extras.getDouble("longitude", 0);
         }
-        report = new Database(this).getNitrateReportById(id);
-        Image = (ImageView) findViewById(R.id.image);
-        Glide.with(this)
-                .load(report.image)
-                .placeholder(null)
-                .crossFade()
-                .centerCrop()
-                .into(Image);
-        Nitrate = (TextView) findViewById(R.id.nitrate);
-        Nitrate.setText("Nitrate: "+report.nitrate);
-        Nitrite = (TextView) findViewById(R.id.nitrite);
-        Nitrite.setText("Nitrite: "+report.nitrite);
-        Description = (TextView) findViewById(R.id.description);
-        Description.setText(report.description);
-        Name = (TextView) findViewById(R.id.name);
-        Name.setText("Name: "+report.name);
-        setTitle(report.name);
-        Date = (TextView) findViewById(R.id.date);
-        Date.setText("Date: "+report.date);
 
-        MapFragment mapFragment = (MapFragment) getFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        final String[] titles = new String[]{"Info", "Map"};
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                switch(position){
+                    case 0:
+                        return History_NitrateActivityFragment_Info.newInstance(id);
+                    case 1:
+                        return History_ActivityFragment_Map.newInstance(latitude, longitude);
+                    default:
+                        return History_NitrateActivityFragment_Info.newInstance(-1);
+                }
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position){
+                return titles[position];
+            }
+
+            @Override
+            public int getCount() {
+                return titles.length;
+            }
+        });
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -89,13 +86,5 @@ public class History_NitrateActivity_Item extends AppCompatActivity implements O
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onMapReady(GoogleMap map) {
-        map.addMarker(new MarkerOptions()
-            .position(new LatLng(report.latitude, report.longitude))
-            .title(report.name));
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(report.latitude, report.longitude), 14));
     }
 }

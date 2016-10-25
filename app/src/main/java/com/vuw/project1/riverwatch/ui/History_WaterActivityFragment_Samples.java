@@ -18,13 +18,13 @@ import java.util.ArrayList;
  * Created by James on 8/10/2016.
  */
 
-public class History_WaterActivityFragment1 extends Fragment {
+public class History_WaterActivityFragment_Samples extends Fragment {
 
     private RecyclerView recyclerView;
     private AdapterHistory_Water_Samples mAdapter;
 
-    static History_WaterActivityFragment1 newInstance(long id){
-        History_WaterActivityFragment1 fragment = new History_WaterActivityFragment1();
+    static History_WaterActivityFragment_Samples newInstance(long id){
+        History_WaterActivityFragment_Samples fragment = new History_WaterActivityFragment_Samples();
         Bundle bundle = new Bundle();
         bundle.putLong("id", id);
         fragment.setArguments(bundle);

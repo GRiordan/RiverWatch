@@ -19,7 +19,7 @@ import com.vuw.project1.riverwatch.R;
  * Created by James on 8/10/2016.
  */
 
-public class History_WaterActivityFragment2_Location extends Fragment implements
+public class History_ActivityFragment_Map extends Fragment implements
         OnMapReadyCallback {
 
     GoogleMap mGoogleMap;
@@ -27,8 +27,8 @@ public class History_WaterActivityFragment2_Location extends Fragment implements
 
     View mView;
 
-    static History_WaterActivityFragment2_Location newInstance(double latitude, double longitude){
-        History_WaterActivityFragment2_Location fragment = new History_WaterActivityFragment2_Location();
+    static History_ActivityFragment_Map newInstance(double latitude, double longitude){
+        History_ActivityFragment_Map fragment = new History_ActivityFragment_Map();
         Bundle bundle = new Bundle();
         bundle.putDouble("latitude", latitude);
         bundle.putDouble("longitude", longitude);
@@ -45,7 +45,7 @@ public class History_WaterActivityFragment2_Location extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //        Inflate the layout for this fragment
-        mView = inflater.inflate(R.layout.activity_history_water_map, container, false);
+        mView = inflater.inflate(R.layout.activity_history_map, container, false);
         return mView;
     }
 
@@ -71,6 +71,5 @@ public class History_WaterActivityFragment2_Location extends Fragment implements
         mGoogleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(getArguments().getDouble("latitude"), getArguments().getDouble("longitude"))));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(getArguments().getDouble("latitude"), getArguments().getDouble("longitude")), 14));
-        mGoogleMap.getUiSettings().setAllGesturesEnabled(false);
     }
 }

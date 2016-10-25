@@ -43,11 +43,11 @@
         <activity android:name=".bluetooth.MainCalibrateActivity" />
         <activity android:name=".ui.HistoryActivity" android:label="History"/>
         <activity android:name=".ui.History_IncidentActivity" android:label="Incident Reports"/>
-        <activity android:name=".ui.History_IncidentActivity_Item" />
+        <activity android:name=".ui.History_IncidentActivity_Item" android:label="Incident Reports"/>
         <activity android:name=".ui.History_NitrateActivity" android:label="Nitrate Tests" />
-        <activity android:name=".ui.History_NitrateActivity_Item" />
+        <activity android:name=".ui.History_NitrateActivity_Item" android:label="Nitrate Tests"/>
         <activity android:name=".ui.History_WaterActivity" android:label="Water Tests"/>
-        <activity android:name=".ui.History_WaterActivity_Samples" />
+        <activity android:name=".ui.History_WaterActivity_Samples" android:label="Water Tests"/>
         <activity
             android:name=".colour_algorithm.CameraActivity"
             android:screenOrientation="portrait"
