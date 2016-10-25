@@ -46,6 +46,17 @@ public class Sample implements Serializable {
         this.tsl = tsl;
     }
 
+    public Sample(final String sampled, final Location location, final double conductivity,
+                  final double temperature, final double turbidity, final double ph, final double tsl) {
+        this.date = sampled;
+        this.location = location;
+        this.conductivity = conductivity;
+        this.temperature = temperature;
+        this.turbidity = turbidity;
+        this.ph = ph;
+        this.tsl = tsl;
+    }
+
     public double getConductivity() {
         return conductivity;
     }
