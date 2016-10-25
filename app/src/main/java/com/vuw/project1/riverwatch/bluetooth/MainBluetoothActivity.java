@@ -269,18 +269,26 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
                             Database database = new Database(this);
 
-                            long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString());
-
-                            for (Sample sample : samples) {
-
-                                database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
-
-                            }
-
+                            // Connected
                             if (NetworkChecker.checkNetworkConnected(mainContext)){
+                                long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 1);
+                                for (Sample sample : samples) {
+                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
+                                }
+
                                 Toast.makeText(mainContext, "   Sending.....   ", Toast.LENGTH_SHORT).show();
                                 app.getInstance().getServiceBroker().sendReport(report);
                             }
+
+                            // Not Connected
+                            else{
+
+                                long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 0);
+                                for (Sample sample : samples) {
+                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
+                                }
+                            }
+
 
                             break;
                         default:

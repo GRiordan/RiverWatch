@@ -75,7 +75,7 @@ public class ReportTabbedActivity extends AppCompatActivity {
     public void submit(String date, String descriptionText, String extraDetailsText){
         //Save to history
         Database database = new Database(this);
-        database.saveIncidentReport(descriptionText, location.getLatitude(),location.getLongitude(),date,extraDetailsText,imagePath);
+        database.saveIncidentReport(descriptionText, location.getLatitude(),location.getLongitude(),date,extraDetailsText,imagePath,0);
         //TODO attemmpt to submit to website
         final NetworkInfo network = ((ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
         if(network != null && network.isConnected()){
