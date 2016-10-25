@@ -543,9 +543,6 @@ public class BluetoothLeService extends Service {
         return mBluetoothGatt.getServices();
     }
 
-    public BluetoothAdapter getmBluetootAdapter(){
-        return this.mBluetoothAdapter;
-    }
-    
+
     
 }

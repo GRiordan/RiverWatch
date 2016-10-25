@@ -15,13 +15,10 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.vuw.project1.riverwatch.R;
-import com.vuw.project1.riverwatch.Report_functionality.BasicLocation;
-import com.vuw.project1.riverwatch.Report_functionality.IncidentReport;
 import com.vuw.project1.riverwatch.bluetooth.Location;
 import com.vuw.project1.riverwatch.bluetooth.Sample;
 import com.vuw.project1.riverwatch.bluetooth.WaterQualityReport;
 import com.vuw.project1.riverwatch.database.Database;
-import com.vuw.project1.riverwatch.objects.Incident_Report;
 import com.vuw.project1.riverwatch.objects.Water_Report;
 import com.vuw.project1.riverwatch.objects.Water_Report_Sample;
 import com.vuw.project1.riverwatch.service.App;
@@ -86,7 +83,7 @@ public class History_WaterActivity extends AppCompatActivity {
                                     ArrayList<Water_Report_Sample> watRepSamples = database.getWaterReportSamplesList(obj.id);
                                     List<Sample> samples = new ArrayList<Sample>();
                                     for(Water_Report_Sample s : watRepSamples){
-                                        samples.add(new Sample(new Date(obj.date), new Location(obj.latitude, obj.longitude), s.conductivity, s.temperature, s.turbidity, s.pH));
+                                        samples.add(new Sample(obj.date, new Location(obj.latitude, obj.longitude), s.conductivity, s.temperature, s.turbidity, s.pH, s.time));
                                     }
                                     new App().getServiceBroker().sendReport(new WaterQualityReport(new Location(obj.latitude, obj.longitude), new Date(obj.date), samples,true));
                                     database.submittedWaterReportById(obj.id);

@@ -32,14 +32,29 @@ public class Sample implements Serializable {
     @SerializedName("ph")
     private final double ph;
 
+    @SerializedName("tsl")
+    private final double tsl;
+
     public Sample(final Date sampled, final Location location, final double conductivity,
-                  final double temperature, final double turbidity, final double ph) {
+                  final double temperature, final double turbidity, final double ph, final double tsl) {
         this.date = DateHelper.dateToServerFormat(sampled);
         this.location = location;
         this.conductivity = conductivity;
         this.temperature = temperature;
         this.turbidity = turbidity;
         this.ph = ph;
+        this.tsl = tsl;
+    }
+
+    public Sample(final String sampled, final Location location, final double conductivity,
+                  final double temperature, final double turbidity, final double ph, final double tsl) {
+        this.date = sampled;
+        this.location = location;
+        this.conductivity = conductivity;
+        this.temperature = temperature;
+        this.turbidity = turbidity;
+        this.ph = ph;
+        this.tsl = tsl;
     }
 
     public double getConductivity() {
@@ -56,6 +71,10 @@ public class Sample implements Serializable {
 
     public double getPh() {
         return ph;
+    }
+
+    public double getTsl(){
+        return tsl;
     }
 
     public String toJson() {

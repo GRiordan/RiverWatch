@@ -269,25 +269,26 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
                             Database database = new Database(this);
 
-                            long id = database.saveWaterReport("placeholder", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(),0);
-
-                            int sampleCount = 0;
-
-                            //TODO get the sample rate from the device
-                            int SAMPLE_RATE = 5;
-
-                            for (Sample sample : samples) {
-
-                                database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sampleCount);
-
-                                sampleCount += SAMPLE_RATE;
-
-                            }
-
+                            // Connected
                             if (NetworkChecker.checkNetworkConnected(mainContext)){
+                                long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 1);
+                                for (Sample sample : samples) {
+                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
+                                }
+
                                 Toast.makeText(mainContext, "   Sending.....   ", Toast.LENGTH_SHORT).show();
                                 app.getInstance().getServiceBroker().sendReport(report);
                             }
+
+                            // Not Connected
+                            else{
+
+                                long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 0);
+                                for (Sample sample : samples) {
+                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
+                                }
+                            }
+
 
                             break;
                         default:
@@ -300,6 +301,8 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                 }
 
             }
+            allData = "";
+
         }
 
         else if (allData.contains("Sready")){

@@ -284,7 +284,7 @@ public class Database extends SQLiteAssetHelper {
         return getWritableDatabase().insert("water_report", null, values);
     }
 
-    public long saveWaterReportSample(long fk_water_report_id, double temperature, double pH, double conductivity, double turbidity, int time){
+    public long saveWaterReportSample(long fk_water_report_id, double temperature, double pH, double conductivity, double turbidity, double time){
         ContentValues values = new ContentValues();
         values.put("fk_water_report_id", fk_water_report_id);
         values.put("temperature", temperature);
