@@ -278,8 +278,7 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
      */
     public void takePicture(){
         if( lastLocation == null){
-            Toast.makeText(this, "No Location please wait", Toast.LENGTH_SHORT).show();
-            return;
+            Toast.makeText(this, "No Location using place holder this will have to be set on the website", Toast.LENGTH_SHORT).show();
         }
 
         mOrientationListener.disable();
@@ -292,8 +291,14 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
     public void pictureTaken(){
         Intent intent = new Intent(ReportActivity.this,ReportTabbedActivity.class );
         intent.putExtra("IMAGE_PATH", imagePath);
-        intent.putExtra("LATITUDE",String.valueOf(lastLocation.getLatitude()));
-        intent.putExtra("LONGITUDE",String.valueOf(lastLocation.getLongitude()));
+        if(lastLocation == null){
+            intent.putExtra("LATITUDE",String.valueOf(41.2865));
+            intent.putExtra("LONGITUDE",String.valueOf(174.7762));
+        }else{
+            intent.putExtra("LATITUDE",String.valueOf(lastLocation.getLatitude()));
+            intent.putExtra("LONGITUDE",String.valueOf(lastLocation.getLongitude()));
+        }
+
         startActivity(intent);
     }
     /*
