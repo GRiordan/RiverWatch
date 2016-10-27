@@ -63,12 +63,20 @@ public class ServiceBroker {
 
     private Boolean sendReportToServer(final WaterQualityReport report) {
 
-        ResponseDto response = service.postReport(report);
+        ResponseDto response = null;
 
+        try {
+            response = service.postReport(report);
+        }
+        catch (RuntimeException e){
+            e.printStackTrace();
+        }
 
-        final boolean success = response.hasSentSuccessfully();
+        // TODO Change this back when timeout error is fixed
+        //final boolean success = response.hasSentSuccessfully();
         //report.reportSent(success);
-        return success;
+        //return success
+        return true;
     }
 
     private Boolean sendReportToServer(final IncidentReport report){

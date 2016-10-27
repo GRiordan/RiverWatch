@@ -277,7 +277,7 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                                 long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 1);
                                 for (Sample sample : samples) {
                                     database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), count);
-                                    count+=sample.getTsl();
+                                    count+=(sample.getTsl()/60);
                                 }
 
                                 Toast.makeText(mainContext, "   Sending.....   ", Toast.LENGTH_SHORT).show();
@@ -290,8 +290,10 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
                                 long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 0);
                                 for (Sample sample : samples) {
                                     database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), count);
-                                    count+=sample.getTsl();
+                                    count+=(sample.getTsl()/60);
                                 }
+
+                                Toast.makeText(mainContext, " Data saved to Database ", Toast.LENGTH_SHORT).show();
                             }
 
 
