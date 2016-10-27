@@ -312,7 +312,6 @@ public class ReportActivity extends AppCompatActivity implements GoogleApiClient
         }
     };
 
-    //not completely sure what this is doing
     private void refreshGallery(File file) {
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         mediaScanIntent.setData(Uri.fromFile(file));
