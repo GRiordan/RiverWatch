@@ -38,7 +38,7 @@
             android:imeOptions="actionDone"
             android:layout_marginLeft="@dimen/common_margin_half"
             android:layout_marginRight="@dimen/common_margin_half"
-            android:hint="Extra details?" >
+            android:hint="Tags" >
         </EditText>
 
         <ImageView
