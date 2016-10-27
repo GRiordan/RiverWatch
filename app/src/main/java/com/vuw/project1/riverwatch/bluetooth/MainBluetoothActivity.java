@@ -271,9 +271,13 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
                             // Connected
                             if (NetworkChecker.checkNetworkConnected(mainContext)){
+
+                                double count = 0;
+
                                 long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 1);
                                 for (Sample sample : samples) {
-                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
+                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), count);
+                                    count+=sample.getTsl();
                                 }
 
                                 Toast.makeText(mainContext, "   Sending.....   ", Toast.LENGTH_SHORT).show();
@@ -282,10 +286,11 @@ public class MainBluetoothActivity extends BlunoLibrary implements GoogleApiClie
 
                             // Not Connected
                             else{
-
+                                double count = 0;
                                 long id = database.saveWaterReport("Water Report", location.getLatitude(), location.getLongitude(), GregorianCalendar.getInstance().getTime().toString(), 0);
                                 for (Sample sample : samples) {
-                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), sample.getTsl());
+                                    database.saveWaterReportSample(id, sample.getTemperature(), sample.getPh(), sample.getConductivity(), sample.getTurbidity(), count);
+                                    count+=sample.getTsl();
                                 }
                             }
 
