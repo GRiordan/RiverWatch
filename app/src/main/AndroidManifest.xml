@@ -38,7 +38,6 @@
         <activity android:name=".ui.ReportActivity"
             android:parentActivityName=".ui.MainActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.NitrateActivity" />
         <activity android:name=".bluetooth.MainBluetoothActivity"
             android:theme="@style/BluetoothTheme"/>
         <activity android:name=".bluetooth.MainCalibrateActivity" />
