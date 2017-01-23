@@ -31,10 +31,11 @@ various graphs will be created to easily see the data.
 
 ## Get involved
 
-Please read through our user guide and technical guide to get more information.
+Please read through our [user guide](https://github.com/WaiNZ/RiverWatch-Android/blob/master/Documentation/UserDocumentation.pdf) and [technical guide](https://github.com/WaiNZ/RiverWatch-Android/blob/master/Documentation/TechnicalDocumentation.pdf) to get more information.
 
 If you have any issues or new feature requests feel free to email
-us at [wai.newzealand@gmail.com](mailto:wai.newzealand@gmail.com)
+us at [wai.newzealand@gmail.com](mailto:wai.newzealand@gmail.com) or visit
+our website at [wainz.org.nz](https://www.wainz.org.nz/)
 
 ### Copyright information
 
